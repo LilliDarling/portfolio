@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 
 import basicVertex from './shaders/basicVertex.glsl';
 import cosmicFrag from './shaders/cosmicFragment.glsl';
+import TwinklingStars from './TwinklingStars';
 
 interface CosmicFlowerProps {
   initialDelay?: number;
@@ -37,16 +38,20 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
 
   const crystalMaterial = useMemo(() => {
     return new THREE.MeshPhysicalMaterial({
-      color: 0x88ccff,
-      metalness: 0.1,
-      roughness: 0.1,
-      transmission: 0.9,
-      thickness: 0.5,
-      ior: 1.5,
+      color: new THREE.Color(0.8, 0.7, 1.0),
+      metalness: 0.05,
+      roughness: 0.05,
+      transmission: 0.95,
+      thickness: 1.2,
+      ior: 2.42,
       clearcoat: 1.0,
-      clearcoatRoughness: 0.1,
+      clearcoatRoughness: 0.02,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.85,
+      envMapIntensity: 1.5,
+      attenuationDistance: 0.8,
+      attenuationColor: new THREE.Color(0.9, 0.8, 1.0),
+      side: THREE.DoubleSide,
     });
   }, []);
 
@@ -58,7 +63,7 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+    const gradient = ctx.createRadialGradient(60, 60, 0, 64, 64, 64);
     gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
     gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.7)');
     gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)');
@@ -88,7 +93,7 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const centerGradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 16);
+    const centerGradient = ctx.createRadialGradient(60, 60, 0, 64, 64, 16);
     centerGradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
     centerGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.7)');
     centerGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
@@ -119,23 +124,23 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
     const baseAngles = new Float32Array(particleCount);
     const particleTypes = new Float32Array(particleCount);
 
-    const minRadius = 4.0;
+    const minRadius = 3.0;
     const maxRadius = 15.0;
-    const spiralTightness = 0.8;
+    const spiralTightness = 0.5;
     const galaxyHeight = 1.5;
 
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
 
-      const spiralArm = Math.floor(Math.random() * 4);
-      const armAngle = (spiralArm * Math.PI * 2) / 4;
-      const armProgress = Math.pow(Math.random(), 1.8);
+      const spiralArm = Math.floor(Math.random() * 6);
+      const armAngle = (spiralArm * Math.PI * 2) / 6;
+      const armProgress = Math.pow(Math.random(), 1.5);
 
       const radius = minRadius + armProgress * (maxRadius - minRadius);
-      const spiralOffset = armProgress * spiralTightness * Math.PI * 2;
+      const spiralOffset = radius * spiralTightness;
 
-      const armWidth = 0.8 + armProgress * 0.7;
-      const armDeviation = (Math.random() - 0.5) * armWidth * (1.0 - armProgress * 0.5);
+      const armWidth = 0.6 + armProgress * 1.2;
+      const armDeviation = (Math.random() - 0.3) * armWidth * (armProgress * 0.7);
 
       const finalAngle = armAngle + spiralOffset + armDeviation;
       const height = (Math.random() - 0.5) * (galaxyHeight + radius * 0.05);
@@ -262,6 +267,8 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
     clonedScene.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         child.material = crystalMaterial;
+        child.castShadow = true;
+        child.receiveShadow = true;
         flowerRef.current = child;
       }
     });
@@ -348,6 +355,7 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
 
   return (
     <>
+      <TwinklingStars />
       {flowerModel && <primitive object={flowerModel} ref={flowerRef} scale={[2, 2, 2]} />}
       <points ref={galaxyRef} geometry={galaxyGeometry} material={galaxyMaterial} />
     </>

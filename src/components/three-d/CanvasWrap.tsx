@@ -9,7 +9,7 @@ interface CanvasWrapProps {
 const CanvasWrap: React.FC<CanvasWrapProps> = ({ children }) => {
   return (
     <Canvas
-      camera={{ position: [0, 0, 3], fov: 75 }}
+      camera={{ position: [1, 1, 2.5], fov: 75 }}
       style={{ width: '100%', height: '100%', background: '#000000' }}
     >
       <Suspense fallback={null}> 
