@@ -1,15 +1,40 @@
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
+import * as THREE from 'three';
 
 interface CanvasWrapProps {
   children: React.ReactNode;
+  cameraPosition?: { x: number; y: number; z: number };
+  sceneScale?: number;
+  scenePosition?: { x: number; y: number };
+  stars?: React.ReactNode;
+  enableControls?: boolean;
 }
 
-const CanvasWrap: React.FC<CanvasWrapProps> = ({ children }) => {
+function CameraController({ position, enableControls }: { position: { x: number; y: number; z: number }, enableControls: boolean }) {
+  const { camera } = useThree();
+  const controlsRef = useRef<any>(null);
+
+  useFrame(() => {
+    camera.position.lerp(new THREE.Vector3(position.x, position.y, position.z), 0.1);
+    camera.lookAt(0, 0, 0);
+  });
+
+  return <OrbitControls ref={controlsRef} enabled={enableControls} enableZoom={true} enablePan={false} enableRotate={true} />;
+}
+
+const CanvasWrap: React.FC<CanvasWrapProps> = ({ 
+  children, 
+  cameraPosition = { x: 1, y: 1, z: 2.5 },
+  sceneScale = 1,
+  scenePosition = { x: 0, y: 0 },
+  stars,
+  enableControls = true
+}) => {
   return (
     <Canvas
-      camera={{ position: [1, 1, 2.5], fov: 75 }}
+      camera={{ position: [cameraPosition.x, cameraPosition.y, cameraPosition.z], fov: 75 }}
       style={{ width: '100%', height: '100%', background: '#000000' }}
     >
       <Suspense fallback={null}> 
@@ -18,9 +43,16 @@ const CanvasWrap: React.FC<CanvasWrapProps> = ({ children }) => {
         <pointLight position={[0, 0, -2]} intensity={1} color={0xccaa00} />
         <Environment preset="night" />
 
-        {children}
+        {stars}
 
-        <OrbitControls enableZoom={true} enablePan={false} enableRotate={true} />
+        <group 
+          scale={[sceneScale, sceneScale, sceneScale]}
+          position={[scenePosition.x, scenePosition.y, 0]}
+        >
+          {children}
+        </group>
+
+        <CameraController position={cameraPosition} enableControls={enableControls} />
       </Suspense>
     </Canvas>
   );

@@ -6,7 +6,6 @@ import { gsap } from 'gsap';
 
 import basicVertex from './shaders/basicVertex.glsl';
 import cosmicFrag from './shaders/cosmicFragment.glsl';
-import TwinklingStars from './TwinklingStars';
 
 interface CosmicFlowerProps {
   initialDelay?: number;
@@ -355,7 +354,6 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
 
   return (
     <>
-      <TwinklingStars />
       {flowerModel && <primitive object={flowerModel} ref={flowerRef} scale={[2, 2, 2]} />}
       <points ref={galaxyRef} geometry={galaxyGeometry} material={galaxyMaterial} />
     </>

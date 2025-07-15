@@ -33,9 +33,8 @@ const TwinklingStars: React.FC = () => {
 
     for (let i = 0; i < starCount; i++) {
       const i3 = i * 3;
-      
-      // Create stars in a spherical distribution around the scene
-      const radius = 25 + Math.random() * 25; // Far background
+
+      const radius = 25 + Math.random() * 25;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
       
@@ -43,26 +42,21 @@ const TwinklingStars: React.FC = () => {
       positions[i3 + 1] = radius * Math.cos(phi);
       positions[i3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
 
-      // Subtle color variations - mostly white with slight blue/yellow tints
       const colorVariation = Math.random();
       if (colorVariation < 0.7) {
-        // Pure white stars
         colors[i3] = 1;
         colors[i3 + 1] = 1; 
         colors[i3 + 2] = 1;
       } else if (colorVariation < 0.85) {
-        // Slightly blue tint
         colors[i3] = 0.9;
         colors[i3 + 1] = 0.95;
         colors[i3 + 2] = 1;
       } else {
-        // Slightly yellow tint
         colors[i3] = 1;
         colors[i3 + 1] = 0.95;
         colors[i3 + 2] = 0.8;
       }
 
-      // Random scale and twinkling phase
       scales[i] = 0.1 + Math.random() * 0.3;
       phases[i] = Math.random() * Math.PI * 2;
     }
@@ -124,7 +118,6 @@ const TwinklingStars: React.FC = () => {
       material.uniforms.u_time.value = elapsedTime;
     }
 
-    // Very slow rotation for subtle movement
     if (starsRef.current) {
       starsRef.current.rotation.y += 0.0001;
       starsRef.current.rotation.x += 0.00005;
