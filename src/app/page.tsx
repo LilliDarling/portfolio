@@ -1,8 +1,10 @@
 "use client";
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import React, { Suspense, useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getHighlightProjects } from '@/data/projects';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +15,9 @@ const CosmicFlower = dynamic(() => import('@/components/three-d/CosmicFlower'), 
   ssr: false,
 });
 const TwinklingStars = dynamic(() => import('@/components/three-d/TwinklingStars'), {
+  ssr: false,
+});
+const ProjectCard = dynamic(() => import('@/components/ui/ProjectCard'), {
   ssr: false,
 });
 
@@ -27,6 +32,8 @@ export default function Home() {
   const canvasRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  const highlightProjects = getHighlightProjects();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -153,14 +160,59 @@ export default function Home() {
         }}
       >
         <div style={{ maxWidth: '1200px', margin: '0 auto', color: 'white' }}>
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem' }}>Projects</h2>
-          <p style={{ fontSize: '1.2rem', lineHeight: '1.8' }}>
-            Here are some of my featured projects...
+          <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem' }}>Featured Projects</h2>
+          <p style={{ fontSize: '1.2rem', lineHeight: '1.8', marginBottom: '3rem' }}>
+            Here are some highlights from my recent work. Each project represents a unique challenge and creative solution.
           </p>
+          
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+            gap: '2rem',
+            marginBottom: '3rem',
+          }}>
+            {highlightProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                id={project.id}
+                title={project.title}
+                description={project.description}
+                technologies={project.technologies}
+                imageUrl={project.imageUrl}
+                isHighlight={project.isHighlight}
+              />
+            ))}
+          </div>
+          
+          <div style={{ textAlign: 'center' }}>
+            <Link 
+              href="/projects"
+              style={{
+                display: 'inline-block',
+                padding: '12px 24px',
+                backgroundColor: 'rgba(147, 51, 234, 0.2)',
+                border: '1px solid rgba(147, 51, 234, 0.5)',
+                borderRadius: '8px',
+                color: 'white',
+                textDecoration: 'none',
+                fontSize: '1.1rem',
+                transition: 'all 0.3s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.3)';
+                e.currentTarget.style.borderColor = 'rgba(147, 51, 234, 0.7)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.2)';
+                e.currentTarget.style.borderColor = 'rgba(147, 51, 234, 0.5)';
+              }}
+            >
+              View All Projects →
+            </Link>
+          </div>
         </div>
       </div>
 
-      {/* Contact section */}
       <div 
         id="contact"
         style={{ 
