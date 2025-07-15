@@ -1,6 +1,6 @@
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
-import React, { Suspense, useEffect, useRef } from 'react';
+import React, { Suspense, useRef } from 'react';
 import * as THREE from 'three';
 
 interface CanvasWrapProps {
@@ -21,7 +21,7 @@ function CameraController({ position, enableControls }: { position: { x: number;
     camera.lookAt(0, 0, 0);
   });
 
-  return <OrbitControls ref={controlsRef} enabled={enableControls} enableZoom={true} enablePan={false} enableRotate={true} />;
+  return <OrbitControls ref={controlsRef} enabled={enableControls} enableZoom={false} enablePan={false} enableRotate={enableControls} />;
 }
 
 const CanvasWrap: React.FC<CanvasWrapProps> = ({ 
