@@ -8,8 +8,9 @@ interface ProjectPageProps {
   };
 }
 
-export default function ProjectPage({ params }: ProjectPageProps) {
-  const project = getProjectById(params.id);
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const { id } = await params;
+  const project = getProjectById(id);
 
   if (!project) {
     notFound();
@@ -17,7 +18,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <div style={{ 
-      minHeight: '100vh', 
       backgroundColor: '#000000',
       padding: '6rem 2rem 4rem',
       color: 'white'

@@ -8,7 +8,6 @@ export default function ProjectsPage() {
 
   return (
     <div style={{ 
-      minHeight: '100vh', 
       backgroundColor: '#000000',
       padding: '6rem 2rem 4rem',
       color: 'white'
