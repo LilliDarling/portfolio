@@ -12,7 +12,6 @@ void main() {
 
     // Optional: Subtle vertex displacement for a "breathing" effect
     vec3 animatedPosition = position;
-    // You can uncomment and fine-tune this for a subtle pulse
     float displacement = sin(u_time * 2.0) * u_pulseFactor;
     animatedPosition += normal * displacement; // Push vertices along their normal
 

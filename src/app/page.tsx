@@ -128,12 +128,12 @@ export default function Home() {
           textAlign: 'center',
           color: 'white'
         }}>
-          <h1 style={{ fontSize: '3rem', margin: 0 }}>Bringing life to ideas</h1>
+          <h1 style={{ fontSize: '5rem'}} className="">Bringing life to ideas</h1>
         </div>
       </div>
 
       <div 
-        id="about-me"
+        id="about"
         style={{ 
         minHeight: '100vh', 
         position: 'relative', 
