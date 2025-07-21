@@ -25,7 +25,7 @@ const TwinklingStars: React.FC = () => {
 
   const { geometry, material } = useMemo(() => {
     const starGeometry = new THREE.BufferGeometry();
-    const starCount = 500;
+    const starCount = 5000;
     const positions = new Float32Array(starCount * 3);
     const colors = new Float32Array(starCount * 3);
     const scales = new Float32Array(starCount);

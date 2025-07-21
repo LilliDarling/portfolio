@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { getAllProjects } from '@/data/projects';
 import ProjectCard from '@/components/ui/ProjectCard';
+import StarsWrapper from '@/components/ui/StarsWrapper';
 
 export default function ProjectsPage() {
   const allProjects = getAllProjects();
@@ -10,16 +11,19 @@ export default function ProjectsPage() {
     <div style={{ 
       backgroundColor: '#000000',
       padding: '6rem 2rem 4rem',
-      color: 'white'
+      color: 'white',
+      position: 'relative',
+      minHeight: '100vh'
     }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <StarsWrapper />
+      <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <div style={{ marginBottom: '3rem' }}>
           <Link 
             href="/#projects"
             style={{
               color: 'rgba(147, 51, 234, 0.8)',
               textDecoration: 'none',
-              fontSize: '1rem',
+              fontSize: '1.3rem',
               marginBottom: '1rem',
               display: 'inline-block'
             }}
@@ -38,10 +42,10 @@ export default function ProjectsPage() {
           </h1>
           
           <p style={{ 
-            fontSize: '1.2rem', 
+            fontSize: '1.3rem', 
             lineHeight: '1.8', 
             color: 'rgba(255, 255, 255, 0.8)',
-            maxWidth: '600px'
+            maxWidth: '700px'
           }}>
             A comprehensive collection of my work spanning web development, 
             mobile applications, and creative coding projects.

@@ -152,16 +152,16 @@ export default function Home() {
       <div 
         id="projects"
         style={{ 
-          minHeight: '100vh', 
+          minHeight: '80vh', 
           position: 'relative', 
           zIndex: 20,
           backgroundColor: 'rgba(10, 10, 10, 0.9)',
-          padding: '4rem 2rem'
+          padding: '3rem 2rem'
         }}
       >
         <div style={{ maxWidth: '1200px', margin: '0 auto', color: 'white' }}>
           <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem' }}>Featured Projects</h2>
-          <p style={{ fontSize: '1.2rem', lineHeight: '1.8', marginBottom: '3rem' }}>
+          <p style={{ fontSize: '1.5rem', lineHeight: '1.8', marginBottom: '3rem' }}>
             Here are some highlights from my recent work. Each project represents a unique challenge and creative solution.
           </p>
           
@@ -195,7 +195,7 @@ export default function Home() {
                 borderRadius: '8px',
                 color: 'white',
                 textDecoration: 'none',
-                fontSize: '1.1rem',
+                fontSize: '1.3rem',
                 transition: 'all 0.3s ease',
               }}
               onMouseEnter={(e) => {

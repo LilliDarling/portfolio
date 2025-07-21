@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getProjectById, getAllProjects } from '@/data/projects';
+import StarsWrapper from '@/components/ui/StarsWrapper';
 
 interface ProjectPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -20,16 +21,19 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <div style={{ 
       backgroundColor: '#000000',
       padding: '6rem 2rem 4rem',
-      color: 'white'
+      color: 'white',
+      position: 'relative',
+      minHeight: '100vh'
     }}>
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <StarsWrapper />
+      <div style={{ maxWidth: '1000px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <div style={{ marginBottom: '3rem' }}>
           <Link 
             href="/projects"
             style={{
               color: 'rgba(147, 51, 234, 0.8)',
               textDecoration: 'none',
-              fontSize: '1rem',
+              fontSize: '1.3rem',
               marginBottom: '1rem',
               display: 'inline-block'
             }}
@@ -61,13 +65,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  padding: '12px 24px',
+                  padding: '8px 18px',
                   backgroundColor: 'rgba(147, 51, 234, 0.2)',
                   border: '1px solid rgba(147, 51, 234, 0.5)',
                   borderRadius: '8px',
                   color: 'white',
                   textDecoration: 'none',
-                  fontSize: '1rem',
+                  fontSize: '1.2rem',
                   transition: 'all 0.3s ease',
                 }}
               >
@@ -81,13 +85,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  padding: '12px 24px',
+                  padding: '8px 18px',
                   backgroundColor: 'rgba(255, 255, 255, 0.1)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   borderRadius: '8px',
                   color: 'white',
                   textDecoration: 'none',
-                  fontSize: '1rem',
+                  fontSize: '1.2rem',
                   transition: 'all 0.3s ease',
                 }}
               >
@@ -109,7 +113,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   padding: '6px 12px',
                   backgroundColor: 'rgba(255, 255, 255, 0.1)',
                   color: 'rgba(255, 255, 255, 0.8)',
-                  fontSize: '0.9rem',
+                  fontSize: '1rem',
                   borderRadius: '20px',
                   border: '1px solid rgba(255, 255, 255, 0.2)'
                 }}
@@ -142,7 +146,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         <div style={{ marginBottom: '3rem' }}>
           <h2 style={{ 
-            fontSize: '2rem', 
+            fontSize: '2.2rem', 
             marginBottom: '1.5rem',
             color: 'white'
           }}>
@@ -150,7 +154,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </h2>
           
           <p style={{ 
-            fontSize: '1.2rem', 
+            fontSize: '1.3rem', 
             lineHeight: '1.8', 
             color: 'rgba(255, 255, 255, 0.8)'
           }}>
@@ -179,7 +183,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           }}>
             <div>
               <h4 style={{ 
-                fontSize: '1rem', 
+                fontSize: '1.2rem', 
                 marginBottom: '0.5rem',
                 color: 'rgba(147, 51, 234, 0.8)'
               }}>
@@ -192,7 +196,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             
             <div>
               <h4 style={{ 
-                fontSize: '1rem', 
+                fontSize: '1.2rem', 
                 marginBottom: '0.5rem',
                 color: 'rgba(147, 51, 234, 0.8)'
               }}>

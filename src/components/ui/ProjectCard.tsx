@@ -37,15 +37,15 @@ export default function ProjectCard({
           </div>
         )}
         
-        <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
+        <h3 className="text-2xl text-white mb-2">{title}</h3>
         
-        <p className="mb-3 text-gray-300 flex-grow">{description}</p>
+        <p className="mb-3 text-gray-300 flex-grow text-lg">{description}</p>
         
         <div className="flex flex-wrap gap-2 mt-auto">
           {technologies.map((tech, index) => (
             <span 
               key={index}
-              className="px-3 py-1 bg-gray-700/50 text-gray-300 text-sm rounded-full"
+              className="px-3 py-1 bg-gray-700/50 text-gray-300 text-md rounded-full"
             >
               {tech}
             </span>
