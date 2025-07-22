@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getProjectById, getAllProjects } from '@/data/projects';
 import StarsWrapper from '@/components/ui/StarsWrapper';
@@ -100,6 +101,20 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             )}
           </div>
 
+          <div style={{
+            display: 'flex', 
+            flexWrap: 'wrap',  
+            marginBottom: '1rem'
+          }}>
+            <p style={{
+              fontSize: '1rem',
+              color: 'white',
+              textDecoration: 'italicized',
+            }}>
+              {project.note}
+            </p>
+          </div>
+
           <div style={{ 
             display: 'flex', 
             flexWrap: 'wrap', 
@@ -124,23 +139,68 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
         </div>
 
-        {project.imageUrl && (
-          <div style={{ 
-            marginBottom: '3rem',
-            aspectRatio: '16/9',
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            borderRadius: '12px',
-            overflow: 'hidden'
-          }}>
-            <img 
-              src={project.imageUrl} 
-              alt={project.title}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover'
-              }}
-            />
+        {project.images && project.images.length > 0 && (
+          <div style={{ marginBottom: '3rem' }}>
+            {project.images.find(img => img.type === 'main') && (
+              <div style={{ 
+                marginBottom: '2rem',
+                aspectRatio: '16/9',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                position: 'relative'
+              }}>
+                <Image 
+                  src={`/${project.images.find(img => img.type === 'main')?.src}`}
+                  alt={project.images.find(img => img.type === 'main')?.alt || project.title}
+                  fill
+                  style={{
+                    objectFit: 'cover'
+                  }}
+                />
+              </div>
+            )}
+
+            {project.images.filter(img => img.type === 'feature').length > 0 && (
+              <div>
+                <h3 style={{ 
+                  fontSize: '1.5rem', 
+                  marginBottom: '1rem',
+                  color: 'white'
+                }}>
+                  Project Screenshots
+                </h3>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                  gap: '1.5rem',
+                  marginBottom: '1rem'
+                }}>
+                  {project.images.filter(img => img.type === 'feature').map((image, index) => (
+                    <div 
+                      key={index}
+                      style={{
+                        aspectRatio: '16/10',
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        borderRadius: '8px',
+                        overflow: 'hidden',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        position: 'relative'
+                      }}
+                    >
+                      <Image 
+                        src={`/${image.src}`}
+                        alt={image.alt}
+                        fill
+                        style={{
+                          objectFit: 'cover'
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -150,7 +210,87 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             marginBottom: '1.5rem',
             color: 'white'
           }}>
-            About This Project
+            Overview
+          </h2>
+          
+          <p style={{ 
+            fontSize: '1.3rem', 
+            lineHeight: '1.8', 
+            color: 'rgba(255, 255, 255, 0.8)',
+            marginBottom: '1.5rem'
+          }}>
+            {project.overview}
+          </p>
+          
+          <p style={{ 
+            fontSize: '1.2rem', 
+            lineHeight: '1.7', 
+            color: 'rgba(255, 255, 255, 0.7)',
+            fontStyle: 'italic'
+          }}>
+            {project.description}
+          </p>
+        </div>
+
+        {project.features && project.features.length > 0 && (
+          <div style={{ marginBottom: '3rem' }}>
+            <h2 style={{ 
+              fontSize: '2.2rem', 
+              marginBottom: '1.5rem',
+              color: 'white'
+            }}>
+              Key Features & Implementation
+            </h2>
+            
+            <div style={{ 
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.5rem'
+            }}>
+              {project.features.map((feature, index) => {
+                const [title, ...descriptionParts] = feature.split(':');
+                const description = descriptionParts.join(':').trim();
+                
+                return (
+                  <div 
+                    key={index}
+                    style={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '8px',
+                      padding: '1.5rem'
+                    }}
+                  >
+                    <h3 style={{ 
+                      fontSize: '1.3rem', 
+                      marginBottom: '0.8rem',
+                      color: 'rgba(147, 51, 234, 0.9)',
+                      fontWeight: 'bold'
+                    }}>
+                      {title.trim()}
+                    </h3>
+                    <p style={{ 
+                      fontSize: '1.1rem', 
+                      lineHeight: '1.7', 
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      margin: 0
+                    }}>
+                      {description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        <div style={{ marginBottom: '3rem' }}>
+          <h2 style={{ 
+            fontSize: '2.2rem', 
+            marginBottom: '1.5rem',
+            color: 'white'
+          }}>
+            Outcome & Learnings
           </h2>
           
           <p style={{ 
@@ -158,7 +298,25 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             lineHeight: '1.8', 
             color: 'rgba(255, 255, 255, 0.8)'
           }}>
-            {project.fullDescription}
+            {project.outcome}
+          </p>
+        </div>
+
+        <div style={{ marginBottom: '3rem' }}>
+          <h2 style={{ 
+            fontSize: '2.2rem', 
+            marginBottom: '1.5rem',
+            color: 'white'
+          }}>
+            Future Development
+          </h2>
+          
+          <p style={{ 
+            fontSize: '1.3rem', 
+            lineHeight: '1.8', 
+            color: 'rgba(255, 255, 255, 0.8)'
+          }}>
+            {project.future}
           </p>
         </div>
 
