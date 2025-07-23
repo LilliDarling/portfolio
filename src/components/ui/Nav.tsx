@@ -12,7 +12,7 @@ export default function Nav() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-indigo-800/50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="text-3xl hover:text-indigo-600 duration-300">
+          <Link href="/" className="text-2xl hover:text-indigo-600 duration-300">
             Lillith Long
           </Link>
           
@@ -21,7 +21,7 @@ export default function Nav() {
               <li key={item.name}>
                 <Link 
                   href={item.href}
-                  className="text-xl hover:text-indigo-600 duration-300 focus:text-indigo-400"
+                  className="text-lg hover:text-indigo-600 duration-300 focus:text-indigo-400"
                 >
                   {item.name}
                 </Link>

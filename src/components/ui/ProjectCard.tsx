@@ -23,7 +23,7 @@ export default function ProjectCard({
         className={`
           bg-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-lg p-6
           transition-all duration-300 hover:bg-gray-800/60 hover:border-gray-600/50 
-          hover:transform hover:scale-105 cursor-pointer h-96 flex flex-col
+          hover:transform hover:scale-105 cursor-pointer h-115 flex flex-col
           ${isHighlight ? 'border-purple-500/30 bg-purple-900/20' : ''}
         `}
       >
@@ -39,7 +39,7 @@ export default function ProjectCard({
         
         <h3 className="text-2xl text-white mb-2">{title}</h3>
         
-        <p className="mb-3 text-gray-300 flex-grow text-lg">{description}</p>
+        <p className="mb-3 text-gray-300 flex-grow text-md">{description}</p>
         
         <div className="flex flex-wrap gap-2 mt-auto">
           {technologies.map((tech, index) => (

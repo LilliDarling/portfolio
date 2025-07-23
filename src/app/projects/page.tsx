@@ -1,5 +1,6 @@
 "use client";
 import Link from 'next/link';
+import Image from 'next/image';
 import { getAllProjects } from '@/data/projects';
 import ProjectCard from '@/components/ui/ProjectCard';
 import StarsWrapper from '@/components/ui/StarsWrapper';
@@ -57,17 +58,20 @@ export default function ProjectsPage() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
           gap: '2rem'
         }}>
-          {allProjects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              id={project.id}
-              title={project.title}
-              description={project.description}
-              technologies={project.technologies}
-              imageUrl={project.imageUrl}
-              isHighlight={project.isHighlight}
-            />
-          ))}
+          {allProjects.map((project) => {
+            const mainImage = project.images?.find(img => img.type === 'main');
+            return (
+              <ProjectCard
+                key={project.id}
+                id={project.id}
+                title={project.title}
+                description={project.description}
+                technologies={project.technologies}
+                imageUrl={mainImage?.src}
+                isHighlight={project.isHighlight}
+              />
+            );
+          })}
         </div>
 
         {allProjects.length === 0 && (

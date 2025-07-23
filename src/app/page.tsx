@@ -28,6 +28,7 @@ export default function Home() {
     cameraPosition: { x: 1, y: 1, z: 2.5 }
   });
   const [isScrolling, setIsScrolling] = useState(false);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
   
   const canvasRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -126,9 +127,113 @@ export default function Home() {
           left: '50%', 
           transform: 'translate(-50%, -50%)',
           textAlign: 'center',
-          color: 'white'
+          color: 'white',
+          width: '90%',
+          maxWidth: '1200px'
         }}>
-          <h1 style={{ fontSize: '5rem'}} className="">Bringing life to ideas</h1>
+          <div style={{
+            marginBottom: '2rem',
+            position: 'relative',
+            display: 'inline-block',
+          }}>
+            <div style={{
+              position: 'absolute',
+              inset: '-20px -40px',
+              background: 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 25%, rgba(255, 255, 255, 0.04) 60%, rgba(255, 255, 255, 0) 90%)',
+              backdropFilter: 'blur(15px)',
+              WebkitMaskImage: 'radial-gradient(ellipse at center, black 0%, transparent 70%)',
+              maskImage: 'radial-gradient(ellipse at center, black 0%, transparent 70%)',
+            }} />
+            <div style={{
+              position: 'relative',
+              fontSize: '1.4rem',
+              fontFamily: 'monospace',
+              color: 'white',
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              fontWeight: '600',
+              padding: '0 10px',
+            }}>
+              {'< '}Full-Stack Engineer{' />'}
+            </div>
+          </div>
+          
+          <h1 style={{ 
+            fontSize: 'clamp(3rem, 8vw, 6rem)',
+            fontWeight: '600',
+            marginBottom: '2rem',
+            lineHeight: '1',
+            background: 'linear-gradient(135deg, #ffffff 0%, #e0e0e0 50%, #ffffff 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            textShadow: '0 0 60px rgba(147, 51, 234, 0.5)'
+          }}>
+            Bringing life to ideas
+          </h1>
+
+          {/* <div style={{ 
+            fontSize: 'clamp(1.5rem, 2vw, 2rem)',
+            marginBottom: '3rem',
+            opacity: '0.9',
+            fontWeight: '400',
+            lineHeight: '1.2'
+          }}>
+            <span style={{ 
+              display: 'inline-block',
+              minHeight: '1rem',
+              paddingRight: '5px',
+            }}>
+              Placeholder text that needs updating later when the inspiration strikes
+            </span>
+          </div> */}
+          
+          <div style={{
+            display: 'flex',
+            gap: '1rem',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            marginBottom: '3rem',
+            pointerEvents: 'auto'
+          }}>
+            <a 
+              href="#contact"
+              style={{
+                width: '120px',
+                height: '120px',
+                borderRadius: '50%',
+                background: 'transparent',
+                border: '2px solid #a5b4fc',
+                color: 'white',
+                textDecoration: 'none',
+                fontSize: '1.2rem',
+                fontWeight: '600',
+                transition: 'all 0.3s ease',
+                backdropFilter: 'blur(10px)',
+                backgroundColor: 'rgba(147, 51, 234, 0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                lineHeight: '1.2',
+                padding: '10px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.2)';
+                e.currentTarget.style.borderColor = '#4f46e5';
+                e.currentTarget.style.transform = 'scale(1.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.1)';
+                e.currentTarget.style.borderColor = '#a5b4fc';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+                <span>Get In Touch</span>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -161,7 +266,7 @@ export default function Home() {
       >
         <div style={{ maxWidth: '1200px', margin: '0 auto', color: 'white' }}>
           <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem' }}>Featured Projects</h2>
-          <p style={{ fontSize: '1.5rem', lineHeight: '1.8', marginBottom: '3rem' }}>
+          <p style={{ fontSize: '1.2rem', lineHeight: '1.8', marginBottom: '3rem' }}>
             Here are some highlights from my recent work. Each project represents a unique challenge and creative solution.
           </p>
           
@@ -171,40 +276,54 @@ export default function Home() {
             gap: '2rem',
             marginBottom: '3rem',
           }}>
-            {highlightProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                id={project.id}
-                title={project.title}
-                description={project.description}
-                technologies={project.technologies}
-                imageUrl={project.imageUrl}
-                isHighlight={project.isHighlight}
-              />
-            ))}
+            {highlightProjects.map((project) => {
+              const mainImage = project.images?.find(img => img.type === 'main');
+              return (
+                <ProjectCard
+                  key={project.id}
+                  id={project.id}
+                  title={project.title}
+                  description={project.description}
+                  technologies={project.technologies}
+                  imageUrl={mainImage?.src}
+                  isHighlight={project.isHighlight}
+                />
+              );
+            })}
           </div>
           
           <div style={{ textAlign: 'center' }}>
             <Link 
               href="/projects"
               style={{
-                display: 'inline-block',
-                padding: '12px 24px',
-                backgroundColor: 'rgba(147, 51, 234, 0.2)',
-                border: '1px solid rgba(147, 51, 234, 0.5)',
-                borderRadius: '8px',
+                width: '120px',
+                height: '120px',
+                borderRadius: '50%',
+                background: 'transparent',
+                border: '2px solid #a5b4fc',
                 color: 'white',
                 textDecoration: 'none',
-                fontSize: '1.3rem',
+                fontSize: '1.2rem',
+                fontWeight: '400',
                 transition: 'all 0.3s ease',
+                backdropFilter: 'blur(10px)',
+                backgroundColor: 'rgba(147, 51, 234, 0.1)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                lineHeight: '1.2',
+                padding: '10px'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.3)';
-                e.currentTarget.style.borderColor = 'rgba(147, 51, 234, 0.7)';
+                e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.2)';
+                e.currentTarget.style.borderColor = '#4f46e5';
+                e.currentTarget.style.transform = 'scale(1.05)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.2)';
-                e.currentTarget.style.borderColor = 'rgba(147, 51, 234, 0.5)';
+                e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.1)';
+                e.currentTarget.style.borderColor = '#a5b4fc';
+                e.currentTarget.style.transform = 'scale(1)';
               }}
             >
               View All Projects →

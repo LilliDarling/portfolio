@@ -19,8 +19,46 @@ html {
 html, body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Zain", sans-serif;
-  font-weight: 400;
+  font-family: "Goldman", sans-serif;
+  font-weight: 300;
   font-style: normal;
   overflow-x: hidden;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% { 
+    transform: scale(1.5);
+    opacity: 0.3;
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

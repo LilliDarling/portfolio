@@ -71,7 +71,7 @@ export const projects: Project[] = [
     status: "In Development (Co-founder & Lead Developer)",
     description: "Developing a personalized AI companion robot with local, privacy-focused AI, utilizing MQTT for efficient communication protocols.",
     overview: "As a co-founder and lead developer, I am building NAILA Robotics – a personalized AI companion robot inspired by devices like EMO or Vector. The core objective is to create an interactive and intelligent desktop robot that offers companionship, entertainment, and utility, all powered by on-device, privacy-focused AI. By leveraging powerful local AI models and efficient MQTT communication protocols, NAILA is designed to deliver a low-latency, highly responsive experience, minimizing reliance on cloud services.",
-    technologies: ["MQTT", "Python", "C/C++", "Rust", "LangChain/LangGraph", "ESP32-S3"],
+    technologies: ["MQTT", "Python", "C/C++", "Rust", "ESP32-S3", "LangChain/LangGraph"],
     features: [
       "Local, Privacy-Focused AI: Designing and implementing an architecture that leverages on-device AI models for natural language processing and interaction, ensuring user data privacy and reducing cloud dependency.",
       "Robust Communication Protocol: Utilizing MQTT for low-latency, efficient, and reliable communication between the robot's hardware components and its AI core.",
@@ -109,7 +109,7 @@ export const projects: Project[] = [
     status: "In Development (Client MVP Stage)",
     description: "Developed an AI-powered mobile wellness coach for a client, creating personalized health plans and offering real-time guidance through an agentic chat interface.",
     overview: "For a private client, I am currently developing Kora, a mobile application engineered to empower users in achieving their health goals through dynamic AI-driven coaching. The application leverages advanced AI to create personalized wellness plans, categorize goals (fitness, nutrition, mindfulness), and adapt to individual user needs. Kora's core innovation lies in its agentic AI flow, allowing the system to intelligently interpret user requests for new plans, plan refinements, daily advice, and more. By integrating with user health data and profile information, Kora aims to provide highly informed, adaptive, and personalized wellness guidance. The project is currently under active development, focusing on core functionality and AI robustness to meet client specifications.",
-    technologies: ["Flutter", "Typescript", "Google Cloud Platform (GCP)", "Gemini LLM API", "Firebase", "Swift", "Kotlin"],
+    technologies: ["Flutter", "Typescript", "Firebase", "Swift", "Kotlin", "Google Cloud Platform (GCP)", "Gemini LLM API"],
     features: [
       "Personalized Wellness Plans: AI-driven generation of customized fitness, nutrition, and mindfulness plans based on individual user goals and preferences.",
       "Agentic AI Flow: Implemented a sophisticated agentic AI architecture using Gemini LLM API to intelligently understand user intent (e.g., 'create new plan,' 'refine existing plan,' 'seeking daily advice') and respond contextually.",
