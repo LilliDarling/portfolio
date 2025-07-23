@@ -28,7 +28,6 @@ export default function Home() {
     cameraPosition: { x: 1, y: 1, z: 2.5 }
   });
   const [isScrolling, setIsScrolling] = useState(false);
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
   
   const canvasRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -326,7 +325,7 @@ export default function Home() {
                 e.currentTarget.style.transform = 'scale(1)';
               }}
             >
-              View All Projects →
+              View All Projects
             </Link>
           </div>
         </div>

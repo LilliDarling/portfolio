@@ -1,6 +1,5 @@
 "use client";
 import Link from 'next/link';
-import Image from 'next/image';
 import { getAllProjects } from '@/data/projects';
 import ProjectCard from '@/components/ui/ProjectCard';
 import StarsWrapper from '@/components/ui/StarsWrapper';
