@@ -89,7 +89,7 @@ export default function Skills() {
         position: 'relative', 
         zIndex: 20,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        padding: '3rem 2rem',
+        padding: '8rem 2rem',
         overflow: 'hidden'
       }}
     >

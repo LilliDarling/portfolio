@@ -25,12 +25,53 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "portfolio",
+    title: "My Portfolio",
+    status: "Deployed",
+    description: "Design and developed this portfolio in NextJS and used React Three Fiber for ThreeJS integration",
+    overview: "Identified a critical need for neurodivergent individuals facing cognitive overload in task management. I developed an AI-powered task management MVP to address this by offering intelligent task breakdowns and streamlined organization.",
+    technologies: ["NextJS", "React", "React Three Fiber", "ThreeJS", "AWS", "Tailwind"],
+    features: [
+      "Core AI Integration: Engineered the integration with the Anthropic LLM API to dynamically break down complex tasks into manageable sub-tasks, significantly reducing user overwhelm.",
+      "Seamless Calendar Synchronization: Implemented Google Calendar API integration, allowing users to automatically schedule tasks and receive notifications, enhancing timely completion.",
+      "Robust Data Management: Designed and built the backend with Python and MongoDB on Google Cloud Platform (GCP), ensuring scalable and secure data storage for user tasks and preferences.",
+      "Intuitive User Interface: Developed the cross-platform frontend using Expo and React, focusing on a clean, accessible, and responsive design for an optimal user experience."
+    ],
+    outcome: "Initial user testing of the MVP yielded positive feedback, with users reporting increased task completion and reduced stress, validating the core solution. This project deepened my understanding of cloud deployment (GCP), managing large language models, and designing for user-specific accessibility needs. A particular challenge was handling complex API integrations and data consistency across multiple external services, which I overcame by developing a robust middleware layer.",
+    future: "Currently, the project is exploring a strategic pivot towards a 'notification-first' model, enabling direct AI interaction via text, further enhancing user accessibility and engagement based on early feedback.",
+    images: [
+      { 
+        src: "stars.jpg",
+        alt: "Main screenshot of the AI Task Helper app demonstrating core features.", 
+        type: "main"
+      }, 
+      { 
+        src: "galaxy.jpg", 
+        alt: "Screenshot illustrating AI-powered task breakdown from a complex task into smaller steps.", 
+        type: "feature"
+      }, 
+      { 
+        src: "stars.jpg", 
+        alt: "Screenshot showing Google Calendar integration and notification setup within the app.", 
+        type: "feature"
+      }, 
+      {
+        src: "galaxy.jpg",
+        alt: "Mobile view of the task helper app on a smartphone, highlighting responsive design.",
+        type: "feature"
+      }
+    ],
+    note: "Private Repository (Available for review upon request)",
+    isHighlight: true,
+    completedDate: "2025-05"
+  },
+  {
     id: "nixit",
     title: "AI-Powered Task Management MVP",
     status: "Client MVP (Currently private, seeking further development)",
     description: "Developed an AI-driven task management MVP, leveraging LLMs to simplify complex tasks for neurodivergent users.",
     overview: "Identified a critical need for neurodivergent individuals facing cognitive overload in task management. I developed an AI-powered task management MVP to address this by offering intelligent task breakdowns and streamlined organization.",
-    technologies: ["Expo", "React", "Google Cloud Platform (GCP)", "Python", "Anthropic LLM API", "MongoDB", "React"],
+    technologies: ["Expo", "React", "Google Cloud Platform (GCP)", "Python", "Anthropic LLM API", "MongoDB"],
     features: [
       "Core AI Integration: Engineered the integration with the Anthropic LLM API to dynamically break down complex tasks into manageable sub-tasks, significantly reducing user overwhelm.",
       "Seamless Calendar Synchronization: Implemented Google Calendar API integration, allowing users to automatically schedule tasks and receive notifications, enhancing timely completion.",

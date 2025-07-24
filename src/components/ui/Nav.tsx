@@ -10,9 +10,9 @@ const navItems = [
 
 export default function Nav() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-indigo-800/50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+    <nav className="fixed top-4 left-70 right-70 z-50 bg-neutral-950/30 backdrop-blur-md border border-indigo-800/50 rounded-4xl shadow-lg hover:shadow-xl hover:bg-indigo-950/30 hover:border-indigo-600/60 transition-all duration-300">
+      <div className="container mx-auto px-6">
+        <div className="flex items-center justify-between h-12">
           <Link href="/" className="text-2xl hover:text-indigo-600 duration-300">
             Lillith Long
           </Link>
