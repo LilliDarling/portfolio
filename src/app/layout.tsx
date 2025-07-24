@@ -11,7 +11,7 @@ const gold = Goldman({
 
 
 export const metadata: Metadata = {
-  title: "Lillith Long Portfolio",
+  title: "Lillith Long",
   description: "Lillith Long software engineering portfolio",
 };
 
