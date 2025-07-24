@@ -62,3 +62,66 @@ html, body {
     transform: translateX(0);
   }
 }
+
+@keyframes dustSparkle {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.3) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes dustFloat {
+  0% {
+    transform: translate(-50%, -50%) translateY(0px) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%) translateY(-20px) scale(0.3);
+  }
+}
+
+@keyframes magicWand {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    filter: blur(1px) brightness(1);
+  }
+  25% {
+    transform: translate(-50%, -50%) scale(1.1) rotate(90deg);
+    filter: blur(0.5px) brightness(1.2);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+    filter: blur(0px) brightness(1.5);
+  }
+  75% {
+    transform: translate(-50%, -50%) scale(1.1) rotate(270deg);
+    filter: blur(0.5px) brightness(1.2);
+  }
+}
+
+.dust-particle {
+  animation: dustSparkle 1.5s ease-out forwards;
+}
+
+.dust-particle:nth-child(odd) {
+  animation: dustFloat 2s ease-out forwards;
+}
+
+.dust-particle:nth-child(3n) {
+  animation-delay: 0.1s;
+}
+
+.dust-particle:nth-child(4n) {
+  animation-delay: 0.2s;
+}
+
+.stardust-cursor {
+  cursor: none;
+}
