@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
-import DustCursor from './DustCursor';
 
 export default function About() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -185,7 +184,6 @@ export default function About() {
           </div>
         </div>
       </div>
-      <DustCursor />
     </div>
   );
 }

@@ -44,6 +44,7 @@ export default function Projects() {
         position: 'relative', 
         zIndex: 20,
         background: 'transparent',
+        padding: '2rem 2rem',
         overflow: 'hidden'
       }}
     >
@@ -124,8 +125,8 @@ export default function Projects() {
             </div>
 
             <h1 style={{
-              fontSize: 'clamp(3rem, 5vw, 4.5rem)',
-              fontWeight: '900',
+              fontSize: 'clamp(2rem, 5vw, 4rem)',
+              fontWeight: '600',
               lineHeight: '0.9',
               marginBottom: '2rem',
               background: 'linear-gradient(135deg, #ffffff 0%, #a855f7 100%)',
@@ -138,7 +139,7 @@ export default function Projects() {
             </h1>
 
             <p style={{
-              fontSize: '1.4rem',
+              fontSize: '1.2rem',
               lineHeight: '1.6',
               color: 'rgba(255, 255, 255, 0.7)',
               marginBottom: '2.5rem',
@@ -154,7 +155,7 @@ export default function Projects() {
                     key={tech}
                     style={{
                       display: 'inline-block',
-                      padding: '0.75rem 1.5rem',
+                      padding: '0.5rem 1rem',
                       background: 'rgba(0, 0, 0, 0.3)',
                       border: '1px solid rgba(255, 255, 255, 0.2)',
                       borderRadius: '50px',
@@ -255,7 +256,8 @@ export default function Projects() {
 
           <div style={{ 
             position: 'relative',
-            height: '700px',
+            height: '625px',
+            marginBottom: '3rem',
             opacity: isTransitioning ? 0 : 1,
             transform: isTransitioning ? 'scale(0.9) rotateY(10deg)' : 'scale(1) rotateY(0)',
             transition: 'all 0.5s ease'
@@ -343,6 +345,7 @@ export default function Projects() {
         }}>
           <button
             onClick={() => handleProjectChange((activeProject - 1 + allProjects.length) % allProjects.length)}
+            className="stardust-cursor"
             style={{
               width: '60px',
               height: '60px',
@@ -352,7 +355,6 @@ export default function Projects() {
               backdropFilter: 'blur(20px)',
               color: 'white',
               fontSize: '1.5rem',
-              cursor: 'pointer',
               transition: 'all 0.3s ease',
               display: 'flex',
               alignItems: 'center',
@@ -395,6 +397,7 @@ export default function Projects() {
 
           <button
             onClick={() => handleProjectChange((activeProject + 1) % allProjects.length)}
+            className="stardust-cursor"
             style={{
               width: '60px',
               height: '60px',
@@ -404,7 +407,6 @@ export default function Projects() {
               backdropFilter: 'blur(20px)',
               color: 'white',
               fontSize: '1.5rem',
-              cursor: 'pointer',
               transition: 'all 0.3s ease',
               display: 'flex',
               alignItems: 'center',

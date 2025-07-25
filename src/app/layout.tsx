@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Goldman } from "next/font/google";
 import "../styles/globals.css";
 import Nav from "@/components/ui/Nav";
-import Footer from "@/components/ui/Footer"
+import Footer from "@/components/ui/Footer";
+import DustCursor from "@/components/ui/DustCursor";
 
 const gold = Goldman({
   weight: "400",
@@ -32,6 +33,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </div>
+        <DustCursor />
       </body>
     </html>
   );

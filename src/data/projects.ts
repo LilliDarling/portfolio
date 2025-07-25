@@ -7,6 +7,7 @@ export interface ProjectImage {
 
 export interface Project {
   id: string;
+  num: string,
   title: string;
   status: string;
   description: string;
@@ -26,6 +27,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "portfolio",
+    num: '1',
     title: "My Portfolio",
     status: "Deployed",
     description: "Design and developed this portfolio in NextJS and used React Three Fiber for ThreeJS integration",
@@ -67,6 +69,7 @@ export const projects: Project[] = [
   },
   {
     id: "nixit",
+    num: '2',
     title: "AI-Powered Task Management MVP",
     status: "Client MVP (Currently private, seeking further development)",
     description: "Developed an AI-driven task management MVP, leveraging LLMs to simplify complex tasks for neurodivergent users.",
@@ -108,6 +111,7 @@ export const projects: Project[] = [
   },
   {
     id: "naila",
+    num: '3',
     title: "NAILA Robotics: Local AI Companion Robot",
     status: "In Development (Co-founder & Lead Developer)",
     description: "Developing a personalized AI companion robot with local, privacy-focused AI, utilizing MQTT for efficient communication protocols.",
@@ -146,6 +150,7 @@ export const projects: Project[] = [
   },
   {
     id: "kora",
+    num: '4',
     title: "AI Wellness Coach Mobile App",
     status: "In Development (Client MVP Stage)",
     description: "Developed an AI-powered mobile wellness coach for a client, creating personalized health plans and offering real-time guidance through an agentic chat interface.",
@@ -183,6 +188,7 @@ export const projects: Project[] = [
   },
   {
     id: "ai-text-summary",
+    num: '5',
     title: "AI Text Summary: Cost-Optimized Flask Web App",
     status: "Deployed & Operational (Self-Managed)",
     description: "A Flask web application using the BART transformer model for text summarization, deployed on a cost-optimized AWS serverless architecture.",
@@ -222,6 +228,7 @@ export const projects: Project[] = [
   },
   {
     id: "witchy-cooking",
+    num: '6',
     title: "Intuitive Recipe Management Platform",
     status: "Deployed & Maintained",
     description: "A full-stack Django application designed for streamlined user recipe management, focusing on a clean, ad-free experience.",
