@@ -1,8 +1,17 @@
 "use client";
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <div 
       ref={heroRef}
@@ -22,7 +31,9 @@ export default function Hero() {
         textAlign: 'center',
         color: 'white',
         width: '90%',
-        maxWidth: '1200px'
+        maxWidth: '1200px',
+        opacity: isVisible ? 1 : 0,
+        transition: 'opacity 800ms cubic-bezier(0.4, 0, 0.2, 1)'
       }}>
         <div style={{
           marginBottom: '2rem',
@@ -64,22 +75,6 @@ export default function Hero() {
         }}>
           Bringing life to ideas
         </h1>
-
-        {/* <div style={{ 
-          fontSize: 'clamp(1.5rem, 2vw, 2rem)',
-          marginBottom: '3rem',
-          opacity: '0.9',
-          fontWeight: '400',
-          lineHeight: '1.2'
-        }}>
-          <span style={{ 
-            display: 'inline-block',
-            minHeight: '1rem',
-            paddingRight: '5px',
-          }}>
-            Placeholder text that needs updating later when the inspiration strikes
-          </span>
-        </div> */}
         
         <div style={{
           display: 'flex',

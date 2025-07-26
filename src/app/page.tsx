@@ -30,17 +30,22 @@ export default function Home() {
     cameraPosition: { x: 1, y: 1, z: 2.5 }
   });
   const [isScrolling, setIsScrolling] = useState(false);
+  const [canvasLoaded, setCanvasLoaded] = useState(true);
   
   const canvasRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    setCanvasLoaded(false);
+    const canvasTimer = setTimeout(() => {
+      setCanvasLoaded(true);
+    }, 700);
+
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
-        trigger: heroRef.current,
+        trigger: "body",
         start: "top top",
-        end: "bottom top",
+        end: "100vh top",
         scrub: 1,
         onUpdate: (self) => {
           const progress = self.progress;
@@ -80,6 +85,7 @@ export default function Home() {
     return () => {
       ctx.revert();
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      clearTimeout(canvasTimer);
     };
   }, []);
 
@@ -94,7 +100,9 @@ export default function Home() {
           width: '100%', 
           height: '100vh',
           zIndex: 1,
-          overflow: 'hidden'
+          overflow: 'hidden',
+          opacity: canvasLoaded ? 1 : 0,
+          transition: 'opacity 800ms cubic-bezier(0.4, 0, 0.2, 1)'
         }}
       >
         <Suspense fallback={<div>Loading 3D experience...</div>}>

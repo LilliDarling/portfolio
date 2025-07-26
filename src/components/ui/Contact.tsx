@@ -76,10 +76,16 @@ export default function Contact() {
         width: '100%'
       }}>
         <h2 style={{ 
-          fontSize: '2.5rem', 
-          marginBottom: '1rem',
-          textAlign: 'center',
-          fontWeight: '400'
+          fontSize: 'clamp(2rem, 5vw, 4rem)',
+          fontWeight: '400',
+          lineHeight: '0.9',
+          marginBottom: '2rem',
+          background: 'linear-gradient(135deg, #ffffff 0%, #a855f7 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          letterSpacing: '-0.02em', 
+          textAlign: 'center'
         }}>
           Contact
         </h2>
@@ -184,7 +190,7 @@ export default function Contact() {
             style={{
               padding: '1rem 2rem',
               backgroundColor: 'transparent',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
+              border: '1px solid rgba(168, 85, 247, 0.5)',
               borderRadius: '4px',
               color: 'white',
               fontSize: '1rem',
@@ -201,7 +207,7 @@ export default function Contact() {
             }}
             onMouseLeave={(e) => {
               if (!isSubmitting) {
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.5)';
                 e.currentTarget.style.backgroundColor = 'transparent';
               }
             }}

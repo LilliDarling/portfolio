@@ -10,6 +10,7 @@ interface CanvasWrapProps {
   scenePosition?: { x: number; y: number };
   stars?: React.ReactNode;
   enableControls?: boolean;
+  onCreated?: () => void;
 }
 
 function CameraController({ position, enableControls }: { position: { x: number; y: number; z: number }, enableControls: boolean }) {
@@ -30,12 +31,14 @@ const CanvasWrap: React.FC<CanvasWrapProps> = ({
   sceneScale = 1,
   scenePosition = { x: 0, y: 0 },
   stars,
-  enableControls = true
+  enableControls = true,
+  onCreated
 }) => {
   return (
     <Canvas
       camera={{ position: [cameraPosition.x, cameraPosition.y, cameraPosition.z], fov: 75 }}
       style={{ width: '100%', height: '100%', background: '#000000' }}
+      onCreated={onCreated}
     >
       <Suspense fallback={null}> 
         <ambientLight intensity={0.5} />

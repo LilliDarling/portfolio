@@ -8,258 +8,276 @@ interface ProjectImageGalleryProps {
 }
 
 export default function ProjectImageGallery({ images, title }: ProjectImageGalleryProps) {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   if (!images || images.length === 0) return null;
   
   const mainImage = images.find(img => img.type === 'main');
   const featureImages = images.filter(img => img.type === 'feature');
+  const allImages = mainImage ? [mainImage, ...featureImages] : featureImages;
   
-  const getGridLayout = (count: number) => {
-    if (count === 1) return { columns: '1fr', maxWidth: '600px' };
-    if (count === 2) return { columns: 'repeat(2, 1fr)', maxWidth: '800px' };
-    if (count === 3) return { columns: 'repeat(3, 1fr)', maxWidth: '900px' };
-    return { columns: 'repeat(auto-fit, minmax(280px, 1fr))', maxWidth: '1000px' };
+  const currentDisplayImage = allImages[currentImageIndex];
+  
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
   };
   
-  const gridLayout = getGridLayout(featureImages.length);
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
+  };
   
   return (
     <div style={{ marginBottom: '4rem' }}>
-      {mainImage && (
-        <div style={{ 
-          marginBottom: '3rem',
-          position: 'relative',
-          cursor: 'pointer'
-        }}
-        onClick={() => setSelectedImage(mainImage.src)}
-        >
+      {allImages.length > 0 && (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '2fr 1fr',
+          gap: '2rem',
+          alignItems: 'start'
+        }}>
           <div style={{
             position: 'relative',
-            aspectRatio: '16/9',
-            borderRadius: '16px',
-            overflow: 'hidden',
-            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5), 0 0 100px rgba(168, 85, 247, 0.2)',
-            transition: 'all 0.3s ease'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.02) translateY(-5px)';
-            e.currentTarget.style.boxShadow = '0 35px 70px rgba(0, 0, 0, 0.6), 0 0 120px rgba(168, 85, 247, 0.3)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1) translateY(0)';
-            e.currentTarget.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.5), 0 0 100px rgba(168, 85, 247, 0.2)';
+            cursor: 'pointer'
           }}
           >
-            <Image 
-              src={`/${mainImage.src}`}
-              alt={mainImage.alt}
-              fill
-              style={{ objectFit: 'cover' }}
-            />
             <div style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, transparent 50%, rgba(99, 102, 241, 0.1) 100%)'
-            }} />
-            <div style={{
-              position: 'absolute',
-              top: '1.5rem',
-              left: '1.5rem',
-              padding: '0.75rem 1.5rem',
-              background: 'rgba(0, 0, 0, 0.7)',
-              backdropFilter: 'blur(20px)',
-              borderRadius: '50px',
-              color: 'rgba(168, 85, 247, 0.9)',
-              fontSize: '0.9rem',
-              fontWeight: '600',
-              border: '1px solid rgba(168, 85, 247, 0.3)'
-            }}>
-              Featured Image
-            </div>
-          </div>
-        </div>
-      )}
-      
-      {featureImages.length > 0 && (
-        <div>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-            marginBottom: '2rem'
-          }}>
-            <h3 style={{ 
-              fontSize: '2rem', 
-              color: 'white',
-              margin: 0,
-              background: 'linear-gradient(135deg, #ffffff 0%, #a855f7 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
-              Gallery
-            </h3>
-            <div style={{
-              flex: 1,
-              height: '1px',
-              background: 'linear-gradient(90deg, rgba(168, 85, 247, 0.5) 0%, transparent 100%)'
-            }} />
-            <span style={{
-              color: 'rgba(255, 255, 255, 0.6)',
-              fontSize: '0.9rem'
-            }}>
-              {featureImages.length} image{featureImages.length !== 1 ? 's' : ''}
-            </span>
-          </div>
-          
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: gridLayout.columns,
-            gap: '1.5rem',
-            maxWidth: gridLayout.maxWidth,
-            margin: '0 auto'
-          }}>
-            {featureImages.map((image, index) => (
-              <div 
-                key={index}
-                style={{
-                  position: 'relative',
-                  aspectRatio: featureImages.length === 1 ? '16/10' : '4/3',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
-                }}
-                onClick={() => setSelectedImage(image.src)}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(168, 85, 247, 0.2)';
-                  e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                }}
-              >
-                <Image 
-                  src={`/${image.src}`}
-                  alt={image.alt}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                />
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.6) 100%)',
-                  opacity: 0,
-                  transition: 'opacity 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = '1';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = '0';
-                }}
-                />
-                <div style={{
-                  position: 'absolute',
-                  bottom: '1rem',
-                  right: '1rem',
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  background: 'rgba(0, 0, 0, 0.7)',
-                  backdropFilter: 'blur(10px)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontSize: '1.2rem',
-                  opacity: 0,
-                  transition: 'opacity 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = '1';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = '0';
-                }}
-                >
-                  🔍
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-      
-      {selectedImage && (
-        <div 
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(0, 0, 0, 0.95)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 1000,
-            cursor: 'pointer',
-            backdropFilter: 'blur(10px)'
-          }}
-          onClick={() => setSelectedImage(null)}
-        >
-          <div style={{
-            position: 'relative',
-            maxWidth: '90vw',
-            maxHeight: '90vh',
-            borderRadius: '12px',
-            overflow: 'hidden',
-            boxShadow: '0 50px 100px rgba(0, 0, 0, 0.8)'
-          }}>
-            <Image 
-              src={`/${selectedImage}`}
-              alt="Full size view"
-              width={1200}
-              height={800}
-              style={{ 
-                maxWidth: '100%',
-                maxHeight: '90vh',
-                objectFit: 'contain'
-              }}
-            />
-          </div>
-          <button 
-            style={{
-              position: 'absolute',
-              top: '2rem',
-              right: '2rem',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              background: 'rgba(255, 255, 255, 0.1)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              color: 'white',
-              fontSize: '1.5rem',
-              cursor: 'pointer',
-              backdropFilter: 'blur(20px)',
-              transition: 'all 0.3s ease'
+              position: 'relative',
+              aspectRatio: '16/10',
+              borderRadius: '20px',
+              overflow: 'hidden',
+              boxShadow: '0 30px 60px rgba(0, 0, 0, 0.4), 0 0 100px rgba(168, 85, 247, 0.15)',
+              transition: 'all 0.4s ease',
+              border: '1px solid rgba(255, 255, 255, 0.1)'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+              e.currentTarget.style.transform = 'scale(1.02) translateY(-8px)';
+              e.currentTarget.style.boxShadow = '0 40px 80px rgba(0, 0, 0, 0.5), 0 0 120px rgba(168, 85, 247, 0.2)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+              e.currentTarget.style.transform = 'scale(1) translateY(0)';
+              e.currentTarget.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 0.4), 0 0 100px rgba(168, 85, 247, 0.15)';
             }}
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedImage(null);
-            }}
-          >
-            ✕
-          </button>
+            >
+              <Image 
+                src={`/${currentDisplayImage.src}`}
+                alt={currentDisplayImage.alt}
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: `
+                  linear-gradient(to top, rgba(0, 0, 0, 0.3) 0%, transparent 50%),
+                  linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, transparent 60%)
+                `,
+                pointerEvents: 'none'
+              }} />
+
+              <div style={{
+                position: 'absolute',
+                top: '1.5rem',
+                left: '1.5rem',
+                padding: '0.75rem 1.25rem',
+                background: 'rgba(0, 0, 0, 0.7)',
+                backdropFilter: 'blur(20px)',
+                borderRadius: '50px',
+                color: currentDisplayImage.type === 'main' ? 'rgba(168, 85, 247, 0.9)' : 'rgba(99, 102, 241, 0.9)',
+                fontSize: '0.85rem',
+                fontWeight: '600',
+                border: `1px solid ${currentDisplayImage.type === 'main' ? 'rgba(168, 85, 247, 0.3)' : 'rgba(99, 102, 241, 0.3)'}`
+              }}>
+                {currentDisplayImage.type === 'main' ? 'Featured' : `Gallery ${currentImageIndex}`}
+              </div>
+
+              {allImages.length > 1 && (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      prevImage();
+                    }}
+                    style={{
+                      position: 'absolute',
+                      left: '1.5rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      background: 'rgba(0, 0, 0, 0.6)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      color: 'white',
+                      fontSize: '1.5rem',
+                      cursor: 'pointer',
+                      backdropFilter: 'blur(20px)',
+                      transition: 'all 0.3s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(168, 85, 247, 0.3)';
+                      e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.5)';
+                      e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.6)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                      e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+                    }}
+                  >
+                    ←
+                  </button>
+                  
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      nextImage();
+                    }}
+                    style={{
+                      position: 'absolute',
+                      right: '1.5rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      background: 'rgba(0, 0, 0, 0.6)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      color: 'white',
+                      fontSize: '1.5rem',
+                      cursor: 'pointer',
+                      backdropFilter: 'blur(20px)',
+                      transition: 'all 0.3s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(168, 85, 247, 0.3)';
+                      e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.5)';
+                      e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.6)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                      e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+                    }}
+                  >
+                    →
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.75rem',
+              maxHeight: '400px',
+              marginTop: '10%',
+              overflowY: 'auto',
+              paddingRight: '0.5rem'
+            }}>
+              {allImages.map((image, index) => (
+                <div
+                  key={index}
+                  onClick={() => setCurrentImageIndex(index)}
+                  style={{
+                    position: 'relative',
+                    aspectRatio: '16/10',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    border: currentImageIndex === index 
+                      ? '2px solid rgba(168, 85, 247, 0.6)' 
+                      : '1px solid rgba(255, 255, 255, 0.1)',
+                    opacity: currentImageIndex === index ? 1 : 0.6,
+                    transform: currentImageIndex === index ? 'scale(1)' : 'scale(0.95)'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (currentImageIndex !== index) {
+                      e.currentTarget.style.opacity = '0.8';
+                      e.currentTarget.style.transform = 'scale(0.98)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (currentImageIndex !== index) {
+                      e.currentTarget.style.opacity = '0.6';
+                      e.currentTarget.style.transform = 'scale(0.95)';
+                    }
+                  }}
+                >
+                  <Image 
+                    src={`/${image.src}`}
+                    alt={image.alt}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                  />
+
+                  {currentImageIndex === index && (
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(168, 85, 247, 0.1)',
+                      border: '2px solid rgba(168, 85, 247, 0.6)',
+                      borderRadius: '12px'
+                    }} />
+                  )}
+
+                  <div style={{
+                    position: 'absolute',
+                    top: '0.5rem',
+                    right: '0.5rem',
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: image.type === 'main' ? '#a855f7' : '#6366f1'
+                  }} />
+                </div>
+              ))}
+            </div>
+
+            {allImages.length > 1 && (
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                marginTop: '1rem',
+                padding: '1rem',
+                background: 'rgba(255, 255, 255, 0.03)',
+                borderRadius: '20px',
+                border: '1px solid rgba(255, 255, 255, 0.05)'
+              }}>
+                {allImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    style={{
+                      width: currentImageIndex === index ? '24px' : '8px',
+                      height: '8px',
+                      borderRadius: '4px',
+                      border: 'none',
+                      background: currentImageIndex === index 
+                        ? 'linear-gradient(90deg, #a855f7, #6366f1)' 
+                        : 'rgba(255, 255, 255, 0.2)',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
