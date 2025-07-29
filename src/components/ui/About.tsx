@@ -40,15 +40,15 @@ export default function About() {
                     newVisible[index] = true;
                     return newVisible;
                   });
-                }, index * 750);
+                }, index * 300);
               });
-            }, 500);
+            }, 200);
           } else {
             setVisibleCards([false, false, false]);
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.2 }
     );
 
     const aboutSection = document.getElementById('about');
@@ -66,71 +66,34 @@ export default function About() {
   return (
     <div 
       id="about"
-      style={{ 
-        minHeight: '100vh', 
-        position: 'relative', 
-        zIndex: 20,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        padding: '6rem 2rem',
-        overflow: 'hidden'
-      }}
+      className="min-h-screen relative bg-black/80 section-padding overflow-hidden"
+      style={{ zIndex: 20 }}
     >
-      <div style={{
-        position: 'absolute',
-        top: '-20%',
-        right: '-10%',
-        width: '40%',
-        height: '40%',
-        background: 'radial-gradient(circle at center, rgba(147, 51, 234, 0.15) 0%, transparent 70%)',
-        filter: 'blur(100px)',
-        pointerEvents: 'none'
-      }} />
+      <div className="absolute -top-[20%] -right-[10%] w-[60%] sm:w-[40%] h-[40%] bg-gradient-radial from-purple-600/15 to-transparent blur-[100px] pointer-events-none" />
 
-      <div style={{ maxWidth: '1400px', margin: '0 auto', color: 'white', position: 'relative' }}>
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <h2 style={{ 
-            fontSize: 'clamp(2rem, 5vw, 3rem)', 
-            marginBottom: '1rem',
-            fontWeight: '600',
-            letterSpacing: '-0.02em'
-          }}>
+      <div className="max-w-[1400px] mx-auto text-white relative">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-responsive-3xl mb-4 font-semibold tracking-tight">
             Not Your Average Developer
           </h2>
-          <div style={{
-            width: '60px',
-            height: '3px',
-            background: 'linear-gradient(90deg, transparent, #818cf8, transparent)',
-            margin: '0 auto',
-            borderRadius: '3px'
-          }} />
+          <div className="w-[60px] h-[3px] bg-gradient-to-r from-transparent via-indigo-400 to-transparent mx-auto rounded-[3px]" />
         </div>
 
-        <div style={{ 
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-          gap: '3rem',
-          marginBottom: '3rem'
-        }}>
-          <div style={{ 
-            fontSize: '1rem',
-            lineHeight: '1.6',
-            color: '#c7d2fe',
-            marginTop: '1rem',
-            letterSpacing: '0.01em'
-          }}>
-            <p style={{ marginBottom: '0.9rem' }}>
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 mb-12">
+          <div className="text-base sm:text-lg leading-relaxed text-indigo-200 mt-4 tracking-wide space-y-4">
+            <p>
               Plot twist: I accidentally became obsessed with making robots sentient.
             </p>
-            <p style={{ marginBottom: '0.9rem' }}>
+            <p>
               It started innocently enough - managing sales teams, optimizing the occasional customer journey. Then I fixed my first bug and got completely hooked. Fast forward through a blur of late-night debugging sessions and way too much caffeine, and now I'm building AI that might actually have opinions about my life choices.
             </p>
-            <p style={{ marginBottom: '0.9rem' }}>
+            <p>
               Current status: Developing a desk robot with my partner because normal productivity tools are clearly insufficient. Also deep-diving into Web3 while simultaneously trying to teach machines how to think. My four cats serve as impromptu code reviewers (they're surprisingly harsh critics).
             </p>
-            <p style={{ marginBottom: '0.9rem' }}>
+            <p>
               The beautiful disaster of jumping from business strategy to AI engineering is that your brain never quite recalibrates to "normal." Why optimize a sales funnel when you could architect an entire agentic AI system? Why use existing solutions when you could build something that doesn't exist yet?
             </p>
-            <p style={{ marginBottom: '0.9rem' }}>
+            <p>
               Between meditation sessions in my garden, crafting elaborate meals, and convincing my snowboard that yes, I will absolutely hit that jump, I'm plotting the next phase: humanoid computers that don't just compute - they collaborate.
             </p>
             <p>
@@ -138,45 +101,33 @@ export default function About() {
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div className="flex flex-col gap-4 sm:gap-6 mt-5">
             {journeyPoints.map((point, index) => (
               <div
                 key={index}
                 ref={(el) => { cardRefs.current[index] = el }}
-                className="stardust-cursor"
+                className={`stardust-cursor p-4 sm:p-6 rounded-xl backdrop-blur-[10px] transition-all duration-600 border ${
+                  hoveredCard === index 
+                    ? 'bg-purple-900/10 border-indigo-400' 
+                    : 'bg-white/[0.03] border-white/10'
+                } ${visibleCards[index] ? 'opacity-100' : 'opacity-0'}`}
                 style={{
-                  padding: '1.5rem',
-                  background: hoveredCard === index 
-                    ? 'rgba(147, 51, 234, 0.1)' 
-                    : 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid',
-                  borderColor: hoveredCard === index ? '#818cf8' : 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '12px',
-                  backdropFilter: 'blur(10px)',
-                  transition: 'all 0.6s ease',
-                  opacity: visibleCards[index] ? 1 : 0,
                   transform: visibleCards[index] 
                     ? (hoveredCard === index ? 'translateX(-10px)' : 'translateX(0)') 
-                    : 'translateX(200px)'
+                    : window.innerWidth < 640 ? 'translateX(30px)' : 'translateX(50px)'
                 }}
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '2rem' }}>{point.icon}</span>
-                  <h3 style={{ 
-                    fontSize: '1.2rem', 
-                    fontWeight: '600',
-                    color: hoveredCard === index ? '#a5b4fc' : '#ffffff'
-                  }}>
+                <div className="flex items-center gap-3 sm:gap-4 mb-2">
+                  <span className="text-2xl sm:text-3xl">{point.icon}</span>
+                  <h3 className={`text-lg sm:text-xl font-semibold ${
+                    hoveredCard === index ? 'text-indigo-300' : 'text-white'
+                  }`}>
                     {point.title}
                   </h3>
                 </div>
-                <p style={{ 
-                  fontSize: '0.95rem', 
-                  color: '#94a3b8',
-                  lineHeight: '1.6' 
-                }}>
+                <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
                   {point.description}
                 </p>
               </div>

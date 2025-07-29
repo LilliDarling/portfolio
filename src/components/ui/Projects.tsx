@@ -36,148 +36,69 @@ export default function Projects() {
   }, [activeProject, allProjects.length]);
 
   return (
-    <div 
+    <div
       id="projects"
       ref={containerRef}
-      style={{ 
-        minHeight: '100vh', 
-        position: 'relative', 
-        zIndex: 20,
-        background: 'transparent',
-        padding: '2rem 2rem',
-        overflow: 'hidden'
-      }}
+      style={{ zIndex: 20 }}
+      className='min-h-screen relative pt-6 sm:pt-12 lg:pt-14 xl:pt-18 2xl:pt-20 overflow-hidden pb-6 sm:pb-8 lg:pb-12 xl:pb-16 2xl:pb-20'
     >
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        background: `
-          radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 80% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-          linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%)
-        `,
-        transform: `translateY(${isTransitioning ? '50px' : '0'})`,
-        transition: 'transform 0.8s ease',
-        pointerEvents: 'none'
-      }} />
+      <div className={`absolute inset-0 project-background-gradient
+        transition-transform duration-800 ease-in-out pointer-events-none
+        ${isTransitioning ? 'translate-y-[50px]' : 'translate-y-0'}`}
+      />
 
-      <div style={{ 
-        position: 'relative',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        padding: '2rem'
-      }}>
-        
-        <div style={{
-          position: 'absolute',
-          top: '4rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          fontSize: '8rem',
-          fontWeight: '900',
-          color: 'rgba(255, 255, 255, 0.05)',
-          fontFamily: 'monospace',
-          letterSpacing: '-0.05em',
-          userSelect: 'none'
-        }}>
+      <div className='min-h-screen relative flex flex-col justify-center px-6 sm:px-6 lg:px-12 xl:px-16 2xl:px-20'>
+        <div className='absolute top-12 left-1/2 -translate-x-1/2
+          text-6xl font-black text-white/5 font-mono tracking-tighter select-none
+          sm:text-7xl md:text-8xl lg:top-16 lg:text-9xl xl:top-20 xl:text-[8rem] 2xl:top-24 2xl:text-[9rem]'
+        >
           {String(activeProject + 1).padStart(2, '0')}
         </div>
 
-        <div style={{
-          maxWidth: '1600px',
-          margin: '0 auto',
-          width: '100%',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1.5fr',
-          gap: '4rem',
-          alignItems: 'center',
-          position: 'relative'
-        }}>
+        <div className='mx-auto w-full grid gap-8 items-center relative
+          grid-cols-1 lg:grid-cols-[1fr_1.4fr] sm:gap-10 md:gap-12 lg:gap-10 xl:gap-16
+          sm:max-w-3xl md:max-w-6xl lg:max-w-7xl xl:max-w-[1600px] 2xl:max-w-[1800px] 2xl:gap-24
+          px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16'
+        >
+          <div className={`relative text-center lg:text-left px-2 sm:px-4 lg:px-0
+            transition-all duration-500 ease-in-out pt-8 sm:pt-12 lg:pt-4 xl:pt-6 2xl:pt-8
+            ${isTransitioning ? 'opacity-0 -translate-x-[50px]' : 'opacity-100 translate-x-0'}`}
+          >
+            <div className='hidden lg:block absolute left-[-30px] xl:left-[-50px] 2xl:left-[-70px] top-1/2 -translate-y-1/2
+              w-[2px] h-[150px] xl:h-[200px] 2xl:h-[250px] bg-gradient-to-b from-transparent via-purple-500 to-transparent
+              opacity-50'
+            />
 
-          <div style={{ 
-            opacity: isTransitioning ? 0 : 1,
-            transform: isTransitioning ? 'translateX(-50px)' : 'translateX(0)',
-            transition: 'all 0.5s ease',
-            position: 'relative'
-          }}>
-            <div style={{
-              position: 'absolute',
-              left: '-50px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '2px',
-              height: '200px',
-              background: 'linear-gradient(to bottom, transparent, #a855f7, transparent)',
-              opacity: 0.5
-            }} />
-
-            <div style={{
-              fontSize: '0.8rem',
-              color: '#a855f7',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-              marginBottom: '1rem',
-              fontWeight: '700'
-            }}>
+            <div className='text-xs sm:text-sm text-purple-500 uppercase tracking-widest mb-3 font-bold
+              2xl:text-base'
+            >
               Featured Project
             </div>
 
-            <h1 style={{
-              fontSize: 'clamp(2rem, 5vw, 4rem)',
-              fontWeight: '600',
-              lineHeight: '0.9',
-              marginBottom: '2rem',
-              background: 'linear-gradient(135deg, #ffffff 0%, #a855f7 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              letterSpacing: '-0.02em'
-            }}>
+            <h1 className='font-semibold leading-tight mb-4 sm:mb-6 tracking-tight
+              [font-size:clamp(1.75rem,5vw,3.5rem)] 2xl:[font-size:clamp(2.5rem,6vw,4.5rem)]
+              bg-gradient-to-br from-white to-purple-500
+              bg-clip-text text-transparent'
+            >
               {currentProject.title}
             </h1>
 
-            <p style={{
-              fontSize: '1.2rem',
-              lineHeight: '1.6',
-              color: 'rgba(255, 255, 255, 0.7)',
-              marginBottom: '2.5rem',
-              maxWidth: '500px'
-            }}>
+            <p className='text-sm sm:text-base leading-relaxed text-white/70 mb-6 sm:mb-8 max-w-md sm:max-w-lg mx-auto lg:mx-0
+              lg:max-w-lg 2xl:max-w-xl 2xl:text-lg'>
               {currentProject.description}
             </p>
 
-            <div style={{ marginBottom: '3rem' }}>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-                {currentProject.technologies.slice(0, 6).map((tech, index) => (
+            <div className='mb-10'>
+              <div className='flex flex-wrap gap-2 justify-center lg:justify-start 2xl:gap-3'>
+                {currentProject.technologies.slice(0, 6).map((tech) => (
                   <span
                     key={tech}
-                    style={{
-                      display: 'inline-block',
-                      padding: '0.5rem 1rem',
-                      background: 'rgba(0, 0, 0, 0.3)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      borderRadius: '50px',
-                      fontSize: '0.9rem',
-                      color: 'rgba(255, 255, 255, 0.9)',
-                      backdropFilter: 'blur(20px)',
-                      transform: isTransitioning ? 'scale(0)' : 'scale(1)',
-                      transition: `all 0.3s ease ${index * 0.05}s`,
-                      cursor: 'default',
-                      position: 'relative',
-                      overflow: 'hidden'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(168, 85, 247, 0.2)';
-                      e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.5)';
-                      e.currentTarget.style.color = '#ffffff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                      e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)';
-                    }}
+                    className={`inline-block px-3 py-1 bg-black/30 border border-white/20
+                      rounded-full text-xs text-white/90 backdrop-blur-xl cursor-default
+                      relative overflow-hidden transform transition-all duration-300 ease-in-out
+                      ${isTransitioning ? 'scale-0' : 'scale-100'} hover:bg-purple-500/20
+                      hover:border-purple-500/50 hover:text-white
+                      sm:px-4 sm:py-2 sm:text-sm 2xl:px-5 2xl:py-2.5 2xl:text-base`}
                   >
                     {tech}
                   </span>
@@ -185,36 +106,18 @@ export default function Projects() {
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+            <div className='flex flex-col gap-3 sm:gap-4 flex-wrap items-center sm:flex-row sm:justify-center lg:justify-start lg:gap-6 2xl:gap-8'>
               <Link
                 href={`/projects/${currentProject.id}`}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  padding: '1.2rem 2.5rem',
-                  background: 'linear-gradient(135deg, #a855f7, #6366f1)',
-                  borderRadius: '12px',
-                  color: 'white',
-                  textDecoration: 'none',
-                  fontSize: '1.1rem',
-                  fontWeight: '700',
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 20px 40px rgba(168, 85, 247, 0.3)',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 25px 50px rgba(168, 85, 247, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(168, 85, 247, 0.3)';
-                }}
+                className="inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-br
+                  from-purple-500 to-indigo-500 rounded-xl text-white no-underline
+                  text-sm sm:text-base font-bold transition-all duration-300 ease-in-out shadow-xl
+                  shadow-purple-500/30 relative overflow-hidden hover:-translate-y-px
+                  hover:scale-102 hover:shadow-2xl hover:shadow-purple-500/40
+                  w-full sm:w-auto sm:min-w-[160px] 2xl:px-10 2xl:py-5 2xl:text-lg 2xl:min-w-[200px]"
               >
                 <span>Explore Project</span>
-                <span style={{ fontSize: '1.3rem' }}>→</span>
+                <span className='text-lg 2xl:text-xl'>→</span>
               </Link>
 
               {currentProject.githubUrl && (
@@ -222,31 +125,12 @@ export default function Projects() {
                   href={currentProject.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.75rem',
-                    padding: '1.2rem 2.5rem',
-                    background: 'transparent',
-                    border: '2px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '12px',
-                    color: 'white',
-                    textDecoration: 'none',
-                    fontSize: '1.1rem',
-                    fontWeight: '700',
-                    transition: 'all 0.3s ease',
-                    backdropFilter: 'blur(10px)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'transparent';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
+                  className="inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4
+                    bg-transparent border-2 border-white/20 rounded-xl
+                    text-white no-underline text-sm sm:text-base font-bold transition-all
+                    duration-300 ease-in-out backdrop-blur-md hover:bg-white/10
+                    hover:border-white/40 hover:-translate-y-0.5
+                    w-full sm:w-auto sm:min-w-[120px] 2xl:px-10 2xl:py-5 2xl:text-lg 2xl:min-w-[150px]"
                 >
                   View Code
                 </a>
@@ -254,78 +138,42 @@ export default function Projects() {
             </div>
           </div>
 
-          <div style={{ 
-            position: 'relative',
-            height: '625px',
-            marginBottom: '3rem',
-            opacity: isTransitioning ? 0 : 1,
-            transform: isTransitioning ? 'scale(0.9) rotateY(10deg)' : 'scale(1) rotateY(0)',
-            transition: 'all 0.5s ease'
-          }}>
+          <div className={`relative transition-all duration-500 ease-in-out
+            ${isTransitioning
+              ? 'opacity-0 scale-95 rotate-y-10'
+              : 'opacity-100 scale-100 rotate-y-0'
+            }
+            mt-6 sm:mt-8 lg:mt-0 mb-8 sm:mb-12 lg:mb-6
+            aspect-[14/10] sm:aspect-[14/9] lg:aspect-[14/10] xl:aspect-[14/9] 2xl:aspect-[14/10]
+            w-full max-w-[90vw] lg:max-w-none'
+          `}>
             {mainImage && (
               <>
-                <div style={{
-                  position: 'absolute',
-                  inset: '-20px',
-                  border: '2px solid rgba(168, 85, 247, 0.3)',
-                  borderRadius: '24px',
-                  transform: 'rotate(-2deg)',
-                  transition: 'all 0.5s ease'
-                }} />
+                <div className='absolute inset-[-8px] sm:inset-[-12px] lg:inset-[-15px] xl:inset-[-20px] 2xl:inset-[-25px] border-2 border-purple-500/30 rounded-xl sm:rounded-2xl lg:rounded-3xl -rotate-2 transition-all duration-500 ease-in-out' />
 
-                <div style={{
-                  position: 'relative',
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '20px',
-                  overflow: 'hidden',
-                  boxShadow: `
-                    0 50px 100px rgba(0, 0, 0, 0.5),
-                    0 0 200px rgba(168, 85, 247, 0.2)
-                  `,
-                  transform: 'perspective(1000px) rotateY(-5deg)',
-                  transition: 'transform 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'perspective(1000px) rotateY(0deg) scale(1.02)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'perspective(1000px) rotateY(-5deg) scale(1)';
-                }}
+                <div className="relative w-full h-full rounded-lg sm:rounded-xl lg:rounded-2xl overflow-hidden
+                  [box-shadow:0_15px_30px_rgba(0,0,0,0.4),_0_0_60px_rgba(168,85,247,0.15)]
+                  sm:[box-shadow:0_25px_50px_rgba(0,0,0,0.5),_0_0_100px_rgba(168,85,247,0.2)]
+                  lg:[box-shadow:0_40px_80px_rgba(0,0,0,0.5),_0_0_150px_rgba(168,85,247,0.2)]
+                  2xl:[box-shadow:0_60px_120px_rgba(0,0,0,0.6),_0_0_200px_rgba(168,85,247,0.3)]
+                  [transform:perspective(800px)_rotateY(-2deg)] sm:[transform:perspective(1000px)_rotateY(-3deg)]
+                  lg:[transform:perspective(1000px)_rotateY(-5deg)] transition-transform duration-300
+                  ease-in-out hover:[transform:perspective(1000px)_rotateY(0deg)_scale(1.02)]"
                 >
                   <img
                     src={mainImage.src}
                     alt={currentProject.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
+                    className='w-full h-full object-cover'
                   />
 
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: `
-                      linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 30%),
-                      linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, transparent 50%)
-                    `,
-                    pointerEvents: 'none'
-                  }} />
+                  <div className='absolute inset-0 pointer-events-none custom-overlay-gradient' />
 
-                  <div style={{
-                    position: 'absolute',
-                    top: '2rem',
-                    right: '2rem',
-                    padding: '0.75rem 1.5rem',
-                    background: 'rgba(0, 0, 0, 0.6)',
-                    backdropFilter: 'blur(25px)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '50px',
-                    fontSize: '0.9rem',
-                    color: '#fbbf24',
-                    fontWeight: '600'
-                  }}>
+                  <div className='absolute top-4 right-4 px-3 py-1.5 bg-black/60
+                    backdrop-blur-xl border border-white/20 rounded-full
+                    text-xs text-amber-400 font-semibold
+                    sm:px-4 sm:py-2 sm:top-6 sm:right-6 lg:px-6 lg:py-3 lg:text-sm lg:top-8 lg:right-8
+                    2xl:px-8 2xl:py-4 2xl:text-base 2xl:top-10 2xl:right-10'
+                  >
                     {currentProject.status}
                   </div>
                 </div>
@@ -334,122 +182,54 @@ export default function Projects() {
           </div>
         </div>
 
-        <div style={{
-          position: 'absolute',
-          bottom: '4rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '2rem'
-        }}>
+        <div className='absolute left-1/2 -translate-x-1/2 flex items-center gap-3
+          flex-wrap justify-center sm:gap-4 lg:gap-6 xl:gap-8
+          bottom-6 sm:bottom-8 lg:bottom-10 xl:bottom-12 2xl:bottom-16 2xl:gap-10'>
           <button
             onClick={() => handleProjectChange((activeProject - 1 + allProjects.length) % allProjects.length)}
-            className="stardust-cursor"
-            style={{
-              width: '60px',
-              height: '60px',
-              borderRadius: '50%',
-              border: '2px solid rgba(255, 255, 255, 0.2)',
-              background: 'rgba(0, 0, 0, 0.6)',
-              backdropFilter: 'blur(20px)',
-              color: 'white',
-              fontSize: '1.5rem',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(168, 85, 247, 0.2)';
-              e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.5)';
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.5)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-              e.currentTarget.style.transform = 'scale(1)';
-            }}
+              className="stardust-cursor w-10 h-10 sm:w-12 sm:h-12 lg:w-[60px] lg:h-[60px] 2xl:w-[70px] 2xl:h-[70px] rounded-full
+                border-2 border-white/20 bg-black/60 backdrop-blur-xl text-white text-lg sm:text-xl lg:text-2xl 2xl:text-3xl transition-all duration-300 ease-in-out flex items-center justify-center hover:bg-purple-500/20
+                hover:border-purple-500/50 hover:scale-110"
           >
             ←
           </button>
 
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <div className='flex gap-2 sm:gap-3 2xl:gap-4'>
             {allProjects.map((_, index) => (
               <button
                 key={index}
                 onClick={() => handleProjectChange(index)}
-                style={{
-                  width: index === activeProject ? '40px' : '10px',
-                  height: '10px',
-                  borderRadius: '5px',
-                  border: 'none',
-                  background: index === activeProject 
-                    ? 'linear-gradient(90deg, #a855f7, #6366f1)' 
-                    : 'rgba(255, 255, 255, 0.2)',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  padding: 0
-                }}
+                className={`h-[6px] sm:h-[8px] lg:h-[10px] rounded-[3px] sm:rounded-[4px] lg:rounded-[5px] border-none cursor-pointer
+                  transition-all duration-300 ease-in-out p-0
+                  ${index === activeProject
+                    ? 'w-[24px] sm:w-[30px] lg:w-[40px] 2xl:w-[50px] bg-gradient-to-r from-purple-500 to-indigo-500'
+                    : 'w-[6px] sm:w-[8px] lg:w-[10px] 2xl:w-[12px] bg-white/20'
+                  }
+                `}
               />
             ))}
           </div>
 
           <button
             onClick={() => handleProjectChange((activeProject + 1) % allProjects.length)}
-            className="stardust-cursor"
-            style={{
-              width: '60px',
-              height: '60px',
-              borderRadius: '50%',
-              border: '2px solid rgba(255, 255, 255, 0.2)',
-              background: 'rgba(0, 0, 0, 0.6)',
-              backdropFilter: 'blur(20px)',
-              color: 'white',
-              fontSize: '1.5rem',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(168, 85, 247, 0.2)';
-              e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.5)';
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.5)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-              e.currentTarget.style.transform = 'scale(1)';
-            }}
+            className="stardust-cursor w-10 h-10 sm:w-12 sm:h-12 lg:w-[60px] lg:h-[60px] 2xl:w-[70px] 2xl:h-[70px] rounded-full border-2 border-white/20
+              bg-black/60 backdrop-blur-xl text-white text-lg sm:text-xl lg:text-2xl 2xl:text-3xl transition-all duration-300
+              ease-in-out flex items-center justify-center hover:bg-purple-500/20
+              hover:border-purple-500/50 hover:scale-110"
           >
             →
           </button>
         </div>
 
-        <div style={{
-          position: 'absolute',
-          bottom: '2rem',
-          right: '2rem',
-          fontSize: '0.8rem',
-          color: 'rgba(255, 255, 255, 0.4)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem'
-        }}>
+        <div className='absolute right-4 text-[0.6rem] sm:text-xs text-white/40 flex items-center gap-1
+          flex-col items-end lg:flex-row lg:gap-2 sm:right-6 lg:right-8 xl:right-10
+          bottom-20 sm:bottom-24 lg:bottom-12 xl:bottom-16 2xl:bottom-20 2xl:right-12 2xl:text-sm'
+        >
           <span>Use arrow keys to navigate</span>
-          <span style={{
-            padding: '0.25rem 0.5rem',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            borderRadius: '4px',
-            fontSize: '0.7rem'
-          }}>←</span>
-          <span style={{
-            padding: '0.25rem 0.5rem',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            borderRadius: '4px',
-            fontSize: '0.7rem'
-          }}>→</span>
+          <div className="flex gap-1 md:gap-2 2xl:gap-3"> 
+            <span className='px-1 py-0.5 border border-white/20 rounded text-[0.55rem] sm:px-1.5 sm:text-[0.6rem] lg:px-2 lg:py-1 lg:text-[0.7rem] 2xl:px-2.5 2xl:py-1.5 2xl:text-sm'>←</span>
+            <span className='px-1 py-0.5 border border-white/20 rounded text-[0.55rem] sm:px-1.5 sm:text-[0.6rem] lg:px-2 lg:py-1 lg:text-[0.7rem] 2xl:px-2.5 2xl:py-1.5 2xl:text-sm'>→</span>
+          </div>
         </div>
       </div>
     </div>

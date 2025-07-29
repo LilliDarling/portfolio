@@ -56,9 +56,12 @@ export default function Home() {
 
           const scale = 1 - progress * 0.3;
 
-          const baseOffset = window.innerWidth < 768 ? -8 : -10;
+          const isMobile = window.innerWidth < 768;
+          const isTablet = window.innerWidth < 1024;
+          
+          const baseOffset = isMobile ? -6 : isTablet ? -8 : -10;
           const positionX = progress * baseOffset;
-          const positionY = progress * -5;
+          const positionY = progress * (isMobile ? -3 : -5);
 
           const cameraX = 0;
           const cameraY = 1 + progress * 4;
