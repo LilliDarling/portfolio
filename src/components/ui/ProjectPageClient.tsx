@@ -26,25 +26,6 @@ interface Project {
 
 export default function ProjectPageClient({ project }: { project: Project }) {
   const { endNavigation } = useLoading();
-  
-  const pulseKeyframes = `
-    @keyframes pulse {
-      0%, 100% { opacity: 0.7; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.1); }
-    }
-  `;
-
-  if (typeof document !== 'undefined') {
-    const existingStyle = document.getElementById('project-page-styles');
-    if (!existingStyle) {
-      const style = document.createElement('style');
-      style.id = 'project-page-styles';
-      style.textContent = pulseKeyframes;
-      document.head.appendChild(style);
-    }
-
-    document.documentElement.style.scrollBehavior = 'smooth';
-  }
   const [activeSection, setActiveSection] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
@@ -131,546 +112,264 @@ export default function ProjectPageClient({ project }: { project: Project }) {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      if (typeof document !== 'undefined') {
-        document.documentElement.style.scrollBehavior = '';
-      }
     };
   }, []);
 
   return (
-    <div ref={containerRef} style={{ 
-      color: 'white',
-      position: 'relative',
-      minHeight: '100vh',
-      overflow: 'hidden'
-    }}>
+    <div ref={containerRef} className="text-white relative min-h-screen overflow-hidden">
       <StarsWrapper />
 
-      <div style={{
-        position: 'fixed',
-        inset: 0,
-        background: `
-          radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, 
-            rgba(168, 85, 247, 0.12) 0%, 
-            transparent 30%
-          ),
-          radial-gradient(ellipse at top right, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
-          radial-gradient(ellipse at bottom left, rgba(168, 85, 247, 0.08) 0%, transparent 60%),
-          linear-gradient(135deg, rgba(168, 85, 247, 0.02) 0%, transparent 50%, rgba(99, 102, 241, 0.02) 100%)
-        `,
-        pointerEvents: 'none',
-        transition: 'background 0.3s ease'
-      }} />
+      <div 
+        className="fixed inset-0 pointer-events-none transition-all duration-300"
+        style={{
+          background: `
+            radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, 
+              rgba(168, 85, 247, 0.12) 0%, 
+              transparent 30%
+            ),
+            radial-gradient(ellipse at top right, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
+            radial-gradient(ellipse at bottom left, rgba(168, 85, 247, 0.08) 0%, transparent 60%),
+            linear-gradient(135deg, rgba(168, 85, 247, 0.02) 0%, transparent 50%, rgba(99, 102, 241, 0.02) 100%)
+          `
+        }}
+      />
 
-      <div style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundImage: `
-          linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px)
-        `,
-        backgroundSize: '60px 60px',
-        pointerEvents: 'none',
-        opacity: 0.3,
-        maskImage: 'radial-gradient(ellipse at center, transparent 20%, black 80%)',
-        WebkitMaskImage: 'radial-gradient(ellipse at center, transparent 20%, black 80%)'
-      }} />
+      <div className="fixed inset-0 pointer-events-none opacity-30 bg-[linear-gradient(rgba(168,85,247,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(168,85,247,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black_80%)]" />
 
-      <div style={{
-        position: 'fixed',
-        right: '2rem',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        zIndex: 100,
-        display: isMobile ? 'none' : 'flex',
-        flexDirection: 'column',
-        gap: '1.5rem',
-        padding: '2rem 1rem',
-      }}>
+      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-[100] hidden md:flex flex-col gap-6 p-8">
         {['Intro', 'Story', 'Gallery', 'Impact'].map((label, index) => (
           <div
             key={index}
             onClick={() => smoothScrollTo(index)}
-            style={{
-              position: 'relative',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              padding: '0.5rem',
-              borderRadius: '20px',
-              transition: 'all 0.3s ease'
-            }}
+            className="relative cursor-pointer flex items-center gap-4 p-2 rounded-[20px] transition-all duration-300 ease-out"
           >
-            <span style={{
-              fontSize: '0.75rem',
-              color: Math.floor(activeSection) === index ? '#a855f7' : 'rgba(255, 255, 255, 0.5)',
-              opacity: Math.floor(activeSection) === index ? 1 : 0,
-              transform: Math.floor(activeSection) === index ? 'translateX(0)' : 'translateX(10px)',
-              transition: 'all 0.3s ease',
-              whiteSpace: 'nowrap',
-              fontWeight: '600',
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase'
-            }}>
+            <span className={`
+              text-xs font-semibold tracking-[0.1em] uppercase whitespace-nowrap
+              transition-all duration-300 ease-out
+              ${Math.floor(activeSection) === index 
+                ? 'text-purple-500 opacity-100 translate-x-0' 
+                : 'text-white/50 opacity-0 translate-x-[10px]'
+              }
+            `}>
               {label}
             </span>
-            <div style={{
-              position: 'relative',
-              width: '14px',
-              height: '14px'
-            }}>
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                borderRadius: '50%',
-                border: '2px solid',
-                borderColor: Math.floor(activeSection) === index ? '#a855f7' : 'rgba(255, 255, 255, 0.3)',
-                transition: 'all 0.3s ease'
-              }} />
-              <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: Math.floor(activeSection) === index ? '6px' : '0px',
-                height: Math.floor(activeSection) === index ? '6px' : '0px',
-                borderRadius: '50%',
-                background: Math.floor(activeSection) === index ? '#a855f7' : 'transparent',
-                transition: 'all 0.3s ease'
-              }} />
+            <div className="relative w-[14px] h-[14px]">
+              <div className={`
+                absolute inset-0 rounded-full border-2 transition-all duration-300
+                ${Math.floor(activeSection) === index 
+                  ? 'border-purple-500' 
+                  : 'border-white/30'
+                }
+              `} />
+              <div className={`
+                absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full
+                transition-all duration-300
+                ${Math.floor(activeSection) === index 
+                  ? 'w-[6px] h-[6px] bg-purple-500' 
+                  : 'w-0 h-0 bg-transparent'
+                }
+              `} />
               {Math.floor(activeSection) === index && (
-                <div style={{
-                  position: 'absolute',
-                  inset: '-4px',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%)',
-                  animation: 'pulse 2s infinite'
-                }} />
+                <div className="absolute -inset-1 rounded-full bg-gradient-radial from-purple-500/30 to-transparent animate-pulse" />
               )}
             </div>
           </div>
         ))}
       </div>
 
-      <section style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        padding: isMobile ? '2rem 1rem' : '4rem 2rem',
-        overflow: 'hidden'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          width: '100%',
-          position: 'relative',
-          zIndex: 10,
-          display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : '1.1fr 1.2fr',
-          gap: isMobile ? '3rem' : '6rem',
-          alignItems: 'center'
-        }}>
-          <div style={{
-            order: isMobile ? 2 : 1
-          }}>
-            <BackButton />
+      <section className="min-h-screen relative pt-4 sm:pt-4 lg:pt-4 xl:pt-6 2xl:pt-6 overflow-hidden pb-6 sm:pb-8 lg:pb-12 xl:pb-16 2xl:pb-20">
+        <div className={`absolute inset-0 project-background-gradient
+          transition-transform duration-800 ease-in-out pointer-events-none
+          ${isLoaded ? 'translate-y-0' : 'translate-y-[50px]'}`}
+        />
 
-            <h1 style={{
-              fontSize: 'clamp(2rem, 6vw, 4rem)',
-              fontWeight: '600',
-              lineHeight: '0.9',
-              marginTop: '1rem',
-              marginBottom: '1.5rem',
-              background: 'linear-gradient(135deg, #ffffff 0%, #a855f7 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              letterSpacing: '-0.02em',
-              opacity: isLoaded ? 1 : 0,
-              transform: isLoaded ? 'translateY(0)' : 'translateY(30px)',
-              transition: 'all 0.8s ease 0.2s'
-            }}>
-              {project.title}
-            </h1>
-
-            <div style={{
-              display: 'inline-block',
-              padding: '0.5rem 1rem',
-              background: 'rgba(168, 85, 247, 0.15)',
-              border: '1px solid rgba(168, 85, 247, 0.3)',
-              borderRadius: '50px',
-              fontSize: '0.85rem',
-              color: 'rgba(181, 112, 245, 0.9)',
-              backdropFilter: 'blur(10px)',
-              marginBottom: '2rem',
-              fontWeight: '600',
-              opacity: isLoaded ? 1 : 0,
-              transform: isLoaded ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.6s ease 0.3s'
-            }}>
-              {project.status}
-            </div>
-
-            <p style={{
-              fontSize: '1.25rem',
-              color: 'rgba(255, 255, 255, 0.8)',
-              lineHeight: '1.6',
-              marginBottom: '2rem',
-              maxWidth: '600px',
-              opacity: isLoaded ? 1 : 0,
-              transform: isLoaded ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.6s ease 0.4s'
-            }}>
-              {project.description}
-            </p>
-
-            <div style={{
-              marginBottom: '3rem',
-              opacity: isLoaded ? 1 : 0,
-              transform: isLoaded ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.6s ease 0.5s'
-            }}>
-              <div style={{
-                fontSize: '0.9rem',
-                color: 'rgba(255, 255, 255, 0.5)',
-                marginBottom: '1rem',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase'
-              }}>
-                Tech Stack
-              </div>
-              <div style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '0.6rem'
-              }}>
-                {project.technologies.slice(0, 6).map((tech: string, index: number) => (
-                  <span
-                    key={index}
-                    style={{
-                      padding: '0.5rem 1rem',
-                      background: 'rgba(0, 0, 0, 0.3)',
-                      border: '1px solid rgba(255, 255, 255, 0.15)',
-                      borderRadius: '50px',
-                      fontSize: '0.85rem',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      backdropFilter: 'blur(20px)',
-                      transition: 'all 0.2s ease',
-                      opacity: isLoaded ? 1 : 0,
-                      transform: isLoaded ? 'scale(1)' : 'scale(0)',
-                      transitionDelay: `${0.6 + index * 0.05}s`
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(168, 85, 247, 0.2)';
-                      e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.4)';
-                      e.currentTarget.style.color = '#ffffff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                      e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
-                    }}
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div style={{
-              display: 'flex',
-              gap: '1.5rem',
-              flexWrap: 'wrap',
-              opacity: isLoaded ? 1 : 0,
-              transform: isLoaded ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.6s ease 0.7s'
-            }}>
-              {project.demoUrl && (
-                <a
-                  href={project.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.75rem',
-                    padding: '.75rem 1rem',
-                    background: 'linear-gradient(135deg, #a855f7, #6366f1)',
-                    color: 'white',
-                    textDecoration: 'none',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    borderRadius: '12px',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 10px 30px rgba(168, 85, 247, 0.3)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-                    e.currentTarget.style.boxShadow = '0 15px 40px rgba(168, 85, 247, 0.4)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(168, 85, 247, 0.3)';
-                  }}
-                >
-                  <span>Live Demo</span>
-                  <span style={{ fontSize: '1.2rem' }}>→</span>
-                </a>
-              )}
-              {project.githubUrl && (
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.75rem',
-                    padding: '.75rem 1rem',
-                    background: 'transparent',
-                    border: '2px solid rgba(255, 255, 255, 0.2)',
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    textDecoration: 'none',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    borderRadius: '12px',
-                    transition: 'all 0.3s ease',
-                    backdropFilter: 'blur(10px)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-                    e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.4)';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'transparent';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
-                >
-                  View Code
-                </a>
-              )}
-            </div>
-          </div>
-
-          {project.images && project.images.find(img => img.type === 'main') && (
-            <div style={{
-              order: isMobile ? 1 : 2,
-              position: 'relative',
-              height: '600px',
-              opacity: isLoaded ? 1 : 0,
-              transform: isLoaded ? 'scale(1) rotateY(0deg)' : 'scale(0.9) rotateY(10deg)',
-              transition: 'all 1s ease 0.3s'
-            }}>
-              <div style={{
-                position: 'absolute',
-                inset: '-20px',
-                border: '2px solid rgba(168, 85, 247, 0.3)',
-                borderRadius: '24px',
-                transform: 'rotate(-2deg)',
-                transition: 'all 0.5s ease'
-              }} />
-
-              <div style={{
-                position: 'relative',
-                width: '100%',
-                height: '100%',
-                borderRadius: '20px',
-                overflow: 'hidden',
-                boxShadow: `
-                  0 50px 100px rgba(0, 0, 0, 0.5),
-                  0 0 200px rgba(168, 85, 247, 0.2)
-                `,
-                transform: 'perspective(1000px) rotateY(-5deg)',
-                transition: 'transform 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'perspective(1000px) rotateY(0deg) scale(1.02)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'perspective(1000px) rotateY(-5deg) scale(1)';
-              }}
-              >
-                <img
-                  src={`/${project.images.find(img => img.type === 'main')?.src}`}
-                  alt={project.images.find(img => img.type === 'main')?.alt}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover'
-                  }}
-                />
-
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: `
-                    linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 40%),
-                    linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, transparent 50%)
-                  `,
-                  pointerEvents: 'none'
-                }} />
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div 
-          onClick={() => smoothScrollTo(1)}
-          style={{
-            position: 'absolute',
-            bottom: '2rem',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            textAlign: 'center',
-            opacity: isLoaded ? 1 : 0,
-            transition: 'all 0.6s ease 1.2s',
-            cursor: 'pointer',
-            padding: '1rem'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateX(-50%) translateY(-5px)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateX(-50%) translateY(0)';
-          }}
+        <div className='absolute top-12 left-1/2 -translate-x-1/2
+          text-6xl font-black text-white/5 font-mono tracking-tighter select-none
+          sm:text-7xl md:text-8xl lg:top-16 lg:text-9xl xl:top-20 xl:text-[8rem] 2xl:top-24 2xl:text-[9rem]'
         >
-          <div style={{
-            fontSize: '0.85rem',
-            color: 'rgba(255, 255, 255, 0.4)',
-            letterSpacing: '0.1em',
-            marginBottom: '1rem',
-            transition: 'color 0.3s ease'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = 'rgba(168, 85, 247, 0.8)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = 'rgba(255, 255, 255, 0.4)';
-          }}
-          >
-            Scroll to explore
-          </div>
-          <div style={{
-            width: '2px',
-            height: '30px',
-            background: 'linear-gradient(to bottom, #a855f7, transparent)',
-            margin: '0 auto',
-            animation: 'pulse 2s infinite'
-          }} />
+          01
         </div>
-      </section>
 
-      <section style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        position: 'relative',
-        padding: '4rem 2rem',
-        background: `
-          radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
-          radial-gradient(circle at 80% 70%, rgba(99, 102, 241, 0.05) 0%, transparent 50%)
-        `
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-          width: '100%',
-          display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-          gap: isMobile ? '3rem' : '6rem',
-          alignItems: 'center'
-        }}>
-          <div style={{
-            opacity: activeSection >= 0.7 ? 1 : 0,
-            transform: activeSection >= 0.7 ? 'translateX(0)' : 'translateX(-50px)',
-            transition: 'all 0.8s ease'
-          }}>
-            <div style={{
-              fontSize: '0.8rem',
-              color: '#a855f7',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-              marginBottom: '1rem',
-              fontWeight: '700'
-            }}>
-              Overview
+        <div className='min-h-screen relative flex flex-col justify-center px-6 sm:px-6 lg:px-10 xl:px-16 2xl:px-28'>
+          <div className='mx-auto w-full grid gap-8 items-center relative
+            grid-cols-1 lg:grid-cols-[1fr_1.4fr] sm:gap-10 md:gap-12 lg:gap-10 xl:gap-16
+            sm:max-w-3xl md:max-w-6xl lg:max-w-7xl xl:max-w-[1600px] 2xl:max-w-[1800px] 2xl:gap-24
+            px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16'
+          >
+            <div className={`relative text-center lg:text-left px-2 sm:px-4 lg:px-0
+              transition-all duration-500 ease-in-out pt-8 sm:pt-12 lg:pt-4 xl:pt-6 2xl:pt-8
+              ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-[50px]'}`}
+            >
+              <div className='hidden lg:block absolute left-[-30px] xl:left-[-50px] 2xl:left-[-70px] top-1/2 -translate-y-1/2
+                w-[2px] h-[150px] xl:h-[200px] 2xl:h-[250px] bg-gradient-to-b from-transparent via-purple-500 to-transparent
+                opacity-50'
+              />
+
+              <BackButton />
+
+              <div className='text-xs sm:text-sm text-purple-500 uppercase tracking-widest mb-3 font-bold
+                2xl:text-base'
+              >
+                Featured Project
+              </div>
+
+              <h1 className='font-semibold leading-tight mb-4 sm:mb-6 tracking-tight
+                [font-size:clamp(1.75rem,5vw,3.5rem)] 2xl:[font-size:clamp(2.5rem,6vw,4.5rem)]
+                bg-gradient-to-br from-white to-purple-500
+                bg-clip-text text-transparent'
+              >
+                {project.title}
+              </h1>
+
+              <p className='text-sm sm:text-base leading-relaxed text-white/70 mb-6 sm:mb-8 max-w-md sm:max-w-lg mx-auto lg:mx-0
+                lg:max-w-lg 2xl:max-w-xl 2xl:text-lg'>
+                {project.description}
+              </p>
+
+              <div className='mb-10'>
+                <div className='flex flex-wrap gap-2 justify-center lg:justify-start 2xl:gap-3'>
+                  {project.technologies.slice(0, 6).map((tech) => (
+                    <span
+                      key={tech}
+                      className={`inline-block px-3 py-1 bg-black/30 border border-white/20
+                        rounded-full text-xs text-white/90 backdrop-blur-xl cursor-default
+                        relative overflow-hidden transform transition-all duration-300 ease-in-out
+                        ${isLoaded ? 'scale-100' : 'scale-0'} hover:bg-purple-500/20
+                        hover:border-purple-500/50 hover:text-white
+                        sm:px-4 sm:py-2 sm:text-sm 2xl:px-5 2xl:py-2.5 2xl:text-base`}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+              </div>
             </div>
-            <h2 style={{
-              fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
-              marginBottom: '2rem',
-              fontWeight: '600',
-              lineHeight: '1.1',
-              background: 'linear-gradient(135deg, #ffffff 0%, #a855f7 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              letterSpacing: '-0.02em'
-            }}>
-              The Story
-            </h2>
-            <p style={{
-              fontSize: '1.2rem',
-              lineHeight: '1.7',
-              color: 'rgba(255, 255, 255, 0.8)',
-              marginBottom: '2rem'
-            }}>
-              {project.overview}
-            </p>
-            {project.note && (
-              <div style={{
-                padding: '1.2rem',
-                background: 'rgba(168, 85, 247, 0.08)',
-                border: '1px solid rgba(168, 85, 247, 0.2)',
-                borderRadius: '16px',
-                fontSize: '1rem',
-                color: 'rgba(255, 255, 255, 0.9)',
-                backdropFilter: 'blur(20px)',
-                position: 'relative',
-                overflow: 'hidden'
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '4px',
-                  height: '100%',
-                  background: 'linear-gradient(to bottom, #a855f7, #6366f1)'
-                }} />
-                <div style={{
-                  fontSize: '1.2rem',
-                  marginBottom: '0.5rem'
-                }}>💡 Note</div>
-                <div style={{ fontStyle: 'italic' }}>
-                  {project.note}
+
+              <div className='flex flex-col gap-3 sm:gap-4 flex-wrap items-center sm:flex-row sm:justify-center lg:justify-start lg:gap-6 2xl:gap-8'>
+                {project.demoUrl && (
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-br
+                      from-purple-500 to-indigo-500 rounded-xl text-white no-underline
+                      text-sm sm:text-base font-bold transition-all duration-300 ease-in-out shadow-xl
+                      shadow-purple-500/30 relative overflow-hidden hover:-translate-y-px
+                      hover:scale-102 hover:shadow-2xl hover:shadow-purple-500/40
+                      w-full sm:w-auto sm:min-w-[160px] 2xl:px-10 2xl:py-5 2xl:text-lg 2xl:min-w-[200px]"
+                  >
+                    <span>Live Demo</span>
+                    <span className='text-lg 2xl:text-xl'>→</span>
+                  </a>
+                )}
+
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4
+                      bg-transparent border-2 border-white/20 rounded-xl
+                      text-white no-underline text-sm sm:text-base font-bold transition-all
+                      duration-300 ease-in-out backdrop-blur-md hover:bg-white/10
+                      hover:border-white/40 hover:-translate-y-0.5
+                      w-full sm:w-auto sm:min-w-[120px] 2xl:px-10 2xl:py-5 2xl:text-lg 2xl:min-w-[150px]"
+                  >
+                    View Code
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {project.images && project.images.find(img => img.type === 'main') && (
+              <div className={`relative transition-all duration-500 ease-in-out
+                ${isLoaded
+                  ? 'opacity-100 scale-100 rotate-y-0'
+                  : 'opacity-0 scale-95 rotate-y-10'
+                }
+                mt-6 sm:mt-8 lg:mt-0 mb-8 sm:mb-12 lg:mb-6
+                aspect-[14/10] sm:aspect-[14/9] lg:aspect-[14/10] xl:aspect-[14/9] 2xl:aspect-[14/10]
+                w-full max-w-[90vw] lg:max-w-none`
+              }>
+                <div className='absolute inset-[-8px] sm:inset-[-12px] lg:inset-[-15px] xl:inset-[-20px] 2xl:inset-[-25px] 
+                  border-2 border-purple-500/30 rounded-xl sm:rounded-2xl lg:rounded-3xl -rotate-2 
+                  transition-all duration-500 ease-in-out' />
+
+                <div className="relative w-full h-full rounded-lg sm:rounded-xl lg:rounded-2xl overflow-hidden
+                  [box-shadow:0_15px_30px_rgba(0,0,0,0.4),_0_0_60px_rgba(168,85,247,0.15)]
+                  sm:[box-shadow:0_25px_50px_rgba(0,0,0,0.5),_0_0_100px_rgba(168,85,247,0.2)]
+                  lg:[box-shadow:0_40px_80px_rgba(0,0,0,0.5),_0_0_150px_rgba(168,85,247,0.2)]
+                  2xl:[box-shadow:0_60px_120px_rgba(0,0,0,0.6),_0_0_200px_rgba(168,85,247,0.3)]
+                  [transform:perspective(800px)_rotateY(-2deg)] sm:[transform:perspective(1000px)_rotateY(-3deg)]
+                  lg:[transform:perspective(1000px)_rotateY(-5deg)] transition-transform duration-300
+                  ease-in-out hover:[transform:perspective(1000px)_rotateY(0deg)_scale(1.02)]"
+                >
+                  <img
+                    src={project.images.find(img => img.type === 'main')?.src}
+                    alt={project.title}
+                    className='w-full h-full object-cover'
+                  />
+
+                  <div className='absolute inset-0 pointer-events-none custom-overlay-gradient' />
+
+                  <div className='absolute top-4 right-4 px-3 py-1.5 bg-black/60
+                    backdrop-blur-xl border border-white/20 rounded-full
+                    text-xs text-amber-400 font-semibold
+                    sm:px-4 sm:py-2 sm:top-6 sm:right-6 lg:px-6 lg:py-3 lg:text-sm lg:top-8 lg:right-8
+                    2xl:px-8 2xl:py-4 2xl:text-base 2xl:top-10 2xl:right-10'
+                  >
+                    {project.status}
+                  </div>
                 </div>
               </div>
             )}
           </div>
+        </div>
 
-          <div style={{
-            opacity: activeSection >= 0.9 ? 1 : 0,
-            transform: activeSection >= 0.9 ? 'translateX(0)' : 'translateX(50px)',
-            transition: 'all 0.8s ease 0.2s'
-          }}>
+        <div className='absolute right-4 text-[0.6rem] sm:text-xs text-white/40 flex items-center gap-1
+          flex-col items-end lg:flex-row lg:gap-2 sm:right-6 lg:right-8 xl:right-10
+          bottom-20 sm:bottom-24 lg:bottom-12 xl:bottom-16 2xl:bottom-20 2xl:right-12 2xl:text-sm'
+        >
+          <span>Scroll to explore</span>
+          <div className="flex gap-1 md:gap-2 2xl:gap-3"> 
+            <span className='px-1 py-0.5 border border-white/20 rounded text-[0.55rem] sm:px-1.5 sm:text-[0.6rem] lg:px-2 lg:py-1 lg:text-[0.7rem] 2xl:px-2.5 2xl:py-1.5 2xl:text-sm'>↓</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="min-h-screen flex items-center relative py-16 px-4 sm:px-6 lg:px-8 bg-gradient-radial from-purple-500/5 via-transparent to-transparent">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
+          <div className={`
+            transition-all duration-[800ms] ease-out
+            ${activeSection >= 0.7 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-[50px]'}
+          `}>
+            <div className="text-xs lg:text-sm text-purple-500 uppercase tracking-[0.2em] mb-4 font-bold">
+              Overview
+            </div>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl mb-8 font-semibold leading-tight bg-gradient-to-br from-white to-purple-500 bg-clip-text text-transparent tracking-tight">
+              The Story
+            </h2>
+            <p className="text-lg lg:text-xl leading-relaxed text-white/80 mb-8">
+              {project.overview}
+            </p>
+            {project.note && (
+              <div className="p-5 bg-purple-500/8 border border-purple-500/20 rounded-2xl backdrop-blur-[20px] relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-purple-500 to-indigo-500" />
+                <div className="text-xl mb-2">💡 Note</div>
+                <div className="italic text-white/90">{project.note}</div>
+              </div>
+            )}
+          </div>
+
+          <div className={`
+            transition-all duration-[800ms] delay-200 ease-out
+            ${activeSection >= 0.9 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[50px]'}
+          `}>
             {project.features && project.features.length > 0 && (
               <>
-                <h3 style={{
-                  fontSize: '2rem',
-                  marginBottom: '1rem',
-                  fontWeight: '600',
-                  background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent'
-                }}>
+                <h3 className="text-3xl lg:text-4xl mb-6 font-semibold bg-gradient-to-br from-indigo-500 to-purple-500 bg-clip-text text-transparent">
                   Key Highlights
                 </h3>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1rem'
-                }}>
+                <div className="flex flex-col gap-4">
                   {project.features.slice(0, 4).map((feature: string, index: number) => {
                     const [title, ...descParts] = feature.split(':');
                     const description = descParts.join(':').trim();
@@ -678,42 +377,25 @@ export default function ProjectPageClient({ project }: { project: Project }) {
                     return (
                       <div
                         key={index}
+                        className={`
+                          relative p-6 bg-white/[0.02] border border-white/[0.08] rounded-xl
+                          backdrop-blur-[20px] overflow-hidden
+                          ${activeSection >= 0.9 
+                            ? 'opacity-100 translate-y-0' 
+                            : 'opacity-0 translate-y-[30px]'
+                          }
+                        `}
                         style={{
-                          position: 'relative',
-                          padding: '1.5rem',
-                          background: 'rgba(255, 255, 255, 0.02)',
-                          border: '1px solid rgba(255, 255, 255, 0.08)',
-                          borderRadius: '12px',
-                          backdropFilter: 'blur(20px)',
-                          opacity: activeSection >= 0.9 ? 1 : 0,
-                          transform: activeSection >= 0.9 ? 'translateY(0)' : 'translateY(30px)',
-                          transition: `all 0.6s ease ${0.3 + index * 0.1}s`,
-                          overflow: 'hidden'
+                          transitionProperty: 'all',
+                          transitionDuration: '600ms',
+                          transitionDelay: `${0.3 + index * 0.1}s`
                         }}
                       >
-                        <div style={{
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          width: '4px',
-                          height: '100%',
-                          background: `linear-gradient(to bottom, #a855f7, #6366f1)`,
-                          opacity: 0.6
-                        }} />
-                        <h4 style={{
-                          fontSize: '1.3rem',
-                          marginBottom: '0.75rem',
-                          color: '#818cf8',
-                          fontWeight: '600'
-                        }}>
+                        <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-purple-500 to-indigo-500 opacity-60" />
+                        <h4 className="text-xl lg:text-2xl mb-3 text-indigo-400 font-semibold">
                           {title.trim()}
                         </h4>
-                        <p style={{
-                          fontSize: '1rem',
-                          color: 'rgba(255, 255, 255, 0.75)',
-                          lineHeight: '1.6',
-                          margin: 0
-                        }}>
+                        <p className="text-base lg:text-lg text-white/75 leading-relaxed">
                           {description}
                         </p>
                       </div>
@@ -726,316 +408,116 @@ export default function ProjectPageClient({ project }: { project: Project }) {
         </div>
       </section>
 
-      <section style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        padding: '6rem 2rem',
-        background: 'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%)'
-      }}>
-        <div style={{
-          width: '100%',
-          maxWidth: '1400px',
-          margin: '0 auto',
-          opacity: activeSection >= 1.7 ? 1 : 0,
-          transform: activeSection >= 1.7 ? 'translateY(0)' : 'translateY(30px)',
-          transition: 'all 0.5s ease'
-        }}>
-          <div style={{
-            textAlign: 'center',
-            marginBottom: '2rem',
-            opacity: activeSection >= 1.7 ? 1 : 0,
-            transform: activeSection >= 1.7 ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 0.5s ease 0.2s'
-          }}>
-            <div style={{
-              fontSize: '0.8rem',
-              color: '#a855f7',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-              marginBottom: '.75rem',
-              fontWeight: '700'
-            }}>
+      <section className="min-h-screen flex items-center justify-center relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent via-black/20 to-transparent">
+        <div className={`
+          w-full max-w-7xl mx-auto transition-all duration-500
+          ${activeSection >= 1.7 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[30px]'}
+        `}>
+          <div className={`
+            text-center mb-8 lg:mb-12 transition-all duration-500 delay-200
+            ${activeSection >= 1.7 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[30px]'}
+          `}>
+            <div className="text-xs lg:text-sm text-purple-500 uppercase tracking-[0.2em] mb-3 font-bold">
               Visual Showcase
             </div>
-            <h2 style={{
-              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-              fontWeight: '600',
-              margin: 0,
-              background: 'linear-gradient(135deg, #ffffff 0%, #a855f7 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              letterSpacing: '-0.02em'
-            }}>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold bg-gradient-to-br from-white to-purple-500 bg-clip-text text-transparent tracking-tight">
               Gallery
             </h2>
           </div>
 
-          <div style={{
-            position: 'relative'
-          }}>
-            <div style={{
-              position: 'absolute',
-              top: '-50px',
-              left: '-50px',
-              width: '80px',
-              height: '100px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%)',
-              pointerEvents: 'none'
-            }} />
+          <div className="relative">
+            <div className="absolute -top-[50px] -left-[50px] w-20 h-[100px] rounded-full bg-gradient-radial from-purple-500/10 to-transparent pointer-events-none" />
             <ProjectImageGallery images={project.images} title={project.title} />
           </div>
         </div>
       </section>
 
-      <section style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        padding: '4rem 2rem',
-        background: `
-          linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.6) 100%),
-          radial-gradient(circle at 30% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 70% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)
-        `
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          textAlign: 'center',
-          width: '100%',
-          opacity: activeSection >= 2.7 ? 1 : 0,
-          transform: activeSection >= 2.7 ? 'translateY(0)' : 'translateY(50px)',
-          transition: 'all 0.5s ease'
-        }}>
-          <div style={{
-            marginBottom: '2rem',
-            opacity: activeSection >= 2.7 ? 1 : 0,
-            transform: activeSection >= 2.7 ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 0.5s ease 0.2s'
-          }}>
-            <div style={{
-              fontSize: '0.8rem',
-              color: '#a855f7',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-              marginBottom: '.75rem',
-              fontWeight: '700'
-            }}>
+      <section className="min-h-screen flex items-center justify-center relative py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent via-black/30 to-black/60">
+        <div className={`
+          max-w-7xl text-center w-full transition-all duration-500
+          ${activeSection >= 2.7 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[50px]'}
+        `}>
+          <div className={`
+            mb-8 lg:mb-12 transition-all duration-500 delay-200
+            ${activeSection >= 2.7 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[30px]'}
+          `}>
+            <div className="text-xs lg:text-sm text-purple-500 uppercase tracking-[0.2em] mb-3 font-bold">
               Project Impact
             </div>
-            <h2 style={{
-              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-              marginBottom: '.75rem',
-              fontWeight: '600',
-              background: 'linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #6366f1 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              letterSpacing: '-0.02em'
-            }}>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl mb-3 font-semibold bg-gradient-to-r from-white via-purple-500 to-indigo-500 bg-clip-text text-transparent tracking-tight">
               Impact & Vision
             </h2>
-            <p style={{
-              fontSize: '1.1rem',
-              color: 'rgba(255, 255, 255, 0.6)',
-              maxWidth: '600px',
-              margin: '0 auto'
-            }}>
+            <p className="text-base lg:text-lg text-white/60 max-w-2xl mx-auto">
               Reflecting on achievements and looking toward future possibilities
             </p>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-            gap: '2rem',
-            marginBottom: '2rem'
-          }}>
-            <div style={{
-              padding: '2rem 1.2rem',
-              background: 'rgba(168, 85, 247, 0.08)',
-              border: '1px solid rgba(168, 85, 247, 0.2)',
-              borderRadius: '24px',
-              backdropFilter: 'blur(20px)',
-              position: 'relative',
-              overflow: 'hidden',
-              opacity: activeSection >= 2.8 ? 1 : 0,
-              transform: activeSection >= 2.8 ? 'translateX(0)' : 'translateX(-30px)',
-              transition: 'all 0.3s ease 0.2s'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 20px 40px rgba(168, 85, 247, 0.2)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-            >
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '4px',
-                background: 'linear-gradient(90deg, #a855f7, #6366f1)'
-              }} />
-              <h3 style={{
-                fontSize: '1.8rem',
-                marginBottom: '1.5rem',
-                color: '#a855f7',
-                fontWeight: '600'
-              }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-8">
+            <div className={`
+              p-6 lg:p-8 bg-purple-500/8 border border-purple-500/20 rounded-3xl
+              backdrop-blur-[20px] relative overflow-hidden transition-all duration-300 delay-200
+              hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(168,85,247,0.2)]
+              ${activeSection >= 2.8 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-[30px]'}
+            `}>
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-indigo-500" />
+              <h3 className="text-2xl lg:text-3xl mb-6 text-purple-500 font-semibold">
                 Outcome
               </h3>
-              <p style={{
-                fontSize: '1.1rem',
-                lineHeight: '1.7',
-                color: 'rgba(255, 255, 255, 0.8)',
-                margin: 0
-              }}>
+              <p className="text-base lg:text-lg leading-relaxed text-white/80">
                 {project.outcome}
               </p>
             </div>
 
-            <div style={{
-              padding: '2rem 1.2rem',
-              background: 'rgba(99, 102, 241, 0.08)',
-              border: '1px solid rgba(99, 102, 241, 0.2)',
-              borderRadius: '24px',
-              backdropFilter: 'blur(20px)',
-              position: 'relative',
-              overflow: 'hidden',
-              opacity: activeSection >= 2.8 ? 1 : 0,
-              transform: activeSection >= 2.8 ? 'translateX(0)' : 'translateX(30px)',
-              transition: 'all 0.3s ease 0.2s'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 20px 40px rgba(99, 102, 241, 0.2)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-            >
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '4px',
-                background: 'linear-gradient(90deg, #6366f1, #a855f7)'
-              }} />
-              <h3 style={{
-                fontSize: '1.8rem',
-                marginBottom: '1.5rem',
-                color: '#6366f1',
-                fontWeight: '600'
-              }}>
+            <div className={`
+              p-6 lg:p-8 bg-indigo-500/8 border border-indigo-500/20 rounded-3xl
+              backdrop-blur-[20px] relative overflow-hidden transition-all duration-300 delay-200
+              hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(99,102,241,0.2)]
+              ${activeSection >= 2.8 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[30px]'}
+            `}>
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500" />
+              <h3 className="text-2xl lg:text-3xl mb-6 text-indigo-500 font-semibold">
                 Future Vision
               </h3>
-              <p style={{
-                fontSize: '1.1rem',
-                lineHeight: '1.7',
-                color: 'rgba(255, 255, 255, 0.8)',
-                margin: 0
-              }}>
+              <p className="text-base lg:text-lg leading-relaxed text-white/80">
                 {project.future}
               </p>
             </div>
           </div>
 
-          <div style={{
-            padding: '1.2rem 2.5rem',
-            background: 'rgba(255, 255, 255, 0.03)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '20px',
-            display: 'inline-flex',
-            gap: '3rem',
-            alignItems: 'center',
-            marginBottom: '2rem',
-            backdropFilter: 'blur(20px)',
-            opacity: activeSection >= 2.9 ? 1 : 0,
-            transform: activeSection >= 2.9 ? 'scale(1)' : 'scale(0.9)',
-            transition: 'all 0.5s ease 0.8s'
-          }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                fontSize: '0.8rem', 
-                color: 'rgba(255, 255, 255, 0.5)', 
-                marginBottom: '0.5rem',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase'
-              }}>
+          <div className={`
+            inline-flex gap-8 lg:gap-12 items-center px-6 lg:px-10 py-5 mb-8
+            bg-white/[0.03] border border-white/10 rounded-2xl
+            backdrop-blur-[20px] transition-all duration-500 delay-[800ms]
+            ${activeSection >= 2.9 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}
+          `}>
+            <div className="text-center">
+              <div className="text-xs text-white/50 mb-2 tracking-[0.1em] uppercase">
                 Completed
               </div>
-              <div style={{ fontSize: '1rem', fontWeight: '700', color: '#a855f7' }}>
+              <div className="text-base lg:text-lg font-bold text-purple-500">
                 {project.completedDate || 'Recent'}
               </div>
             </div>
-            <div style={{ 
-              width: '2px', 
-              height: '50px', 
-              background: 'linear-gradient(to bottom, #a855f7, #6366f1)',
-              opacity: 0.5
-            }} />
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                fontSize: '0.8rem', 
-                color: 'rgba(255, 255, 255, 0.5)', 
-                marginBottom: '0.5rem',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase'
-              }}>
+            <div className="w-0.5 h-[50px] bg-gradient-to-b from-purple-500 to-indigo-500 opacity-50" />
+            <div className="text-center">
+              <div className="text-xs text-white/50 mb-2 tracking-[0.1em] uppercase">
                 Technologies
               </div>
-              <div style={{ fontSize: '1rem', fontWeight: '700', color: '#6366f1' }}>
+              <div className="text-base lg:text-lg font-bold text-indigo-500">
                 {project.technologies.length} Tools
               </div>
             </div>
           </div>
 
-          <div style={{
-            opacity: activeSection >= 2.95 ? 1 : 0,
-            transform: activeSection >= 2.95 ? 'translateY(0)' : 'translateY(20px)',
-            transition: 'all 0.8s ease 1s'
-          }}>
+          <div className={`
+            transition-all duration-[800ms] delay-1000
+            ${activeSection >= 2.95 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[20px]'}
+          `}>
             <Link
               href="/#projects"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '1rem',
-                padding: '.75rem 2rem',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                borderRadius: '16px',
-                color: 'rgba(255, 255, 255, 0.8)',
-                textDecoration: 'none',
-                fontSize: '1rem',
-                fontWeight: '600',
-                transition: 'all 0.3s ease',
-                backdropFilter: 'blur(20px)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(168, 85, 247, 0.1)';
-                e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.3)';
-                e.currentTarget.style.color = '#a855f7';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+              className="inline-flex items-center gap-4 px-6 lg:px-8 py-3 bg-white/5 border border-white/15 rounded-2xl text-white/80 font-semibold transition-all duration-300 backdrop-blur-[20px] hover:bg-purple-500/10 hover:border-purple-500/30 hover:text-purple-500 hover:-translate-y-0.5"
             >
-              <span style={{ fontSize: '1.2rem' }}>←</span>
+              <span className="text-xl">←</span>
               <span>Back to all projects</span>
             </Link>
           </div>

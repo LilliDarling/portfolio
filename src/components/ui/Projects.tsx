@@ -40,14 +40,14 @@ export default function Projects() {
       id="projects"
       ref={containerRef}
       style={{ zIndex: 20 }}
-      className='min-h-screen relative pt-6 sm:pt-12 lg:pt-14 xl:pt-18 2xl:pt-20 overflow-hidden pb-6 sm:pb-8 lg:pb-12 xl:pb-16 2xl:pb-20'
+      className='min-h-screen relative pt-4 sm:pt-4 lg:pt-4 xl:pt-6 2xl:pt-6 overflow-hidden pb-6 sm:pb-8 lg:pb-12 xl:pb-16 2xl:pb-20'
     >
       <div className={`absolute inset-0 project-background-gradient
         transition-transform duration-800 ease-in-out pointer-events-none
         ${isTransitioning ? 'translate-y-[50px]' : 'translate-y-0'}`}
       />
 
-      <div className='min-h-screen relative flex flex-col justify-center px-6 sm:px-6 lg:px-12 xl:px-16 2xl:px-20'>
+      <div className='min-h-screen relative flex flex-col justify-center px-6 sm:px-6 lg:px-10 xl:px-16 2xl:px-28'>
         <div className='absolute top-12 left-1/2 -translate-x-1/2
           text-6xl font-black text-white/5 font-mono tracking-tighter select-none
           sm:text-7xl md:text-8xl lg:top-16 lg:text-9xl xl:top-20 xl:text-[8rem] 2xl:top-24 2xl:text-[9rem]'
@@ -183,8 +183,8 @@ export default function Projects() {
         </div>
 
         <div className='absolute left-1/2 -translate-x-1/2 flex items-center gap-3
-          flex-wrap justify-center sm:gap-4 lg:gap-6 xl:gap-8
-          bottom-6 sm:bottom-8 lg:bottom-10 xl:bottom-12 2xl:bottom-16 2xl:gap-10'>
+          flex-wrap justify-center sm:gap-2 lg:gap-3 xl:gap-6
+          bottom-0 sm:bottom-5 lg:bottom-10 xl:bottom-18 2xl:bottom-12 2xl:gap-8'>
           <button
             onClick={() => handleProjectChange((activeProject - 1 + allProjects.length) % allProjects.length)}
               className="stardust-cursor w-10 h-10 sm:w-12 sm:h-12 lg:w-[60px] lg:h-[60px] 2xl:w-[70px] 2xl:h-[70px] rounded-full

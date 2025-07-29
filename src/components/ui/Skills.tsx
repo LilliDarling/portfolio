@@ -84,64 +84,22 @@ export default function Skills() {
   return (
     <div 
       id="skills"
-      style={{ 
-        minHeight: '60vh', 
-        position: 'relative', 
-        zIndex: 20,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        padding: '8rem 2rem',
-        overflow: 'hidden'
-      }}
+      className="min-h-[60vh] relative z-20 bg-black/50 py-24 sm:py-28 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
-      <div style={{
-        position: 'absolute',
-        top: '10%',
-        left: '-5%',
-        width: '30%',
-        height: '30%',
-        background: 'radial-gradient(circle at center, rgba(99, 102, 241, 0.12) 0%, transparent 70%)',
-        filter: 'blur(80px)',
-        pointerEvents: 'none'
-      }} />
+      <div className="absolute top-[10%] -left-[5%] w-[30%] h-[30%] bg-gradient-radial from-indigo-500/12 to-transparent blur-[80px] pointer-events-none" />
+      <div className="absolute bottom-[20%] -right-[8%] w-[35%] h-[35%] bg-gradient-radial from-purple-500/8 to-transparent blur-[90px] pointer-events-none" />
 
-      <div style={{
-        position: 'absolute',
-        bottom: '20%',
-        right: '-8%',
-        width: '35%',
-        height: '35%',
-        background: 'radial-gradient(circle at center, rgba(168, 85, 247, 0.08) 0%, transparent 70%)',
-        filter: 'blur(90px)',
-        pointerEvents: 'none'
-      }} />
-
-      <div style={{ maxWidth: '1500px', margin: '0 auto', color: 'white', position: 'relative' }}>
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <h2 style={{ 
-            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', 
-            marginBottom: '1rem',
-            fontWeight: '600',
-            letterSpacing: '-0.02em',
-            transform: 'rotate(-0.5deg)'
-          }}>
+      <div className="max-w-7xl mx-auto text-white relative">
+        <div className="text-center mb-8 lg:mb-12">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-3 lg:mb-4 font-semibold tracking-tight -rotate-[0.5deg]">
             Things I'm Dangerously Good At
           </h2>
-          <p style={{
-            color: '#94a3b8',
-            fontSize: '1rem',
-            marginBottom: '2rem',
-            transform: 'rotate(0.3deg)'
-          }}>
-            <span style={{ fontSize: '1.2rem' }}>🐾</span> (my cats helped arrange these)
+          <p className="text-slate-400 text-base lg:text-lg mb-6 lg:mb-8 rotate-[0.3deg]">
+            <span className="text-xl lg:text-2xl">🐾</span> (my cats helped arrange these)
           </p>
         </div>
 
-        <div style={{ 
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(175px, 1fr))',
-          gap: '1rem',
-          padding: '0.5rem'
-        }}>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 px-2">
           {skills.map((skill, index) => {
             const isHovered = hoveredSkill === index;
             const isVisible = visibleSkills[index];
@@ -150,126 +108,102 @@ export default function Skills() {
               <div
                 key={skill.name}
                 ref={(el) => { skillRefs.current[index] = el }}
+                className={`
+                  p-3 sm:p-4 
+                  backdrop-blur-[10px] 
+                  rounded-md 
+                  border 
+                  cursor-pointer 
+                  relative 
+                  transition-all 
+                  duration-[600ms] 
+                  ease-[cubic-bezier(0.50,-0.25,0.22,1)]
+                  ${isHovered 
+                    ? 'bg-indigo-500/15 border-indigo-500 scale-[1.03]' 
+                    : 'bg-white/[0.04] border-white/[0.08] scale-100'
+                  }
+                  ${isVisible ? 'opacity-100' : 'opacity-0'}
+                `}
                 style={{
-                  padding: '0.8rem',
-                  background: isHovered 
-                    ? 'rgba(99, 102, 241, 0.15)' 
-                    : 'rgba(255, 255, 255, 0.04)',
-                  border: '1px solid',
-                  borderColor: isHovered ? '#6366f1' : 'rgba(255, 255, 255, 0.08)',
-                  borderRadius: '6px',
-                  backdropFilter: 'blur(10px)',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  opacity: isVisible ? 1 : 0,
                   transform: isVisible 
                     ? `translate(${skill.quirk.x * 0.5}px, ${skill.quirk.y * 0.5}px) rotate(${skill.quirk.rotation}deg) ${isHovered ? 'scale(1.03)' : 'scale(1)'}` 
                     : `translate(${skill.quirk.x * 0.5}px, -100px) rotate(${skill.quirk.rotation + 15}deg) scale(0.8)`,
-                  transitionProperty: 'all',
-                  transitionDuration: '0.6s',
-                  transitionTimingFunction: 'cubic-bezier(0.50, -0.25, 0.22, 1)',
                   transitionDelay: `${index * 0.02}s`,
                   ...(isHovered ? getRandomGlitch() : {})
                 }}
                 onMouseEnter={() => setHoveredSkill(index)}
                 onMouseLeave={() => setHoveredSkill(null)}
               >
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'space-between',
-                  marginBottom: '0.5rem'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2 sm:gap-3">
                     <img 
                       src={skill.logo}
                       alt={`${skill.name} logo`}
-                      style={{ 
-                        width: '1.5rem',
-                        height: '1.5rem',
-                        objectFit: 'contain',
-                        transform: isHovered ? 'rotate(15deg) scale(1.1)' : 'rotate(0deg)',
-                        transition: 'transform 0.3s ease'
-                      }}
+                      className={`
+                        w-5 h-5 sm:w-6 sm:h-6 
+                        object-contain 
+                        transition-transform 
+                        duration-300 
+                        ease-out
+                        ${isHovered ? 'rotate-[15deg] scale-110' : 'rotate-0'}
+                      `}
                     />
-                    <h3 style={{ 
-                      fontSize: '0.9rem', 
-                      fontWeight: '600',
-                      color: isHovered ? '#a5b4fc' : '#ffffff',
-                      transition: 'color 0.3s ease'
-                    }}>
+                    <h3 className={`
+                      text-xs sm:text-sm 
+                      font-semibold 
+                      transition-colors 
+                      duration-300 
+                      ease-out
+                      ${isHovered ? 'text-indigo-300' : 'text-white'}
+                    `}>
                       {skill.name}
                     </h3>
                   </div>
-                  <span style={{
-                    fontSize: '0.75rem',
-                    color: '#c7d2fe',
-                    fontWeight: '600',
-                    opacity: isHovered ? 0.6 : 0.6,
-                    transition: 'opacity 0.3s ease'
-                  }}>
+                  <span className={`
+                    text-[10px] sm:text-xs 
+                    text-indigo-300 
+                    font-semibold 
+                    transition-opacity 
+                    duration-300 
+                    ease-out
+                    ${isHovered ? 'opacity-60' : 'opacity-60'}
+                  `}>
                     {skill.proficiency}%
                   </span>
                 </div>
 
-                <div style={{
-                  width: '100%',
-                  height: '3px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '2px',
-                  overflow: 'hidden',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    width: isVisible ? `${skill.proficiency}%` : '0%',
-                    height: '100%',
-                    background: isHovered 
-                      ? 'linear-gradient(90deg, #6366f1, #8b5cf6, #a855f7)' 
-                      : 'linear-gradient(90deg, #4f46e5, #6366f1)',
-                    borderRadius: '2px',
-                    transitionProperty: 'width, background',
-                    transitionDuration: '0.6s, 0.3s',
-                    transitionTimingFunction: 'ease-out, ease',
-                    transitionDelay: `${index * 0.05}s, 0s`
-                  }} />
+                <div className="w-full h-[3px] bg-white/10 rounded-sm overflow-hidden relative">
+                  <div 
+                    className={`
+                      h-full 
+                      rounded-sm 
+                      transition-all 
+                      duration-[600ms] 
+                      ease-out
+                      ${isHovered 
+                        ? 'bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-500' 
+                        : 'bg-gradient-to-r from-indigo-600 to-indigo-500'
+                      }
+                    `}
+                    style={{
+                      width: isVisible ? `${skill.proficiency}%` : '0%',
+                      transitionDelay: `${index * 0.05}s, 0s`
+                    }}
+                  />
                 </div>
 
                 {isHovered && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '-8px',
-                    right: '-8px',
-                    width: '20px',
-                    height: '20px',
-                    background: 'linear-gradient(45deg, #f59e0b, #f97316)',
-                    borderRadius: '50%',
-                    animation: 'pulse 1s infinite',
-                    opacity: 0.8
-                  }} />
+                  <div className="absolute -top-2 -right-2 w-5 h-5 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full animate-pulse opacity-80" />
                 )}
               </div>
             );
           })}
         </div>
 
-        <div style={{
-          textAlign: 'center',
-          marginTop: '3rem',
-          color: '#c7d2fe',
-          fontSize: '0.95rem',
-          fontStyle: 'italic',
-          transform: 'rotate(-0.2deg)'
-        }}>
+        <div className="text-center mt-8 lg:mt-12 text-indigo-300 text-sm sm:text-base italic -rotate-[0.2deg]">
           * Percentages may be slightly inflated due to caffeine confidence
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); opacity: 0.8; }
-          50% { transform: scale(1.2); opacity: 0.4; }
-        }
-      `}</style>
     </div>
   );
 }

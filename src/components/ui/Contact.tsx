@@ -60,50 +60,18 @@ export default function Contact() {
   return (
     <div 
       id="contact"
-      style={{ 
-        minHeight: '100vh', 
-        position: 'relative', 
-        zIndex: 20,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        padding: '4rem 2rem',
-        display: 'flex',
-        alignItems: 'center'
-      }}
+      className="min-h-screen relative z-20 bg-black/80 py-14 px-4 sm:px-6 lg:px-8 flex items-center"
     >
-      <div style={{ 
-        maxWidth: '600px', 
-        margin: '0 auto', 
-        width: '100%'
-      }}>
-        <h2 style={{ 
-          fontSize: 'clamp(2rem, 5vw, 4rem)',
-          fontWeight: '400',
-          lineHeight: '0.9',
-          marginBottom: '2rem',
-          background: 'linear-gradient(135deg, #ffffff 0%, #a855f7 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-          letterSpacing: '-0.02em', 
-          textAlign: 'center'
-        }}>
+      <div className="max-w-2xl mx-auto w-full">
+        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-normal leading-tight mb-6 lg:mb-8 bg-gradient-to-br from-white to-purple-500 bg-clip-text text-transparent tracking-tight text-center">
           Contact
         </h2>
 
-        <p style={{
-          fontSize: '1.2rem',
-          marginBottom: '3rem',
-          textAlign: 'center',
-          color: '#64748b'
-        }}>
+        <p className="text-lg sm:text-xl mb-8 lg:mb-12 text-center text-slate-500">
           Have a project in mind or just want to chat? I'd love to hear from you.
         </p>
 
-        <form onSubmit={handleSubmit} style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1.5rem'
-        }}>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <input
             type="text"
             name="name"
@@ -111,23 +79,7 @@ export default function Contact() {
             onChange={handleInputChange}
             placeholder="Name"
             required
-            style={{
-              width: '100%',
-              padding: '1rem',
-              backgroundColor: 'transparent',
-              border: 'none',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-              color: 'white',
-              fontSize: '1rem',
-              transition: 'border-color 0.3s ease',
-              outline: 'none'
-            }}
-            onFocus={(e) => {
-              e.currentTarget.style.borderBottomColor = '#a5b4fc';
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderBottomColor = 'rgba(255, 255, 255, 0.2)';
-            }}
+            className="w-full p-4 bg-transparent border-0 border-b border-white/20 text-white text-base transition-colors duration-300 outline-none focus:border-indigo-300 placeholder:text-slate-500"
           />
           
           <input
@@ -137,23 +89,7 @@ export default function Contact() {
             onChange={handleInputChange}
             placeholder="Email"
             required
-            style={{
-              width: '100%',
-              padding: '1rem',
-              backgroundColor: 'transparent',
-              border: 'none',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-              color: 'white',
-              fontSize: '1rem',
-              transition: 'border-color 0.3s ease',
-              outline: 'none'
-            }}
-            onFocus={(e) => {
-              e.currentTarget.style.borderBottomColor = '#a5b4fc';
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderBottomColor = 'rgba(255, 255, 255, 0.2)';
-            }}
+            className="w-full p-4 bg-transparent border-0 border-b border-white/20 text-white text-base transition-colors duration-300 outline-none focus:border-indigo-300 placeholder:text-slate-500"
           />
           
           <textarea
@@ -163,101 +99,44 @@ export default function Contact() {
             placeholder="Message"
             rows={3}
             required
-            style={{
-              width: '100%',
-              padding: '1rem',
-              backgroundColor: 'transparent',
-              border: 'none',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-              color: 'white',
-              fontSize: '1rem',
-              transition: 'border-color 0.3s ease',
-              outline: 'none',
-              resize: 'none',
-              fontFamily: 'inherit'
-            }}
-            onFocus={(e) => {
-              e.currentTarget.style.borderBottomColor = '#a5b4fc';
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderBottomColor = 'rgba(255, 255, 255, 0.2)';
-            }}
+            className="w-full p-4 bg-transparent border-0 border-b border-white/20 text-white text-base transition-colors duration-300 outline-none focus:border-indigo-300 resize-none font-inherit placeholder:text-slate-500"
           />
           
           <button
             type="submit"
             disabled={isSubmitting}
-            style={{
-              padding: '1rem 2rem',
-              backgroundColor: 'transparent',
-              border: '1px solid rgba(168, 85, 247, 0.5)',
-              borderRadius: '4px',
-              color: 'white',
-              fontSize: '1rem',
-              cursor: isSubmitting ? 'not-allowed' : 'pointer',
-              transition: 'all 0.3s ease',
-              marginTop: '1rem',
-              opacity: isSubmitting ? 0.6 : 1
-            }}
-            onMouseEnter={(e) => {
-              if (!isSubmitting) {
-                e.currentTarget.style.borderColor = '#a5b4fc';
-                e.currentTarget.style.backgroundColor = 'rgba(165, 180, 252, 0.1)';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (!isSubmitting) {
-                e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.5)';
-                e.currentTarget.style.backgroundColor = 'transparent';
-              }
-            }}
+            className={`
+              mt-4 px-6 py-3 sm:px-8 sm:py-4
+              bg-transparent 
+              border border-purple-500/50 
+              rounded 
+              text-white text-base 
+              transition-all duration-300 
+              hover:border-indigo-300 hover:bg-indigo-300/10
+              disabled:opacity-60 disabled:cursor-not-allowed
+              ${isSubmitting ? 'cursor-not-allowed' : 'cursor-pointer'}
+            `}
           >
             {isSubmitting ? 'Sending...' : 'Send'}
           </button>
         </form>
 
         {submitStatus === 'success' && (
-          <p style={{
-            marginTop: '1rem',
-            textAlign: 'center',
-            color: '#10b981',
-            fontSize: '1rem'
-          }}>
+          <p className="mt-4 text-center text-green-500 text-base">
             Message sent successfully! I'll get back to you soon.
           </p>
         )}
 
         {submitStatus === 'error' && (
-          <p style={{
-            marginTop: '1rem',
-            textAlign: 'center',
-            color: '#ef4444',
-            fontSize: '1rem'
-          }}>
+          <p className="mt-4 text-center text-red-500 text-base">
             Failed to send message. Please try again or email me directly.
           </p>
         )}
 
-        <div style={{
-          marginTop: '4rem',
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '2rem'
-        }}>
+        <div className="mt-12 lg:mt-16 flex flex-wrap justify-center gap-6 sm:gap-8">
           <a
             href="https://x.com/LillithCodes"
-            style={{
-              color: 'rgba(255, 255, 255, 0.6)',
-              textDecoration: 'none',
-              fontSize: '1.1rem',
-              transition: 'color 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = '#818cf8';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)';
-            }}
+            className="text-white/60 no-underline text-base sm:text-lg transition-colors duration-300 hover:text-indigo-400"
           >
             Twitter
           </a>
@@ -265,18 +144,7 @@ export default function Contact() {
             href="https://www.linkedin.com/in/lillith-long/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              color: 'rgba(255, 255, 255, 0.6)',
-              textDecoration: 'none',
-              fontSize: '1.1rem',
-              transition: 'color 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = '#818cf8';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)';
-            }}
+            className="text-white/60 no-underline text-base sm:text-lg transition-colors duration-300 hover:text-indigo-400"
           >
             LinkedIn
           </a>
@@ -284,18 +152,7 @@ export default function Contact() {
             href="https://github.com/LilliDarling"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              color: 'rgba(255, 255, 255, 0.6)',
-              textDecoration: 'none',
-              fontSize: '1.1rem',
-              transition: 'color 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = '#818cf8';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)';
-            }}
+            className="text-white/60 no-underline text-base sm:text-lg transition-colors duration-300 hover:text-indigo-400"
           >
             GitHub
           </a>
