@@ -5,8 +5,8 @@ import { useRouter, usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
 const navItems = [
-  { name: 'About', href: '/#about' },
   { name: 'Projects', href: '/#projects' },
+  { name: 'About', href: '/#about' },
   { name: 'Skills', href: '/#skills' },
   { name: 'Contact', href: '/#contact' }
 ]
