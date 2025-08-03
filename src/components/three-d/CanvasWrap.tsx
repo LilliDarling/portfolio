@@ -2,21 +2,12 @@ import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
 import React, { Suspense, useRef } from 'react';
 import * as THREE from 'three';
-
-interface CanvasWrapProps {
-  children: React.ReactNode;
-  cameraPosition?: { x: number; y: number; z: number };
-  sceneScale?: number;
-  scenePosition?: { x: number; y: number };
-  stars?: React.ReactNode;
-  enableControls?: boolean;
-  onCreated?: () => void;
-  fov?: number;
-}
+import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
+import CanvasWrapProps from '@/types/canvas'
 
 function CameraController({ position, enableControls }: { position: { x: number; y: number; z: number }, enableControls: boolean }) {
   const { camera } = useThree();
-  const controlsRef = useRef<any>(null);
+  const controlsRef = useRef<OrbitControlsImpl>(null);
 
   useFrame(() => {
     camera.position.lerp(new THREE.Vector3(position.x, position.y, position.z), 0.05);

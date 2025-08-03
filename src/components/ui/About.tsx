@@ -85,19 +85,19 @@ export default function About() {
               Plot twist: I accidentally became obsessed with making robots sentient.
             </p>
             <p>
-              It started innocently enough - managing sales teams, optimizing the occasional customer journey. Then I fixed my first bug and got completely hooked. Fast forward through a blur of late-night debugging sessions and way too much caffeine, and now I'm building AI that might actually have opinions about my life choices.
+              It started innocently enough - managing sales teams, optimizing the occasional customer journey. Then I fixed my first bug and got completely hooked. Fast forward through a blur of late-night debugging sessions and way too much caffeine, and now I&apos;m building AI that might actually have opinions about my life choices.
             </p>
             <p>
-              Current status: Developing a desk robot with my partner because normal productivity tools are clearly insufficient. Also deep-diving into Web3 while simultaneously trying to teach machines how to think. My four cats serve as impromptu code reviewers (they're surprisingly harsh critics).
+              Current status: Developing a desk robot with my partner because normal productivity tools are clearly insufficient. Also deep-diving into Web3 while simultaneously trying to teach machines how to think. My four cats serve as impromptu code reviewers (they&apos;re surprisingly harsh critics).
             </p>
             <p>
-              The beautiful disaster of jumping from business strategy to AI engineering is that your brain never quite recalibrates to "normal." Why optimize a sales funnel when you could architect an entire agentic AI system? Why use existing solutions when you could build something that doesn't exist yet?
+              The beautiful disaster of jumping from business strategy to AI engineering is that your brain never quite recalibrates to &quot;normal.&quot; Why optimize a sales funnel when you could architect an entire agentic AI system? Why use existing solutions when you could build something that doesn&apos;t exist yet?
             </p>
             <p>
-              Between meditation sessions in my garden, crafting elaborate meals, and convincing my snowboard that yes, I will absolutely hit that jump, I'm plotting the next phase: humanoid computers that don't just compute - they collaborate.
+              Between meditation sessions in my garden, crafting elaborate meals, and convincing my snowboard that yes, I will absolutely hit that jump, I&apos;m plotting the next phase: humanoid computers that don&apos;t just compute - they collaborate.
             </p>
             <p>
-              Fair warning: I'm dangerously close to becoming one of those people who talks to their code.
+              Fair warning: I&apos;m dangerously close to becoming one of those people who talks to their code.
             </p>
           </div>
 

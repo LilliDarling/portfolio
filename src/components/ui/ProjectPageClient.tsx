@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
 import StarsWrapper from '@/components/ui/StarsWrapper';
 import ProjectImageGallery from '@/components/ui/ProjectImageGallery';
 import BackButton from '@/components/ui/BackButton';
@@ -12,7 +13,6 @@ export default function ProjectPageClient({ project }: { project: Project }) {
   const [activeSection, setActiveSection] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const smoothScrollTo = (sectionIndex: number) => {
@@ -52,12 +52,6 @@ export default function ProjectPageClient({ project }: { project: Project }) {
     setIsLoaded(true);
     endNavigation();
     
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
     
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -66,7 +60,6 @@ export default function ProjectPageClient({ project }: { project: Project }) {
     window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', checkMobile);
     };
   }, [endNavigation]);
 
@@ -278,10 +271,11 @@ export default function ProjectPageClient({ project }: { project: Project }) {
                   lg:[transform:perspective(1000px)_rotateY(-5deg)] transition-transform duration-300
                   ease-in-out hover:[transform:perspective(1000px)_rotateY(0deg)_scale(1.02)]"
                 >
-                  <img
+                  <Image
                     src={`/${project.images?.find(img => img.type === 'main')?.src}`}
                     alt={project.title}
-                    className='w-full h-full object-cover'
+                    fill
+                    className='object-cover'
                   />
 
                   <div className='absolute inset-0 pointer-events-none custom-overlay-gradient' />
@@ -394,7 +388,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
 
           <div className="relative">
             <div className="absolute -top-[50px] -left-[50px] w-20 h-[100px] rounded-full bg-gradient-radial from-purple-500/10 to-transparent pointer-events-none" />
-            <ProjectImageGallery images={project.images} title={project.title} />
+            <ProjectImageGallery images={project.images} />
           </div>
         </div>
       </section>

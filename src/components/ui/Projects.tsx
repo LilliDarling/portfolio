@@ -1,6 +1,7 @@
 "use client";
 import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { getAllProjects } from '@/data/projects';
 
 export default function Projects() {
@@ -13,7 +14,7 @@ export default function Projects() {
   const currentProject = allProjects[activeProject];
   const mainImage = currentProject.images?.find(img => img.type === 'main');
 
-  const handleProjectChange = (index: number) => {
+  const handleProjectChange = useCallback((index: number) => {
     if (index !== activeProject && !isTransitioning) {
       setIsTransitioning(true);
       setTimeout(() => {
@@ -21,7 +22,7 @@ export default function Projects() {
         setIsTransitioning(false);
       }, 300);
     }
-  };
+  }, [activeProject, isTransitioning]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -44,7 +45,7 @@ export default function Projects() {
       window.removeEventListener('keydown', handleKeyPress);
       window.removeEventListener('resize', checkMobile);
     };
-  }, [activeProject, allProjects.length]);
+  }, [activeProject, allProjects.length, handleProjectChange]);
 
   return (
     <div
@@ -171,10 +172,11 @@ export default function Projects() {
                   lg:[transform:perspective(1000px)_rotateY(-5deg)] transition-transform duration-300
                   ease-in-out hover:[transform:perspective(1000px)_rotateY(0deg)_scale(1.02)]"
                 >
-                  <img
+                  <Image
                     src={mainImage.src}
                     alt={currentProject.title}
-                    className='w-full h-full object-cover'
+                    fill
+                    className='object-cover'
                   />
 
                   <div className='absolute inset-0 pointer-events-none custom-overlay-gradient' />

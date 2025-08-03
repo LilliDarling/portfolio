@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 export default function Skills() {
   const [hoveredSkill, setHoveredSkill] = useState<number | null>(null);
@@ -75,7 +76,7 @@ export default function Skills() {
         observer.unobserve(skillsSection);
       }
     };
-  }, []);
+  }, [skills.length]);
 
   const getRandomGlitch = () => ({
     transform: `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`
@@ -92,7 +93,7 @@ export default function Skills() {
       <div className="max-w-[1500px] mx-auto text-white relative">
         <div className="text-center mb-8 lg:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-3 lg:mb-4 font-semibold tracking-tight -rotate-[0.5deg]">
-            Things I'm Dangerously Good At
+            Things I&apos;m Dangerously Good At
           </h2>
           <p className="text-slate-400 text-base lg:text-lg mb-6 lg:mb-8 rotate-[0.3deg]">
             <span className="text-xl lg:text-2xl">🐾</span> (my cats helped arrange these)
@@ -136,9 +137,11 @@ export default function Skills() {
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2 sm:gap-3">
-                    <img 
+                    <Image 
                       src={skill.logo}
                       alt={`${skill.name} logo`}
+                      width={24}
+                      height={24}
                       className={`
                         w-5 h-5 sm:w-6 sm:h-6 
                         object-contain 

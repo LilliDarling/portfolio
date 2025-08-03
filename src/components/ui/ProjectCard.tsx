@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface ProjectCardProps {
   id: string;
@@ -28,11 +29,12 @@ export default function ProjectCard({
         `}
       >
         {imageUrl && (
-          <div className="mb-4 aspect-video bg-gray-800 rounded-lg overflow-hidden">
-            <img 
+          <div className="mb-4 aspect-video bg-gray-800 rounded-lg overflow-hidden relative">
+            <Image 
               src={imageUrl} 
               alt={title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
             />
           </div>
         )}

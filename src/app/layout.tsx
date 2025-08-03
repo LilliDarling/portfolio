@@ -8,7 +8,8 @@ import ClientWrapper from "@/components/ui/ClientWrapper";
 
 const gold = Goldman({
   weight: "400",
-  style: "normal"
+  style: "normal",
+  subsets: ["latin"]
 });
 
 

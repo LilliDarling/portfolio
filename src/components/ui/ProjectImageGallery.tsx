@@ -4,10 +4,9 @@ import { useState, useEffect } from 'react';
 
 interface ProjectImageGalleryProps {
   images?: Array<{ src: string; alt: string; type: 'main' | 'feature' }>;
-  title: string;
 }
 
-export default function ProjectImageGallery({ images, title }: ProjectImageGalleryProps) {
+export default function ProjectImageGallery({ images }: ProjectImageGalleryProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isSmallMobile, setIsSmallMobile] = useState(false);

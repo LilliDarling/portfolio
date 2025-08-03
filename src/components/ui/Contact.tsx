@@ -68,7 +68,7 @@ export default function Contact() {
         </h2>
 
         <p className="text-lg sm:text-xl mb-8 lg:mb-12 text-center text-slate-500">
-          Have a project in mind or just want to chat? I'd love to hear from you.
+          Have a project in mind or just want to chat? I&apos;d love to hear from you.
         </p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -123,7 +123,7 @@ export default function Contact() {
 
         {submitStatus === 'success' && (
           <p className="mt-4 text-center text-green-500 text-base">
-            Message sent successfully! I'll get back to you soon.
+            Message sent successfully! I&apos;ll get back to you soon.
           </p>
         )}
 
