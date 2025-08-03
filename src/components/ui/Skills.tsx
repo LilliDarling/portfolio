@@ -89,7 +89,7 @@ export default function Skills() {
       <div className="absolute top-[10%] -left-[5%] w-[30%] h-[30%] bg-gradient-radial from-indigo-500/12 to-transparent blur-[80px] pointer-events-none" />
       <div className="absolute bottom-[20%] -right-[8%] w-[35%] h-[35%] bg-gradient-radial from-purple-500/8 to-transparent blur-[90px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto text-white relative">
+      <div className="max-w-[1500px] mx-auto text-white relative">
         <div className="text-center mb-8 lg:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-3 lg:mb-4 font-semibold tracking-tight -rotate-[0.5deg]">
             Things I'm Dangerously Good At
@@ -99,7 +99,7 @@ export default function Skills() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 px-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-3 sm:gap-4 px-2">
           {skills.map((skill, index) => {
             const isHovered = hoveredSkill === index;
             const isVisible = visibleSkills[index];
@@ -109,7 +109,7 @@ export default function Skills() {
                 key={skill.name}
                 ref={(el) => { skillRefs.current[index] = el }}
                 className={`
-                  p-3 sm:p-4 
+                  p-2 sm:p-4 
                   backdrop-blur-[10px] 
                   rounded-md 
                   border 

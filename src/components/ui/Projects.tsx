@@ -90,7 +90,7 @@ export default function Projects() {
 
             <div className='mb-10'>
               <div className='flex flex-wrap gap-2 justify-center lg:justify-start 2xl:gap-3'>
-                {currentProject.technologies.slice(0, 6).map((tech) => (
+                {currentProject.technologies.slice(0, 9).map((tech) => (
                   <span
                     key={tech}
                     className={`inline-block px-3 py-1 bg-black/30 border border-white/20

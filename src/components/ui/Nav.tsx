@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useLoading } from '@/contexts/LoadingContext'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
 const navItems = [
@@ -14,6 +14,7 @@ const navItems = [
 export default function Nav() {
   const { startNavigation } = useLoading();
   const router = useRouter();
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -31,6 +32,12 @@ export default function Nav() {
   const handleNavigation = (href: string) => {
     if (href.startsWith('/#')) {
       setIsMenuOpen(false);
+      return;
+    }
+    
+    if (pathname === href) {
+      setIsMenuOpen(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
     
@@ -54,8 +61,7 @@ export default function Nav() {
             >
               Lillith Long
             </button>
-            
-            {/* Desktop Navigation */}
+
             <ul className="hidden md:flex items-center gap-4 lg:gap-8">
               {navItems.map((item) => (
                 <li key={item.name}>
@@ -69,7 +75,6 @@ export default function Nav() {
               ))}
             </ul>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={toggleMenu}
               className="hamburger md:hidden"
@@ -83,7 +88,6 @@ export default function Nav() {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       <div className={`mobile-menu ${isMenuOpen ? 'active' : ''} md:hidden`}>
         <div className="flex flex-col items-center justify-center h-full space-y-8">
           {navItems.map((item) => (

@@ -5,24 +5,7 @@ import ProjectImageGallery from '@/components/ui/ProjectImageGallery';
 import BackButton from '@/components/ui/BackButton';
 import Link from 'next/link';
 import { useLoading } from '@/contexts/LoadingContext';
-
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  overview?: string;
-  technologies: string[];
-  status: string;
-  demoUrl?: string;
-  githubUrl?: string;
-  images?: any[];
-  num?: string | number;
-  note?: string;
-  features?: string[];
-  outcome?: string;
-  future?: string;
-  completedDate?: string;
-}
+import {Project} from '@/types/projects'
 
 export default function ProjectPageClient({ project }: { project: Project }) {
   const { endNavigation } = useLoading();
@@ -177,7 +160,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
         ))}
       </div>
 
-      <section className="min-h-screen relative pt-4 sm:pt-4 lg:pt-4 xl:pt-6 2xl:pt-6 overflow-hidden pb-6 sm:pb-8 lg:pb-12 xl:pb-16 2xl:pb-20">
+      <section className="min-h-screen relative pt-2 overflow-hidden pb-2">
         <div className={`absolute inset-0 project-background-gradient
           transition-transform duration-800 ease-in-out pointer-events-none
           ${isLoaded ? 'translate-y-0' : 'translate-y-[50px]'}`}
@@ -207,14 +190,8 @@ export default function ProjectPageClient({ project }: { project: Project }) {
 
               <BackButton />
 
-              <div className='text-xs sm:text-sm text-purple-500 uppercase tracking-widest mb-3 font-bold
-                2xl:text-base'
-              >
-                Featured Project
-              </div>
-
               <h1 className='font-semibold leading-tight mb-4 sm:mb-6 tracking-tight
-                [font-size:clamp(1.75rem,5vw,3.5rem)] 2xl:[font-size:clamp(2.5rem,6vw,4.5rem)]
+                [font-size:clamp(1.75rem,5vw,3.5rem)] 2xl:[font-size:clamp(2rem,6vw,4rem)]
                 bg-gradient-to-br from-white to-purple-500
                 bg-clip-text text-transparent'
               >
@@ -228,7 +205,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
 
               <div className='mb-10'>
                 <div className='flex flex-wrap gap-2 justify-center lg:justify-start 2xl:gap-3'>
-                  {project.technologies.slice(0, 6).map((tech) => (
+                  {project.technologies.slice(0, 9).map((tech) => (
                     <span
                       key={tech}
                       className={`inline-block px-3 py-1 bg-black/30 border border-white/20
@@ -254,8 +231,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
                       from-purple-500 to-indigo-500 rounded-xl text-white no-underline
                       text-sm sm:text-base font-bold transition-all duration-300 ease-in-out shadow-xl
                       shadow-purple-500/30 relative overflow-hidden hover:-translate-y-px
-                      hover:scale-102 hover:shadow-2xl hover:shadow-purple-500/40
-                      w-full sm:w-auto sm:min-w-[160px] 2xl:px-10 2xl:py-5 2xl:text-lg 2xl:min-w-[200px]"
+                      hover:scale-102 hover:shadow-2xl hover:shadow-purple-500/40"
                   >
                     <span>Live Demo</span>
                     <span className='text-lg 2xl:text-xl'>→</span>
@@ -268,11 +244,10 @@ export default function ProjectPageClient({ project }: { project: Project }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4
-                      bg-transparent border-2 border-white/20 rounded-xl
-                      text-white no-underline text-sm sm:text-base font-bold transition-all
+                      bg-transparent border-2 border-indigo-200/20 rounded-2xl
+                      text-white text-sm sm:text-base transition-all
                       duration-300 ease-in-out backdrop-blur-md hover:bg-white/10
-                      hover:border-white/40 hover:-translate-y-0.5
-                      w-full sm:w-auto sm:min-w-[120px] 2xl:px-10 2xl:py-5 2xl:text-lg 2xl:min-w-[150px]"
+                      hover:border-white/40 hover:-translate-y-0.5"
                   >
                     View Code
                   </a>
@@ -280,7 +255,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
               </div>
             </div>
 
-            {project.images && project.images.find(img => img.type === 'main') && (
+            {project.images && project.images?.find(img => img.type === 'main') && (
               <div className={`relative transition-all duration-500 ease-in-out
                 ${isLoaded
                   ? 'opacity-100 scale-100 rotate-y-0'
@@ -304,7 +279,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
                   ease-in-out hover:[transform:perspective(1000px)_rotateY(0deg)_scale(1.02)]"
                 >
                   <img
-                    src={project.images.find(img => img.type === 'main')?.src}
+                    src={`/${project.images?.find(img => img.type === 'main')?.src}`}
                     alt={project.title}
                     className='w-full h-full object-cover'
                   />
@@ -324,20 +299,10 @@ export default function ProjectPageClient({ project }: { project: Project }) {
             )}
           </div>
         </div>
-
-        <div className='absolute right-4 text-[0.6rem] sm:text-xs text-white/40 flex items-center gap-1
-          flex-col items-end lg:flex-row lg:gap-2 sm:right-6 lg:right-8 xl:right-10
-          bottom-20 sm:bottom-24 lg:bottom-12 xl:bottom-16 2xl:bottom-20 2xl:right-12 2xl:text-sm'
-        >
-          <span>Scroll to explore</span>
-          <div className="flex gap-1 md:gap-2 2xl:gap-3"> 
-            <span className='px-1 py-0.5 border border-white/20 rounded text-[0.55rem] sm:px-1.5 sm:text-[0.6rem] lg:px-2 lg:py-1 lg:text-[0.7rem] 2xl:px-2.5 2xl:py-1.5 2xl:text-sm'>↓</span>
-          </div>
-        </div>
       </section>
 
       <section className="min-h-screen flex items-center relative py-16 px-4 sm:px-6 lg:px-8 bg-gradient-radial from-purple-500/5 via-transparent to-transparent">
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
+        <div className="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
           <div className={`
             transition-all duration-[800ms] ease-out
             ${activeSection >= 0.7 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-[50px]'}
@@ -348,9 +313,11 @@ export default function ProjectPageClient({ project }: { project: Project }) {
             <h2 className="text-4xl sm:text-5xl lg:text-6xl mb-8 font-semibold leading-tight bg-gradient-to-br from-white to-purple-500 bg-clip-text text-transparent tracking-tight">
               The Story
             </h2>
-            <p className="text-lg lg:text-xl leading-relaxed text-white/80 mb-8">
-              {project.overview}
-            </p>
+            <div className="text-lg lg:text-xl leading-relaxed text-white/80 mb-8 space-y-4">
+              {project.overview.split('\n\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
             {project.note && (
               <div className="p-5 bg-purple-500/8 border border-purple-500/20 rounded-2xl backdrop-blur-[20px] relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-purple-500 to-indigo-500" />
@@ -395,7 +362,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
                         <h4 className="text-xl lg:text-2xl mb-3 text-indigo-400 font-semibold">
                           {title.trim()}
                         </h4>
-                        <p className="text-base lg:text-lg text-white/75 leading-relaxed">
+                        <p className="text-base text-white/75 leading-relaxed">
                           {description}
                         </p>
                       </div>
@@ -410,7 +377,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
 
       <section className="min-h-screen flex items-center justify-center relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent via-black/20 to-transparent">
         <div className={`
-          w-full max-w-7xl mx-auto transition-all duration-500
+          w-full max-w-[1500px] mx-auto transition-all duration-500
           ${activeSection >= 1.7 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[30px]'}
         `}>
           <div className={`

@@ -71,7 +71,7 @@ export default function About() {
     >
       <div className="absolute -top-[20%] -right-[10%] w-[60%] sm:w-[40%] h-[40%] bg-gradient-radial from-purple-600/15 to-transparent blur-[100px] pointer-events-none" />
 
-      <div className="max-w-[1400px] mx-auto text-white relative">
+      <div className="max-w-[1500px] mx-auto text-white relative">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-responsive-3xl mb-4 font-semibold tracking-tight">
             Not Your Average Developer
@@ -80,7 +80,7 @@ export default function About() {
         </div>
 
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 mb-12">
-          <div className="text-base sm:text-lg leading-relaxed text-indigo-200 mt-4 tracking-wide space-y-4">
+          <div className="text-base sm:text-lg text-indigo-200 mt-3 tracking-wide space-y-3">
             <p>
               Plot twist: I accidentally became obsessed with making robots sentient.
             </p>

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 
 interface Particle {
   id: number;
@@ -18,6 +19,7 @@ export default function DustCursor() {
   const [isVisible, setIsVisible] = useState(false);
   const animationRef = useRef<number | null>(null);
   const particleId = useRef(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     let lastTime = 0;
@@ -85,22 +87,27 @@ export default function DustCursor() {
     const handleMouseEnter = () => setIsVisible(true);
     const handleMouseLeave = () => setIsVisible(false);
 
-    const journeyCards = document.querySelectorAll('.stardust-cursor');
-    
-    journeyCards.forEach(card => {
-      card.addEventListener('mouseenter', handleMouseEnter);
-      card.addEventListener('mouseleave', handleMouseLeave);
-      card.addEventListener('mousemove', handleMouseMove);
-    });
+    // Add a small delay to ensure DOM is updated after navigation
+    const timeoutId = setTimeout(() => {
+      const journeyCards = document.querySelectorAll('.stardust-cursor');
+      
+      journeyCards.forEach(card => {
+        card.addEventListener('mouseenter', handleMouseEnter);
+        card.addEventListener('mouseleave', handleMouseLeave);
+        card.addEventListener('mousemove', handleMouseMove);
+      });
+    }, 100);
 
     return () => {
+      clearTimeout(timeoutId);
+      const journeyCards = document.querySelectorAll('.stardust-cursor');
       journeyCards.forEach(card => {
         card.removeEventListener('mouseenter', handleMouseEnter);
         card.removeEventListener('mouseleave', handleMouseLeave);
         card.removeEventListener('mousemove', handleMouseMove);
       });
     };
-  }, []);
+  }, [pathname]);
 
   if (!isVisible) return null;
 
