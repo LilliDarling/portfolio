@@ -3,7 +3,7 @@ import {Project} from '@/types/projects'
 export const projects: Project[] = [
   {
     id: "naila",
-    num: '1',
+    num: '01',
     title: "NAILA Robotics: Local AI Companion Robot",
     status: "In Development (Co-founder & Lead Developer)",
     description: "Developing a personalized AI companion robot with local, privacy-focused AI, utilizing MQTT for efficient communication protocols.",
@@ -40,39 +40,29 @@ export const projects: Project[] = [
   },
   {
     id: "nixit",
-    num: '2',
+    num: '02',
     title: "AI-Powered Task Management MVP",
-    status: "Client MVP (Currently private, seeking further development)",
+    status: "Client MVP",
     description: "Developed an AI-driven task management MVP, leveraging LLMs to simplify complex tasks for neurodivergent users.",
-    overview: "Identified a critical need for neurodivergent individuals facing cognitive overload in task management. I developed an AI-powered task management MVP to address this by offering intelligent task breakdowns and streamlined organization.",
-    technologies: ["Expo", "React", "Google Cloud Platform (GCP)", "Python", "Anthropic LLM API", "MongoDB"],
+    overview: "Led the complete product development lifecycle for NixIt, a neurodivergent-focused productivity application addressing a critical gap in accessible task management tools. Through targeted user research and accessibility studies with the autism and ADHD community, we identified key pain points around cognitive overload and executive function challenges, driving a user-centric product approach that resulted in a successful cross-platform MVP deployment.",
+    technologies: ["Expo", "React", "Google Cloud Platform (GCP)", "Python", "Anthropic LLM API", "MongoDB", "Tailwind", "EAS"],
     features: [
-      "Core AI Integration: Engineered the integration with the Anthropic LLM API to dynamically break down complex tasks into manageable sub-tasks, significantly reducing user overwhelm.",
+      "Neurodivergent-Specialized AI Assistant: Engineered a sophisticated integration with Anthropic's Claude API that goes beyond generic task management. The AI understands neurodivergent-specific challenges like executive dysfunction, rejection sensitivity, and sensory overwhelm.",
       "Seamless Calendar Synchronization: Implemented Google Calendar API integration, allowing users to automatically schedule tasks and receive notifications, enhancing timely completion.",
       "Robust Data Management: Designed and built the backend with Python and MongoDB on Google Cloud Platform (GCP), ensuring scalable and secure data storage for user tasks and preferences.",
       "Intuitive User Interface: Developed the cross-platform frontend using Expo and React, focusing on a clean, accessible, and responsive design for an optimal user experience."
     ],
-    outcome: "Initial user testing of the MVP yielded positive feedback, with users reporting increased task completion and reduced stress, validating the core solution. This project deepened my understanding of cloud deployment (GCP), managing large language models, and designing for user-specific accessibility needs. A particular challenge was handling complex API integrations and data consistency across multiple external services, which I overcame by developing a robust middleware layer.",
-    future: "Currently, the project is exploring a strategic pivot towards a 'notification-first' model, enabling direct AI interaction via text, further enhancing user accessibility and engagement based on early feedback.",
+    outcome: "NixIt represented a unique intersection of technical challenge and social impact. Initial user testing of the MVP yielded positive feedback validating the core solution and providing necessary insight into next steps. This project deepened my understanding of cloud deployment (GCP), managing large language models, and designing for user-specific accessibility needs. A particular challenge was handling complex API integrations and data consistency across multiple external services, which I overcame by developing a robust middleware layer.",
+    future: "Currently, the project is exploring a strategic pivot towards a 'notification-first' model, enabling direct AI interaction via text, further enhancing user accessibility and engagement based on early feedback. The goal is to apply advanced personalization using behavioral pattern recocgnition, allowing the AI to adapt to the individual user.",
     images: [
       { 
-        src: "stars.jpg",
-        alt: "Main screenshot of the AI Task Helper app demonstrating core features.", 
+        src: "nixMvp.png",
+        alt: "System Architecture", 
         type: "main"
       }, 
       { 
-        src: "galaxy.jpg", 
-        alt: "Screenshot illustrating AI-powered task breakdown from a complex task into smaller steps.", 
-        type: "feature"
-      }, 
-      { 
-        src: "stars.jpg", 
-        alt: "Screenshot showing Google Calendar integration and notification setup within the app.", 
-        type: "feature"
-      }, 
-      {
-        src: "galaxy.jpg",
-        alt: "Mobile view of the task helper app on a smartphone, highlighting responsive design.",
+        src: "nixArch.png", 
+        alt: "Screenshots illustrating AI-powered task breakdown, home screen, and calendar view.", 
         type: "feature"
       }
     ],
@@ -81,36 +71,30 @@ export const projects: Project[] = [
     completedDate: "2025-05"
   },
   {
-    id: "kora",
-    num: '3',
+    id: "stealth",
+    num: '03',
     title: "AI Wellness Coach Mobile App",
     status: "In Development (Client MVP Stage)",
-    description: "Developed an AI-powered mobile wellness coach for a client, creating personalized health plans and offering real-time guidance through an agentic chat interface.",
-    overview: "For a private client, I am currently developing Kora, a mobile application engineered to empower users in achieving their health goals through dynamic AI-driven coaching. The application leverages advanced AI to create personalized wellness plans, categorize goals (fitness, nutrition, mindfulness), and adapt to individual user needs. Kora's core innovation lies in its agentic AI flow, allowing the system to intelligently interpret user requests for new plans, plan refinements, daily advice, and more. By integrating with user health data and profile information, Kora aims to provide highly informed, adaptive, and personalized wellness guidance. The project is currently under active development, focusing on core functionality and AI robustness to meet client specifications.",
+    description: "Developing an AI-powered mobile wellness coach for a client, creating personalized health plans and offering real-time guidance through an agentic chat interface.",
+    overview: "For a private client, I am currently developing a mobile application engineered to empower users in achieving their health goals through dynamic AI-driven coaching. The application leverages advanced AI to create personalized wellness plans, categorize goals, and adapt to individual user needs. The apps core innovation lies in its agentic AI flow, allowing the system to intelligently interpret user requests for new plans, plan refinements, daily advice, and more. By integrating with user health data and profile information, it aims to provide highly informed, adaptive, and personalized wellness guidance. The project is currently under active development, focusing on core functionality and AI robustness to meet client specifications.",
     technologies: ["Flutter", "Typescript", "Firebase", "Swift", "Kotlin", "Google Cloud Platform (GCP)", "Gemini LLM API"],
     features: [
-      "Personalized Wellness Plans: AI-driven generation of customized fitness, nutrition, and mindfulness plans based on individual user goals and preferences.",
-      "Agentic AI Flow: Implemented a sophisticated agentic AI architecture using Gemini LLM API to intelligently understand user intent (e.g., 'create new plan,' 'refine existing plan,' 'seeking daily advice') and respond contextually.",
-      "Health Data Integration: Designed the architecture for integrating with user health data and profile information to enable highly informed and adaptive coaching decisions.",
-      "Cross-Platform Mobile Development: Building a native-feel mobile experience across iOS and Android using Flutter, with underlying platform-specific integrations (Swift for iOS, Kotlin for Android) where necessary.",
-      "Scalable Backend Infrastructure: Utilizing Firebase for secure user authentication, real-time data storage, and scalable cloud functions on GCP to support AI processing and data management."
+      "Advanced Prompt Engineering: Developed and iteratively refined sophisticated prompt strategies for Gemini API, implementing context-aware conversation flows, fact-checking mechanisms, and goal-alignment protocols that improved AI response accuracy by ensuring medically appropriate and personalized guidance.",
+      "Native Health Platform Integration:  Implemented comprehensive HealthKit (iOS) and Health Connect (Android) integrations to access user fitness metrics, sleep patterns, and health indicators, enabling the AI to generate data-informed recommendations.",
+      "Cross-Platform Mobile Development: Building a native-feel mobile experience across iOS and Android using Flutter, with underlying platform-specific integrations (Swift for iOS, Kotlin for Android) where necessary and enabling push notifications.",
+      "Key Problem-Solving Areas: Developing robust error handling for LLM API inconsistencies, creating seamless cross-platform native integrations that maintain performance across iOS and Android ecosystems, and maintaing up-to-date health data for personalized insights with each user."
     ],
-    outcome: "Currently in active development for a private client, this MVP has successfully implemented the core agentic AI chat flow and initial personalized plan generation. Key milestones achieved include seamless integration with the Gemini LLM API and robust backend setup using Firebase on GCP, all delivered according to client requirements. The primary challenge involves fine-tuning the AI's agentic reasoning for nuanced user interactions and ensuring secure, efficient health data integration without compromising user privacy, which are critical for the client's vision. This project is significantly enhancing my expertise in large language model application development, mobile cross-platform frameworks, and secure cloud architectures for health-focused client applications.",
+    outcome: "Currently in active development for a private client, this MVP has successfully implemented the core agentic AI chat flow and initial personalized plan generation. Key milestones achieved include seamless integration with the Gemini LLM API and robust backend setup using Firebase and GCP, all delivered according to client requirements. The primary challenge involves fine-tuning the AI's agentic reasoning for nuanced user interactions and ensuring secure, efficient health data integration without compromising user privacy, which are critical for the client's vision. This project is significantly enhancing my expertise in large language model application development, mobile cross-platform frameworks, and secure cloud architectures for health-focused client applications.",
     future: "Upcoming development focuses on expanding the AI's contextual awareness and memory, and preparing for initial internal client testing rounds to gather user feedback for further refinement of the MVP.",
     images: [
       {
-        src: "screen.jpg",
-        alt: "Main chat screen of the Kora AI Wellness Coach app, showing a conversation with the AI.",
+        src: "sysArch.png",
+        alt: "System Architecture.",
         type: "main"
       },
       {
-        src: "creation.jpg",
-        alt: "Screenshot illustrating Kora's AI generating a personalized wellness plan based on user goals.",
-        type: "feature"
-      },
-      {
-        src: "diagram.png",
-        alt: "Architectural diagram demonstrating Kora's agentic AI flow for interpreting user intent.",
+        src: "aiArch.png",
+        alt: "Advanced Prompt Engineering Architecture.",
         type: "feature"
       }
     ],
@@ -120,7 +104,7 @@ export const projects: Project[] = [
   },
   {
     id: "portfolio",
-    num: '4',
+    num: '04',
     title: "My Portfolio",
     status: "Deployed",
     description: "Designed and developed this modern portfolio using Next.js with React Three Fiber for immersive 3D experiences and smooth animations.",
@@ -139,7 +123,12 @@ export const projects: Project[] = [
         src: "hero.png",
         alt: "Hero section of the portfolio showcasing 3D particle effects and animated text.", 
         type: "main"
-      }, 
+      },
+      { 
+        src: "proConcept.png", 
+        alt: "Concept inspiration image for the portfolio.", 
+        type: "feature"
+      },
       { 
         src: "mvpPort.png", 
         alt: "Previous version of my portfolio.", 
@@ -154,47 +143,39 @@ export const projects: Project[] = [
   },
   {
     id: "ai-text-summary",
-    num: '5',
+    num: '05',
     title: "AI Text Summary: Cost-Optimized Flask Web App",
-    status: "Deployed & Operational (Self-Managed)",
-    description: "A Flask web application using the BART transformer model for text summarization, deployed on a cost-optimized AWS serverless architecture.",
-    overview: "This project showcases a Flask web application designed for automated text summarization using the **BART transformer model** from Hugging Face. My primary goal was to build a functional AI application while simultaneously demonstrating proficiency in **cost-optimized, event-driven serverless architectures on AWS**. The application is deployed via a Docker container on an EC2 instance, managed dynamically through a series of AWS Lambda functions and API Gateway.",
+    status: "Under Maintenance",
+    description: "A Flask web application using the BART transformer model for text summarization.",
+    overview: "This project began as a deep dive into building a functional AI application with a highly cost-optimized, event-driven serverless architecture on AWS. The initial deployment leveraged a clever orchestration of AWS API Gateway, a series of Lambda functions, and a Dockerized Flask application on an EC2 instance.\n\nThis architecture was a valuable exercise in cloud resource orchestration and serverless design. However, the lengthy initialization time for the large BART model ultimately made the user experience suboptimal and incurred higher-than-expected costs when not regularly maintained.",
     technologies: ["Flask", "AWS EC2", "AWS Lambda", "AWS API Gateway", "Docker", "Python", "Hugging Face (BART Model)"],
     features: [
-      "Automated Text Summarization: Implemented text summarization capabilities leveraging the BART transformer model from Hugging Face, enabling concise content generation from lengthy texts.",
-      "Cost-Optimized Serverless Architecture: Designed and deployed a custom AWS infrastructure to mitigate operational costs. This involves: \n    - Dynamic EC2 Management: Lambda functions control the lifecycle of the EC2 instance, starting it only when needed.\n    - Scheduled Shutdown: A dedicated Lambda function monitors instance activity and automatically stops the EC2 after 10 minutes of inactivity, significantly reducing idle costs.",
-      "Event-Driven Deployment & Health Checks: Utilized AWS API Gateway to trigger Lambda functions for instance management. Dedicated functions report the EC2's status (started, pending, running) and provide real-time application health checks, ensuring readiness.",
-      "Containerized Deployment: Packaged the Flask application within a Docker container, ensuring consistent deployment and environment isolation on the EC2 instance.",
-      "Real-Time Status & Access: Users receive live updates on the application's status and its public IP address once the UI is accessible."
+      "Automated Resource Management: Implemented a robust cleanup process that automatically clears the Hugging Face cache and temporary files post-summary generation. This feature provides a crucial method for controlling disk usage, which is essential when dealing with large model files.",
+      "Containerized & Local Deployment: The application is packaged in a Docker container, guaranteeing a consistent environment and seamless local deployment. The project also supports virtual environment setup with a clear requirements.txt file.",
+      "Efficient Processing: For long texts, the application divides the content into smaller chunks and processes them in parallel using a ThreadPoolExecutor, which significantly speeds up summarization. It also intelligently detects available hardware, using GPU (CUDA) for faster processing when possible."
     ],
     outcome: "Successfully deployed a functional AI text summarization service on a custom, cost-effective AWS serverless architecture. This project provided invaluable hands-on experience in orchestrating cloud resources, managing Dockerized applications in production environments, and implementing strategies for cloud cost mitigation. It also deepened my understanding of large transformer models and their practical deployment challenges.",
-    future: "Future enhancements could include implementing a queueing mechanism for summary requests to handle higher loads, exploring alternative cost-optimization strategies (e.g., AWS Fargate Spot), and integrating additional transformer models for varied summarization needs.",
+    future: "Future enhancements will be quantizing the model for lower deployment costs, optimizing the AWS architecture for better cost management on load times, refining the model for a higher accurate output on a quanitzed model, and creating a better UI/UX for long term use.",
     images: [
       {
-        src: "main.jpg",
+        src: "final.png",
         alt: "Main user interface of the AI Text Summary web application, showing text input and summarized output.",
         type: "main"
       },
       {
-        src: "architecture.png",
-        alt: "Architectural diagram of the AI Text Summary deployment on AWS, illustrating EC2, Lambda, and API Gateway interactions.",
-        type: "feature"
-      },
-      {
-        src: "flow.png",
-        alt: "Flowchart or screenshot illustrating Docker containerization and deployment process for the Flask application.",
+        src: "logs.png",
+        alt: "Terminal output showing cleanup before and after use.",
         type: "feature"
       }
     ],
-    note: "Note on Initialization: Due to the dynamic nature of the AWS infrastructure designed for cost optimization and the download of the large BART model upon instance activation, accessing the live demo may require an initialization period of up to 15-20 minutes. The API will provide status updates during this time until the UI is ready.",
-    demoUrl: "https://2zd4vw2pe7.execute-api.us-east-2.amazonaws.com/prod/start",
+    note: "While currently under maintenance, please feel free to fork the repository and run it locally. While this architecture was good in theory, long term practice has proven to be insufficient when mitigating costs.",
     githubUrl: "https://github.com/LilliDarling/ai-text-summary",
     isHighlight: false,
     completedDate: "2024-11"
   },
   {
     id: "witchy-cooking",
-    num: '6',
+    num: '06',
     title: "Intuitive Recipe Management Platform",
     status: "Deployed",
     description: "A full-stack Django application designed for streamlined user recipe management, focusing on a clean, ad-free experience.",

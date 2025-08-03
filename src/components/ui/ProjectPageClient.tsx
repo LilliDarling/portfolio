@@ -170,7 +170,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
           text-6xl font-black text-white/5 font-mono tracking-tighter select-none
           sm:text-7xl md:text-8xl lg:top-16 lg:text-9xl xl:top-20 xl:text-[8rem] 2xl:top-24 2xl:text-[9rem]'
         >
-          01
+          {project.num}
         </div>
 
         <div className='min-h-screen relative flex flex-col justify-center px-6 sm:px-6 lg:px-10 xl:px-16 2xl:px-28'>

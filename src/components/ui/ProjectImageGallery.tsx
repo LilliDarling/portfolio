@@ -1,6 +1,6 @@
 "use client";
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface ProjectImageGalleryProps {
   images?: Array<{ src: string; alt: string; type: 'main' | 'feature' }>;
@@ -9,6 +9,22 @@ interface ProjectImageGalleryProps {
 
 export default function ProjectImageGallery({ images, title }: ProjectImageGalleryProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isSmallMobile, setIsSmallMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsSmallMobile(window.innerWidth < 400);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
   
   if (!images || images.length === 0) return null;
   
@@ -31,8 +47,8 @@ export default function ProjectImageGallery({ images, title }: ProjectImageGalle
       {allImages.length > 0 && (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '2fr 1fr',
-          gap: '2rem',
+          gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr',
+          gap: isMobile ? '1.5rem' : '2rem',
           alignItems: 'start'
         }}>
           <div style={{
@@ -100,16 +116,16 @@ export default function ProjectImageGallery({ images, title }: ProjectImageGalle
                     }}
                     style={{
                       position: 'absolute',
-                      left: '1.5rem',
+                      left: isMobile ? '0.75rem' : '1.5rem',
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      width: '50px',
-                      height: '50px',
+                      width: isMobile ? '40px' : '50px',
+                      height: isMobile ? '40px' : '50px',
                       borderRadius: '50%',
                       background: 'rgba(0, 0, 0, 0.6)',
                       border: '1px solid rgba(255, 255, 255, 0.2)',
                       color: 'white',
-                      fontSize: '1.5rem',
+                      fontSize: isMobile ? '1.25rem' : '1.5rem',
                       cursor: 'pointer',
                       backdropFilter: 'blur(20px)',
                       transition: 'all 0.3s ease',
@@ -138,16 +154,16 @@ export default function ProjectImageGallery({ images, title }: ProjectImageGalle
                     }}
                     style={{
                       position: 'absolute',
-                      right: '1.5rem',
+                      right: isMobile ? '0.75rem' : '1.5rem',
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      width: '50px',
-                      height: '50px',
+                      width: isMobile ? '40px' : '50px',
+                      height: isMobile ? '40px' : '50px',
                       borderRadius: '50%',
                       background: 'rgba(0, 0, 0, 0.6)',
                       border: '1px solid rgba(255, 255, 255, 0.2)',
                       color: 'white',
-                      fontSize: '1.5rem',
+                      fontSize: isMobile ? '1.25rem' : '1.5rem',
                       cursor: 'pointer',
                       backdropFilter: 'blur(20px)',
                       transition: 'all 0.3s ease',
@@ -175,17 +191,19 @@ export default function ProjectImageGallery({ images, title }: ProjectImageGalle
 
           <div style={{
             display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem'
+            flexDirection: isMobile ? 'row' : 'column',
+            gap: isMobile ? (isSmallMobile ? '0.5rem' : '0.75rem') : '1rem'
           }}>
             <div style={{
               display: 'flex',
-              flexDirection: 'column',
-              gap: '0.75rem',
-              maxHeight: '400px',
-              marginTop: '10%',
-              overflowY: 'auto',
-              paddingRight: '0.5rem'
+              flexDirection: isMobile ? 'row' : 'column',
+              gap: isMobile ? (isSmallMobile ? '0.5rem' : '0.75rem') : '0.75rem',
+              maxHeight: isMobile ? 'none' : '400px',
+              marginTop: isMobile ? '0' : '10%',
+              overflowY: isMobile ? 'visible' : 'auto',
+              overflowX: isMobile ? 'auto' : 'visible',
+              paddingRight: isMobile ? '0' : '0.5rem',
+              paddingBottom: isMobile ? '0.5rem' : '0'
             }}>
               {allImages.map((image, index) => (
                 <div
@@ -202,7 +220,9 @@ export default function ProjectImageGallery({ images, title }: ProjectImageGalle
                       ? '2px solid rgba(168, 85, 247, 0.6)' 
                       : '1px solid rgba(255, 255, 255, 0.1)',
                     opacity: currentImageIndex === index ? 1 : 0.6,
-                    transform: currentImageIndex === index ? 'scale(1)' : 'scale(0.95)'
+                    transform: currentImageIndex === index ? 'scale(1)' : 'scale(0.95)',
+                    minWidth: isMobile ? (isSmallMobile ? '100px' : '120px') : 'auto',
+                    width: isMobile ? (isSmallMobile ? '100px' : '120px') : 'auto'
                   }}
                   onMouseEnter={(e) => {
                     if (currentImageIndex !== index) {
@@ -247,7 +267,7 @@ export default function ProjectImageGallery({ images, title }: ProjectImageGalle
               ))}
             </div>
 
-            {allImages.length > 1 && (
+            {allImages.length > 1 && !isMobile && (
               <div style={{
                 display: 'flex',
                 justifyContent: 'center',

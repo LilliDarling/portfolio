@@ -29,13 +29,26 @@ export default function Home() {
     position: { x: 0, y: 0 },
     cameraPosition: { x: 1, y: 1, z: 2.5 }
   });
+  const [targetTransform, setTargetTransform] = useState({
+    scale: 1,
+    position: { x: 0, y: 0 },
+    cameraPosition: { x: 1, y: 1, z: 2.5 }
+  });
   const [isScrolling, setIsScrolling] = useState(false);
   const [canvasLoaded, setCanvasLoaded] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   
   const canvasRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
     setCanvasLoaded(false);
     const canvasTimer = setTimeout(() => {
       setCanvasLoaded(true);
@@ -46,13 +59,13 @@ export default function Home() {
         trigger: "body",
         start: "top top",
         end: "100vh top",
-        scrub: 1,
+        scrub: 2,
         onUpdate: (self) => {
           const progress = self.progress;
 
           setIsScrolling(true);
           if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
-          scrollTimeoutRef.current = setTimeout(() => setIsScrolling(false), 150);
+          scrollTimeoutRef.current = setTimeout(() => setIsScrolling(false), 500);
 
           const scale = 1 - progress * 0.3;
 
@@ -67,7 +80,7 @@ export default function Home() {
           const cameraY = 1 + progress * 4;
           const cameraZ = 2.5 + progress * 2;
           
-          setSceneTransform({
+          setTargetTransform({
             scale,
             position: { x: positionX, y: positionY },
             cameraPosition: { x: cameraX, y: cameraY, z: cameraZ }
@@ -89,8 +102,37 @@ export default function Home() {
       ctx.revert();
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
       clearTimeout(canvasTimer);
+      window.removeEventListener('resize', checkMobile);
     };
   }, []);
+
+  useEffect(() => {
+    const lerp = (start: number, end: number, factor: number) => {
+      return start + (end - start) * factor;
+    };
+
+    let animationFrameId: number;
+
+    const animateTransform = () => {
+      setSceneTransform(prev => ({
+        scale: lerp(prev.scale, targetTransform.scale, 0.12),
+        position: {
+          x: lerp(prev.position.x, targetTransform.position.x, 0.12),
+          y: lerp(prev.position.y, targetTransform.position.y, 0.12)
+        },
+        cameraPosition: {
+          x: lerp(prev.cameraPosition.x, targetTransform.cameraPosition.x, 0.12),
+          y: lerp(prev.cameraPosition.y, targetTransform.cameraPosition.y, 0.12),
+          z: lerp(prev.cameraPosition.z, targetTransform.cameraPosition.z, 0.12)
+        }
+      }));
+      
+      animationFrameId = requestAnimationFrame(animateTransform);
+    };
+
+    animationFrameId = requestAnimationFrame(animateTransform);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [targetTransform]);
 
   return (
     <>
@@ -115,6 +157,7 @@ export default function Home() {
             scenePosition={sceneTransform.position}
             stars={<TwinklingStars />}
             enableControls={!isScrolling}
+            fov={isMobile ? 120 : 75}
           >
             <CosmicFlower />
           </CanvasWrap>
@@ -123,9 +166,9 @@ export default function Home() {
 
       <Hero />
 
-      <About />
-
       <Projects />
+
+      <About />
 
       <Skills />
 

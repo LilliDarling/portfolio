@@ -7,6 +7,7 @@ export default function Projects() {
   const allProjects = getAllProjects();
   const [activeProject, setActiveProject] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const currentProject = allProjects[activeProject];
@@ -23,6 +24,13 @@ export default function Projects() {
   };
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') {
         handleProjectChange((activeProject + 1) % allProjects.length);
@@ -32,7 +40,10 @@ export default function Projects() {
     };
 
     window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, [activeProject, allProjects.length]);
 
   return (
@@ -76,7 +87,7 @@ export default function Projects() {
             </div>
 
             <h1 className='font-semibold leading-tight mb-4 sm:mb-6 tracking-tight
-              [font-size:clamp(1.75rem,5vw,3.5rem)] 2xl:[font-size:clamp(2.5rem,6vw,4.5rem)]
+              [font-size:clamp(1.75rem,5vw,3.5rem)] 2xl:[font-size:clamp(2rem,6vw,4rem)]
               bg-gradient-to-br from-white to-purple-500
               bg-clip-text text-transparent'
             >
@@ -143,7 +154,7 @@ export default function Projects() {
               ? 'opacity-0 scale-95 rotate-y-10'
               : 'opacity-100 scale-100 rotate-y-0'
             }
-            mt-6 sm:mt-8 lg:mt-0 mb-8 sm:mb-12 lg:mb-6
+            mt-6 sm:mt-8 lg:mt-0 mb-8 sm:mb-20 lg:mb-10
             aspect-[14/10] sm:aspect-[14/9] lg:aspect-[14/10] xl:aspect-[14/9] 2xl:aspect-[14/10]
             w-full max-w-[90vw] lg:max-w-none'
           `}>
@@ -187,9 +198,11 @@ export default function Projects() {
           bottom-0 sm:bottom-5 lg:bottom-10 xl:bottom-18 2xl:bottom-12 2xl:gap-8'>
           <button
             onClick={() => handleProjectChange((activeProject - 1 + allProjects.length) % allProjects.length)}
-              className="stardust-cursor w-10 h-10 sm:w-12 sm:h-12 lg:w-[60px] lg:h-[60px] 2xl:w-[70px] 2xl:h-[70px] rounded-full
-                border-2 border-white/20 bg-black/60 backdrop-blur-xl text-white text-lg sm:text-xl lg:text-2xl 2xl:text-3xl transition-all duration-300 ease-in-out flex items-center justify-center hover:bg-purple-500/20
-                hover:border-purple-500/50 hover:scale-110"
+              className={`stardust-cursor rounded-full border-2 border-white/20 bg-black/60 backdrop-blur-xl text-white transition-all duration-300 ease-in-out flex items-center justify-center hover:bg-purple-500/20 hover:border-purple-500/50 hover:scale-110 ${
+                isMobile 
+                  ? 'w-8 h-8 text-base' 
+                  : 'w-10 h-10 sm:w-12 sm:h-12 lg:w-[60px] lg:h-[60px] 2xl:w-[70px] 2xl:h-[70px] text-lg sm:text-xl lg:text-2xl 2xl:text-3xl'
+              }`}
           >
             ←
           </button>
@@ -212,24 +225,14 @@ export default function Projects() {
 
           <button
             onClick={() => handleProjectChange((activeProject + 1) % allProjects.length)}
-            className="stardust-cursor w-10 h-10 sm:w-12 sm:h-12 lg:w-[60px] lg:h-[60px] 2xl:w-[70px] 2xl:h-[70px] rounded-full border-2 border-white/20
-              bg-black/60 backdrop-blur-xl text-white text-lg sm:text-xl lg:text-2xl 2xl:text-3xl transition-all duration-300
-              ease-in-out flex items-center justify-center hover:bg-purple-500/20
-              hover:border-purple-500/50 hover:scale-110"
+            className={`stardust-cursor rounded-full border-2 border-white/20 bg-black/60 backdrop-blur-xl text-white transition-all duration-300 ease-in-out flex items-center justify-center hover:bg-purple-500/20 hover:border-purple-500/50 hover:scale-110 ${
+              isMobile 
+                ? 'w-8 h-8 text-base' 
+                : 'w-10 h-10 sm:w-12 sm:h-12 lg:w-[60px] lg:h-[60px] 2xl:w-[70px] 2xl:h-[70px] text-lg sm:text-xl lg:text-2xl 2xl:text-3xl'
+            }`}
           >
             →
           </button>
-        </div>
-
-        <div className='absolute right-4 text-[0.6rem] sm:text-xs text-white/40 flex items-center gap-1
-          flex-col items-end lg:flex-row lg:gap-2 sm:right-6 lg:right-8 xl:right-10
-          bottom-20 sm:bottom-24 lg:bottom-12 xl:bottom-16 2xl:bottom-20 2xl:right-12 2xl:text-sm'
-        >
-          <span>Use arrow keys to navigate</span>
-          <div className="flex gap-1 md:gap-2 2xl:gap-3"> 
-            <span className='px-1 py-0.5 border border-white/20 rounded text-[0.55rem] sm:px-1.5 sm:text-[0.6rem] lg:px-2 lg:py-1 lg:text-[0.7rem] 2xl:px-2.5 2xl:py-1.5 2xl:text-sm'>←</span>
-            <span className='px-1 py-0.5 border border-white/20 rounded text-[0.55rem] sm:px-1.5 sm:text-[0.6rem] lg:px-2 lg:py-1 lg:text-[0.7rem] 2xl:px-2.5 2xl:py-1.5 2xl:text-sm'>→</span>
-          </div>
         </div>
       </div>
     </div>
