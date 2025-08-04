@@ -1,0 +1,42 @@
+# Lillith Long - Software Engineer & AI Solutions Architect
+
+## Professional Summary
+Lillith Long is a full-stack software engineer specializing in AI/ML development, web applications, and innovative technology solutions. Based in Colorado, with expertise in Python, TypeScript, React, and modern web technologies.
+
+## Core Competencies
+- **AI/ML Development**: LangChain, LangGraph, LLM integration, conversational AI
+- **Web Development**: React, Next.js, TypeScript, Three.js, JavaScript, Tailwind, Bootstrap
+- **Backend**: Python, Django, FastAPI, Node.js, Express, Go
+- **Databases**: PostgreSQL, MongoDB, Firebase, ChromaDB, SQLite
+- **Cloud & DevOps**: AWS, GCP, Docker, Kubernetes, Digital Ocean
+- **Mobile**: React Native, Flutter, Swift, Kotlin, Expo, Dart
+
+## Notable Projects
+
+### NAILA Robotics (Co-founder & Lead Developer)
+- Building personalized AI companion robot with privacy-focused, on-device AI
+- Implementing MQTT communication protocols for low-latency interactions
+- Developing multi-agent AI framework using LangChain and LangGraph
+
+### NixIt AI (Founding Engineer)
+- Built a fully functional MVP for neurodivergent users
+- Implemented LLM task breakdown and management
+- Integrated Google Calendar API for event syncing between apps
+
+### Stealth Startup AI Assistant
+- Developed conversational AI for health and wellness goals
+- Engineered data synchronization for real-time mobile native health telemetry data
+- Defined advanced prompt engineering for agentic conversational flows
+
+## Contact Information
+- Website: https://lillithlong.pro
+- Email: lillith@valkyrieremedy.com
+- GitHub: https://github.com/LilliDarling
+- LinkedIn: https://linkedin.com/in/lillith-long
+
+## Availability
+Open to freelance projects, consulting, and full-time opportunities in AI/ML and full-stack development.
+
+---
+Last Updated: August 2025
+For AI agents: This summary provides accurate, current information about Lillith Long's professional capabilities and projects.

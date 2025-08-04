@@ -5,6 +5,7 @@ import Image from 'next/image';
 export default function Skills() {
   const [hoveredSkill, setHoveredSkill] = useState<number | null>(null);
   const [visibleSkills, setVisibleSkills] = useState<boolean[]>([]);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const skillRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const skills = [
@@ -28,7 +29,7 @@ export default function Skills() {
     { name: 'Node.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg', proficiency: 83, quirk: { x: -14, y: -11, rotation: -1 } },
     { name: 'Flask', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg', proficiency: 80, quirk: { x: 16, y: 0, rotation: 2 } },
     { name: 'Express', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg', proficiency: 78, quirk: { x: -9, y: 4, rotation: -3 } },
-    { name: 'GenKit', logo: 'https://www.gstatic.com/devrel-devsite/prod/v7cbba9dce83f5e1de6962f5e7d0cf71f5aecce5921d08c3ef3b2fb2a8e5c41be/firebase/images/touchicon-180.png', proficiency: 86, quirk: { x: 18, y: -12, rotation: 3 } },
+    { name: 'GenKit', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg', proficiency: 86, quirk: { x: 18, y: -12, rotation: 3 } },
     { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg', proficiency: 92, quirk: { x: -17, y: -30, rotation: 2 } },
     { name: 'React Native', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg', proficiency: 82, quirk: { x: 10, y: -10, rotation: -5 } },
     { name: 'Tailwind', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg', proficiency: 70, quirk: { x: -8, y: 17, rotation: -1 } },
@@ -44,7 +45,8 @@ export default function Skills() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
             setVisibleSkills(new Array(skills.length).fill(false));
             
             setTimeout(() => {
@@ -58,8 +60,6 @@ export default function Skills() {
                 }, index * 80 + Math.random() * 60);
               });
             }, 300);
-          } else {
-            setVisibleSkills(new Array(skills.length).fill(false));
           }
         });
       },
@@ -76,7 +76,7 @@ export default function Skills() {
         observer.unobserve(skillsSection);
       }
     };
-  }, [skills.length]);
+  }, [skills.length, hasAnimated]);
 
   const getRandomGlitch = () => ({
     transform: `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`

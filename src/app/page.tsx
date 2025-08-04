@@ -12,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CanvasWrap = dynamic(() => import('@/components/three-d/CanvasWrap'), {
   ssr: false,
+  loading: () => <div className="h-screen w-screen bg-black" />
 });
 const CosmicFlower = dynamic(() => import('@/components/three-d/CosmicFlower'), {
   ssr: false,

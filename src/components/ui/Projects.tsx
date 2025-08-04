@@ -173,10 +173,13 @@ export default function Projects() {
                   ease-in-out hover:[transform:perspective(1000px)_rotateY(0deg)_scale(1.02)]"
                 >
                   <Image
-                    src={mainImage.src}
+                    src={`/${mainImage.src}`}
                     alt={currentProject.title}
                     fill
                     className='object-cover'
+                    priority={activeProject === 0}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+                    quality={85}
                   />
 
                   <div className='absolute inset-0 pointer-events-none custom-overlay-gradient' />

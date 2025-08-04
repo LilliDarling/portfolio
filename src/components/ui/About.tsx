@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function About() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [visibleCards, setVisibleCards] = useState<boolean[]>([false, false, false]);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const journeyPoints = [
@@ -29,7 +30,8 @@ export default function About() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
             setVisibleCards([false, false, false]);
 
             setTimeout(() => {
@@ -43,8 +45,6 @@ export default function About() {
                 }, index * 300);
               });
             }, 200);
-          } else {
-            setVisibleCards([false, false, false]);
           }
         });
       },
