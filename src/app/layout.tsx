@@ -6,6 +6,7 @@ import Footer from "@/components/ui/Footer";
 import DustCursor from "@/components/ui/DustCursor";
 import ClientWrapper from "@/components/ui/ClientWrapper";
 import StructuredData from "./structured-data";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const gold = Goldman({
   weight: "400",
@@ -82,6 +83,7 @@ export default function RootLayout({
           </div>
           <DustCursor />
         </ClientWrapper>
+        <SpeedInsights />
       </body>
     </html>
   );
