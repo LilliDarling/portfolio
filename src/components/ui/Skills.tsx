@@ -76,7 +76,7 @@ export default function Skills() {
         observer.unobserve(skillsSection);
       }
     };
-  }, [skills, hasAnimated]);
+  }, [hasAnimated]);
 
   const getRandomGlitch = () => ({
     transform: `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`
