@@ -39,7 +39,6 @@ export default function Home() {
   const [canvasLoaded, setCanvasLoaded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   
-  const canvasRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -145,7 +144,6 @@ export default function Home() {
   return (
     <>
       <div 
-        ref={canvasRef}
         style={{ 
           position: 'fixed', 
           top: 0, 

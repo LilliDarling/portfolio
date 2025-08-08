@@ -1,4 +1,4 @@
-import { extend, ReactThreeFiber } from '@react-three/fiber'
+import { ReactThreeFiber } from '@react-three/fiber'
 import * as THREE from 'three'
 
 declare global {
