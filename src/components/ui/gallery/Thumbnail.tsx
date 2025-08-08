@@ -12,7 +12,6 @@ interface ThumbnailProps {
 
 export default function Thumbnail({ 
   image, 
-  index, 
   isActive, 
   onClick, 
   isMobile,

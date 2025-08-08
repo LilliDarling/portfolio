@@ -61,7 +61,7 @@ export default function About() {
         observer.unobserve(aboutSection);
       }
     };
-  }, []);
+  }, [hasAnimated]);
 
   return (
     <div 
