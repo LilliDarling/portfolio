@@ -213,9 +213,9 @@ export default function Projects() {
           </button>
 
           <div className='flex gap-2 sm:gap-3 2xl:gap-4'>
-            {allProjects.map((_, index) => (
+            {allProjects.map((project, index) => (
               <button
-                key={index}
+                key={`project-dot-${project.id}`}
                 onClick={() => handleProjectChange(index)}
                 className={`h-[6px] sm:h-[8px] lg:h-[10px] rounded-[3px] sm:rounded-[4px] lg:rounded-[5px] border-none cursor-pointer
                   transition-all duration-300 ease-in-out p-0

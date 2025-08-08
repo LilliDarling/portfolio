@@ -254,7 +254,7 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
   }, [dustTexture, starTexture]);
 
   useEffect(() => {
-    if (galaxyMaterial && galaxyMaterial.uniforms) {
+    if (galaxyMaterial?.uniforms) {
       galaxyMaterial.uniforms.dustTexture.value = dustTexture;
       galaxyMaterial.uniforms.starTexture.value = starTexture;
     }

@@ -73,7 +73,14 @@ export default function Home() {
           const isMobile = window.innerWidth < 768;
           const isTablet = window.innerWidth < 1024;
           
-          const baseOffset = isMobile ? -6 : isTablet ? -8 : -10;
+          let baseOffset: number;
+          if (isMobile) {
+            baseOffset = -6;
+          } else if (isTablet) {
+            baseOffset = -8;
+          } else {
+            baseOffset = -10;
+          }
           const positionX = progress * baseOffset;
           const positionY = progress * (isMobile ? -3 : -5);
 

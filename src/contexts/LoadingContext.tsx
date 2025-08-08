@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
 
 interface LoadingContextType {
   isNavigating: boolean;
@@ -13,18 +13,20 @@ const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 export function LoadingProvider({ children }: { children: React.ReactNode }) {
   const [isNavigating, setIsNavigating] = useState(false);
 
-  const startNavigation = () => setIsNavigating(true);
-  const endNavigation = () => {
+  const startNavigation = useCallback(() => setIsNavigating(true), []);
+  const endNavigation = useCallback(() => {
     setTimeout(() => setIsNavigating(false), 800);
-  };
+  }, []);
+
+  const contextValue = useMemo(() => ({
+    isNavigating,
+    setIsNavigating,
+    startNavigation,
+    endNavigation
+  }), [isNavigating, startNavigation, endNavigation]);
 
   return (
-    <LoadingContext.Provider value={{
-      isNavigating,
-      setIsNavigating,
-      startNavigation,
-      endNavigation
-    }}>
+    <LoadingContext.Provider value={contextValue}>
       {children}
     </LoadingContext.Provider>
   );

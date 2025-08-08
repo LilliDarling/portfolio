@@ -102,28 +102,47 @@ export default function About() {
           </div>
 
           <div className="flex flex-col gap-4 sm:gap-6 mt-5">
-            {journeyPoints.map((point, index) => (
+            {journeyPoints.map((point, index) => {
+              let transformValue: string;
+              if (visibleCards[index]) {
+                if (hoveredCard === index) {
+                  transformValue = 'translateX(-10px)';
+                } else {
+                  transformValue = 'translateX(0)';
+                }
+              } else {
+                if (window.innerWidth < 640) {
+                  transformValue = 'translateX(30px)';
+                } else {
+                  transformValue = 'translateX(50px)';
+                }
+              }
+
+              let cardBackgroundClass: string;
+              if (hoveredCard === index) {
+                cardBackgroundClass = 'bg-purple-900/10 border-indigo-400';
+              } else {
+                cardBackgroundClass = 'bg-white/[0.03] border-white/10';
+              }
+
+              const cardOpacityClass = visibleCards[index] ? 'opacity-100' : 'opacity-0';
+              
+              const titleColorClass = hoveredCard === index ? 'text-indigo-300' : 'text-white';
+
+              return (
               <div
-                key={index}
+                key={point.title}
                 ref={(el) => { cardRefs.current[index] = el }}
-                className={`stardust-cursor p-4 sm:p-6 rounded-xl backdrop-blur-[10px] transition-all duration-600 border ${
-                  hoveredCard === index 
-                    ? 'bg-purple-900/10 border-indigo-400' 
-                    : 'bg-white/[0.03] border-white/10'
-                } ${visibleCards[index] ? 'opacity-100' : 'opacity-0'}`}
+                className={`stardust-cursor p-4 sm:p-6 rounded-xl backdrop-blur-[10px] transition-all duration-600 border ${cardBackgroundClass} ${cardOpacityClass}`}
                 style={{
-                  transform: visibleCards[index] 
-                    ? (hoveredCard === index ? 'translateX(-10px)' : 'translateX(0)') 
-                    : window.innerWidth < 640 ? 'translateX(30px)' : 'translateX(50px)'
+                  transform: transformValue
                 }}
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
                 <div className="flex items-center gap-3 sm:gap-4 mb-2">
                   <span className="text-2xl sm:text-3xl">{point.icon}</span>
-                  <h3 className={`text-lg sm:text-xl font-semibold ${
-                    hoveredCard === index ? 'text-indigo-300' : 'text-white'
-                  }`}>
+                  <h3 className={`text-lg sm:text-xl font-semibold ${titleColorClass}`}>
                     {point.title}
                   </h3>
                 </div>
@@ -131,7 +150,8 @@ export default function About() {
                   {point.description}
                 </p>
               </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>

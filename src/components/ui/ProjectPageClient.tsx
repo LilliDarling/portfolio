@@ -24,7 +24,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
         behavior: 'smooth'
       });
     } else {
-      const startY = window.pageYOffset;
+      const startY = window.scrollY;
       const distance = targetY - startY;
       const duration = 800;
       let start: number | null = null;
@@ -115,9 +115,18 @@ export default function ProjectPageClient({ project }: { project: Project }) {
       <div className="fixed right-8 top-1/2 -translate-y-1/2 z-[100] hidden md:flex flex-col gap-6 p-8">
         {['Intro', 'Story', 'Gallery', 'Impact'].map((label, index) => (
           <div
-            key={index}
+            key={label}
+            role="button"
+            tabIndex={0}
             onClick={() => smoothScrollTo(index)}
-            className="relative cursor-pointer flex items-center gap-4 p-2 rounded-[20px] transition-all duration-300 ease-out"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                smoothScrollTo(index);
+              }
+            }}
+            aria-label={`Navigate to ${label} section`}
+            className="relative cursor-pointer flex items-center gap-4 p-2 rounded-[20px] transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black"
           >
             <span className={`
               text-xs font-semibold tracking-[0.1em] uppercase whitespace-nowrap
@@ -248,7 +257,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
               </div>
             </div>
 
-            {project.images && project.images?.find(img => img.type === 'main') && (
+            {project.images?.find(img => img.type === 'main') && (
               <div className={`relative transition-all duration-500 ease-in-out
                 ${isLoaded
                   ? 'opacity-100 scale-100 rotate-y-0'
@@ -309,7 +318,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
             </h2>
             <div className="text-lg lg:text-xl leading-relaxed text-white/80 mb-8 space-y-4">
               {project.overview.split('\n\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
+                <p key={`overview-paragraph-${index}`}>{paragraph}</p>
               ))}
             </div>
             {project.note && (
@@ -325,7 +334,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
             transition-all duration-[800ms] delay-200 ease-out
             ${activeSection >= 0.9 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[50px]'}
           `}>
-            {project.features && project.features.length > 0 && (
+            {project.features?.length > 0 && (
               <>
                 <h3 className="text-3xl lg:text-4xl mb-6 font-semibold bg-gradient-to-br from-indigo-500 to-purple-500 bg-clip-text text-transparent">
                   Key Highlights
@@ -337,7 +346,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
                     
                     return (
                       <div
-                        key={index}
+                        key={`feature-${index}-${title}`}
                         className={`
                           relative p-6 bg-white/[0.02] border border-white/[0.08] rounded-xl
                           backdrop-blur-[20px] overflow-hidden

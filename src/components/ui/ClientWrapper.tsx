@@ -4,7 +4,7 @@ import LoadingScreen from './LoadingScreen';
 import { LoadingProvider, useLoading } from '@/contexts/LoadingContext';
 
 interface ClientWrapperProps {
-  children: React.ReactNode;
+  readonly children: React.ReactNode;
 }
 
 function AppContent({ children }: ClientWrapperProps) {

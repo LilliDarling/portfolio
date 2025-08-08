@@ -169,7 +169,7 @@ export default function Skills() {
                     transition-opacity 
                     duration-300 
                     ease-out
-                    ${isHovered ? 'opacity-60' : 'opacity-60'}
+                    ${isHovered ? 'opacity-100' : 'opacity-60'}
                   `}>
                     {skill.proficiency}%
                   </span>

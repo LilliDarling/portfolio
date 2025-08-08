@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import CanvasWrapProps from '@/types/canvas'
 
-function CameraController({ position, enableControls }: { position: { x: number; y: number; z: number }, enableControls: boolean }) {
+function CameraController({ position, enableControls }: { readonly position: { readonly x: number; readonly y: number; readonly z: number }, readonly enableControls: boolean }) {
   const { camera } = useThree();
   const controlsRef = useRef<OrbitControlsImpl>(null);
 

@@ -2,8 +2,8 @@
 import React from 'react';
 
 interface LoadingScreenProps {
-  message?: string;
-  overlay?: boolean;
+  readonly message?: string;
+  readonly overlay?: boolean;
 }
 
 export default function LoadingScreen({ 

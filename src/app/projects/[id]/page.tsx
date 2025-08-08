@@ -3,8 +3,8 @@ import { getProjectById, getAllProjects } from '@/data/projects';
 import ProjectPageClient from '@/components/ui/ProjectPageClient';
 
 interface ProjectPageProps {
-  params: Promise<{
-    id: string;
+  readonly params: Promise<{
+    readonly id: string;
   }>;
 }
 

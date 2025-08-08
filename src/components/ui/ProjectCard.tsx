@@ -2,12 +2,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 interface ProjectCardProps {
-  id: string;
-  title: string;
-  description: string;
-  technologies: string[];
-  imageUrl?: string;
-  isHighlight?: boolean;
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly technologies: readonly string[];
+  readonly imageUrl?: string;
+  readonly isHighlight?: boolean;
 }
 
 export default function ProjectCard({ 
@@ -44,9 +44,9 @@ export default function ProjectCard({
         <p className="mb-3 text-gray-300 flex-grow text-md">{description}</p>
         
         <div className="flex flex-wrap gap-2 mt-auto">
-          {technologies.map((tech, index) => (
+          {technologies.map((tech) => (
             <span 
-              key={index}
+              key={tech}
               className="px-3 py-1 bg-gray-700/50 text-gray-300 text-md rounded-full"
             >
               {tech}
