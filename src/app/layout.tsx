@@ -7,6 +7,7 @@ import DustCursor from "@/components/ui/DustCursor";
 import ClientWrapper from "@/components/ui/ClientWrapper";
 import StructuredData from "./structured-data";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import Web3Wrapper from "@/components/providers/Web3Wrapper"
 
 const gold = Goldman({
   weight: "400",
@@ -73,16 +74,18 @@ export default function RootLayout({
       <body
         className={`${gold} antialiased bg-background`}
       >
-        <ClientWrapper>
-          <div className="flex flex-col min-h-screen">
-            <Nav />
-            <main className="pt-16 flex-grow" role="main" aria-label="Portfolio content">
-              {children}
-            </main>
-            <Footer />
-          </div>
-          <DustCursor />
-        </ClientWrapper>
+        <Web3Wrapper>
+          <ClientWrapper>
+            <div className="flex flex-col min-h-screen">
+              <Nav />
+              <main className="pt-16 flex-grow" role="main" aria-label="Portfolio content">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <DustCursor />
+          </ClientWrapper>
+        </Web3Wrapper>
         <SpeedInsights />
       </body>
     </html>

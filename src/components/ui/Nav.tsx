@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { useLoading } from '@/contexts/LoadingContext'
 import { useRouter, usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import TipButton from './TipButton'
+import BuyMeCoffeeButton from './BuyMeCoffeeButton'
 
 const navItems = [
   { name: 'Projects', href: '/#projects' },
@@ -57,23 +59,31 @@ export default function Nav() {
           <div className="flex items-center justify-between h-12 lg:h-12">
             <button 
               onClick={() => handleNavigation('/')}
-              className="text-xl sm:text-2xl hover:text-indigo-600 duration-300"
+              className="text-xl sm:text-2xl hover:text-indigo-600 duration-300 flex-shrink-0"
             >
               Lillith Long
             </button>
 
-            <ul className="hidden md:flex items-center gap-4 lg:gap-8">
+            <ul className="hidden lg:flex items-center gap-4 lg:gap-8 absolute left-1/2 transform -translate-x-1/2">
               {navItems.map((item) => (
                 <li key={item.name}>
                   <Link 
                     href={item.href}
-                    className="text-base lg:text-lg hover:text-indigo-600 duration-300 focus:text-indigo-400"
+                    className="text-base lg:text-lg hover:text-indigo-600 duration-300 focus:text-indigo-400 whitespace-nowrap"
                   >
                     {item.name}
                   </Link>
                 </li>
               ))}
             </ul>
+
+            <div className="hidden md:flex items-center gap-2 lg:gap-3">
+              <BuyMeCoffeeButton username={process.env.NEXT_PUBLIC_BUYMEACOFFEE_USERNAME} />
+              <TipButton 
+                ethAddress={process.env.NEXT_PUBLIC_ETH_ADDRESS}
+                solAddress={process.env.NEXT_PUBLIC_SOL_ADDRESS}
+              />
+            </div>
 
             <button
               onClick={toggleMenu}
@@ -100,6 +110,14 @@ export default function Nav() {
               {item.name}
             </Link>
           ))}
+
+          <div className="flex flex-col items-center gap-4 mt-8">
+            <BuyMeCoffeeButton username={process.env.NEXT_PUBLIC_BUYMEACOFFEE_USERNAME} />
+            <TipButton 
+              ethAddress={process.env.NEXT_PUBLIC_ETH_ADDRESS}
+              solAddress={process.env.NEXT_PUBLIC_SOL_ADDRESS}
+            />
+          </div>
         </div>
       </div>
     </>
