@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import Metadata from "next";
+import { Analytics } from '@vercel/analytics/next';
 import { Goldman } from "next/font/google";
 import "../styles/globals.css";
 import Nav from "@/components/ui/Nav";
@@ -87,6 +88,7 @@ export default function RootLayout({
           </ClientWrapper>
         </Web3Wrapper>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
