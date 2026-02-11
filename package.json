@@ -10,41 +10,48 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
-    "@rainbow-me/rainbowkit": "^2.2.8",
-    "@react-three/drei": "^10.5.0",
-    "@react-three/fiber": "^9.2.0",
+    "@rainbow-me/rainbowkit": "^2.2.10",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
     "@solana/wallet-adapter-base": "^0.9.27",
+    "@solana/wallet-adapter-phantom": "^0.9.28",
     "@solana/wallet-adapter-react": "^0.15.39",
     "@solana/wallet-adapter-react-ui": "^0.9.39",
-    "@solana/wallet-adapter-wallets": "^0.19.37",
+    "@solana/wallet-adapter-solflare": "^0.6.32",
     "@solana/web3.js": "^1.98.4",
-    "@tanstack/react-query": "^5.85.3",
-    "@types/three": "^0.178.0",
-    "@vercel/analytics": "^1.5.0",
-    "@vercel/speed-insights": "^1.2.0",
-    "gsap": "^3.13.0",
-    "next": "15.3.5",
+    "@tanstack/react-query": "^5.90.21",
+    "@types/three": "^0.178.1",
+    "@vercel/analytics": "^1.6.1",
+    "@vercel/speed-insights": "^1.3.1",
+    "gsap": "^3.14.2",
+    "next": "15.5.12",
     "qrcode": "^1.5.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "react-qr-code": "^2.0.18",
     "three": "^0.178.0",
-    "three-stdlib": "^2.36.0",
-    "viem": "^2.33.3",
-    "wagmi": "^2.16.3"
+    "three-stdlib": "^2.36.1",
+    "viem": "^2.45.3",
+    "wagmi": "^2.19.5"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.3.5",
+    "@eslint/eslintrc": "^3.3.3",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^20.19.33",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "15.5.12",
     "glslify-loader": "^2.0.0",
     "raw-loader": "^4.0.2",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "webpack": "5.105.1"
   },
-  "packageManager": "pnpm@10.12.3"
+  "packageManager": "pnpm@10.12.3",
+  "pnpm": {
+    "overrides": {
+      "lodash@>=4.0.0 <=4.17.22": "4.17.23"
+    }
+  }
 }
