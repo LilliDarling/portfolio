@@ -105,18 +105,18 @@ export default function About() {
             {journeyPoints.map((point, index) => {
               let transformValue: string;
               if (visibleCards[index]) {
-                if (hoveredCard === index) {
-                  transformValue = 'translateX(-10px)';
-                } else {
-                  transformValue = 'translateX(0)';
-                }
-              } else {
-                if (window.innerWidth < 640) {
-                  transformValue = 'translateX(30px)';
-                } else {
-                  transformValue = 'translateX(50px)';
-                }
-              }
+                              if (hoveredCard === index) {
+                                transformValue = 'translateX(-10px)';
+                              } else {
+                                transformValue = 'translateX(0)';
+                              }
+                            }
+              else if (window.innerWidth < 640) {
+                                transformValue = 'translateX(30px)';
+                              }
+              else {
+                                transformValue = 'translateX(50px)';
+                              }
 
               let cardBackgroundClass: string;
               if (hoveredCard === index) {

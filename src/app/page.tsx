@@ -61,7 +61,7 @@ export default function Home() {
         end: "100vh top",
         scrub: 2,
         onUpdate: (self) => {
-          const progress = self.progress;
+          const {progress} = self;
 
           setIsScrolling(true);
           if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
@@ -152,6 +152,7 @@ export default function Home() {
           height: '100vh',
           zIndex: 1,
           overflow: 'hidden',
+          touchAction: 'pan-y',
           opacity: canvasLoaded ? 1 : 0,
           transition: 'opacity 800ms cubic-bezier(0.4, 0, 0.2, 1)'
         }}
@@ -162,7 +163,7 @@ export default function Home() {
             sceneScale={sceneTransform.scale}
             scenePosition={sceneTransform.position}
             stars={<TwinklingStars />}
-            enableControls={!isScrolling}
+            enableControls={!isMobile && !isScrolling}
             fov={isMobile ? 120 : 75}
           >
             <CosmicFlower />

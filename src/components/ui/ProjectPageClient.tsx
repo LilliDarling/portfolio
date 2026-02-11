@@ -65,7 +65,7 @@ export default function ProjectPageClient({ project }: { project: Project }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
+      const {scrollY} = window;
       const windowHeight = window.innerHeight;
 
       const rawSection = scrollY / windowHeight;

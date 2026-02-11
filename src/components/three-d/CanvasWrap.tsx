@@ -30,7 +30,7 @@ const CanvasWrap: React.FC<CanvasWrapProps> = ({
   return (
     <Canvas
       camera={{ position: [cameraPosition.x, cameraPosition.y, cameraPosition.z], fov: fov }}
-      style={{ width: '100%', height: '100%', background: '#000000' }}
+      style={{ width: '100%', height: '100%', background: '#000000', touchAction: 'pan-y' }}
       onCreated={onCreated}
     >
       <Suspense fallback={null}> 
