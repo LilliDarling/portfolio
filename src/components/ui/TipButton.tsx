@@ -10,6 +10,7 @@ import WalletConnectButton from '@/components/web3/WalletConnectButton'
 import TransactionStatus from '@/components/web3/TransactionStatus'
 import CryptoQRCode from '@/components/web3/CryptoQRCode'
 import { TipButtonProps } from '@/types/web3'
+import { isValidEthAddress, isValidSolAddress, isValidCryptoAmount } from '@/lib/validation'
 
 const CRYPTO_OPTIONS = [
   { id: 'eth', name: 'Ethereum', symbol: 'ETH', color: 'bg-blue-600' },
@@ -21,7 +22,7 @@ const AMOUNTS = ['0.001', '0.01', '0.1', '1']
 export default function TipButton({ ethAddress = '', solAddress = '' }: TipButtonProps) {
   const isTestMode = process.env.NEXT_PUBLIC_TEST_MODE === 'true'
 
-  const testEthAddress = '0x742d35cc6634c0532925a3b8d91b65eb78c5b64'
+  const testEthAddress = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
   const testSolAddress = 'DTestWjvB6XF1qVzxaNgXjKYrJSJf9bgYEUBQT5N7p6tY'
   
   const finalEthAddress = isTestMode ? (ethAddress || testEthAddress) : ethAddress
@@ -55,6 +56,15 @@ export default function TipButton({ ethAddress = '', solAddress = '' }: TipButto
 
   const handleEthTip = async () => {
     if (!finalEthAddress || !amount) return
+    if (!isValidEthAddress(finalEthAddress)) {
+      setTxError('Invalid Ethereum address')
+      return
+    }
+    const amountCheck = isValidCryptoAmount(amount)
+    if (!amountCheck.valid) {
+      setTxError(amountCheck.error || 'Invalid amount')
+      return
+    }
     try {
       setTxError('')
       sendEthTransaction({
@@ -73,6 +83,15 @@ export default function TipButton({ ethAddress = '', solAddress = '' }: TipButto
 
   const handleSolTip = async () => {
     if (!finalSolAddress || !amount || !solPublicKey) return
+    if (!isValidSolAddress(finalSolAddress)) {
+      setTxError('Invalid Solana address')
+      return
+    }
+    const amountCheck = isValidCryptoAmount(amount)
+    if (!amountCheck.valid) {
+      setTxError(amountCheck.error || 'Invalid amount')
+      return
+    }
     try {
       setTxError('')
       setSolTxStatus('pending')
@@ -204,7 +223,8 @@ export default function TipButton({ ethAddress = '', solAddress = '' }: TipButto
                     <input
                       type="number"
                       step="0.001"
-                      min="0"
+                      min="0.0001"
+                      max="10"
                       placeholder="Custom amount"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
