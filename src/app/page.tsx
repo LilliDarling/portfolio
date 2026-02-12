@@ -114,27 +114,47 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const lerp = (start: number, end: number, factor: number) => {
-      return start + (end - start) * factor;
-    };
+    const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
+    const isClose = (a: number, b: number) => Math.abs(a - b) < 0.001;
 
     let animationFrameId: number;
+    let converged = false;
 
     const animateTransform = () => {
-      setSceneTransform(prev => ({
-        scale: lerp(prev.scale, targetTransform.scale, 0.12),
-        position: {
-          x: lerp(prev.position.x, targetTransform.position.x, 0.12),
-          y: lerp(prev.position.y, targetTransform.position.y, 0.12)
-        },
-        cameraPosition: {
-          x: lerp(prev.cameraPosition.x, targetTransform.cameraPosition.x, 0.12),
-          y: lerp(prev.cameraPosition.y, targetTransform.cameraPosition.y, 0.12),
-          z: lerp(prev.cameraPosition.z, targetTransform.cameraPosition.z, 0.12)
+      if (converged) return;
+
+      setSceneTransform(prev => {
+        const next = {
+          scale: lerp(prev.scale, targetTransform.scale, 0.12),
+          position: {
+            x: lerp(prev.position.x, targetTransform.position.x, 0.12),
+            y: lerp(prev.position.y, targetTransform.position.y, 0.12)
+          },
+          cameraPosition: {
+            x: lerp(prev.cameraPosition.x, targetTransform.cameraPosition.x, 0.12),
+            y: lerp(prev.cameraPosition.y, targetTransform.cameraPosition.y, 0.12),
+            z: lerp(prev.cameraPosition.z, targetTransform.cameraPosition.z, 0.12)
+          }
+        };
+
+        if (
+          isClose(next.scale, targetTransform.scale) &&
+          isClose(next.position.x, targetTransform.position.x) &&
+          isClose(next.position.y, targetTransform.position.y) &&
+          isClose(next.cameraPosition.x, targetTransform.cameraPosition.x) &&
+          isClose(next.cameraPosition.y, targetTransform.cameraPosition.y) &&
+          isClose(next.cameraPosition.z, targetTransform.cameraPosition.z)
+        ) {
+          converged = true;
+          return targetTransform;
         }
-      }));
-      
-      animationFrameId = requestAnimationFrame(animateTransform);
+
+        return next;
+      });
+
+      if (!converged) {
+        animationFrameId = requestAnimationFrame(animateTransform);
+      }
     };
 
     animationFrameId = requestAnimationFrame(animateTransform);

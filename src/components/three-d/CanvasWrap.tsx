@@ -8,9 +8,11 @@ import CanvasWrapProps from '@/types/canvas'
 function CameraController({ position, enableControls }: { readonly position: { readonly x: number; readonly y: number; readonly z: number }, readonly enableControls: boolean }) {
   const { camera } = useThree();
   const controlsRef = useRef<OrbitControlsImpl>(null);
+  const targetVec = useRef(new THREE.Vector3());
 
   useFrame(() => {
-    camera.position.lerp(new THREE.Vector3(position.x, position.y, position.z), 0.05);
+    targetVec.current.set(position.x, position.y, position.z);
+    camera.position.lerp(targetVec.current, 0.05);
     camera.lookAt(0, 0, 0);
   });
 
@@ -31,6 +33,8 @@ const CanvasWrap: React.FC<CanvasWrapProps> = ({
     <Canvas
       camera={{ position: [cameraPosition.x, cameraPosition.y, cameraPosition.z], fov: fov }}
       style={{ width: '100%', height: '100%', background: '#000000', touchAction: 'pan-y' }}
+      dpr={[1, 1.5]}
+      gl={{ powerPreference: 'high-performance', antialias: false }}
       onCreated={onCreated}
     >
       <Suspense fallback={null}> 

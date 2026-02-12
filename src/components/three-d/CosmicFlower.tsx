@@ -15,7 +15,6 @@ interface CosmicFlowerProps {
 const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicComplete }) => {
   const flowerRef = useRef<THREE.Mesh>(null);
   const galaxyRef = useRef<THREE.Points>(null);
-  const originalPositions = useRef<Float32Array | null>(null);
 
   const { scene: gltfScene } = useGLTF('/flower.glb');
 
@@ -114,7 +113,8 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
 
   const galaxyGeometry = useMemo(() => {
     const geometry = new THREE.BufferGeometry();
-    const particleCount = 10000;
+    const isMobileDevice = window.innerWidth < 768;
+    const particleCount = isMobileDevice ? 4000 : 10000;
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
     const scales = new Float32Array(particleCount);
@@ -183,8 +183,6 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
     geometry.setAttribute('baseAngle', new THREE.BufferAttribute(baseAngles, 1));
     geometry.setAttribute('particleType', new THREE.BufferAttribute(particleTypes, 1));
 
-    originalPositions.current = new Float32Array(positions);
-
     return geometry;
   }, []);
 
@@ -195,31 +193,56 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
         starTexture: { value: starTexture },
         size: { value: 0.8 },
         u_time: { value: 0 },
+        u_minRadius: { value: 4.0 },
+        u_radiusRange: { value: 11.0 },
       },
       vertexShader: `
         attribute float particleType;
         attribute float scale;
         attribute float phase;
+        attribute float baseRadius;
+        attribute float baseAngle;
         varying float vParticleType;
         varying vec3 vColor;
         varying float vAlphaMultiplier;
         uniform float size;
         uniform float u_time;
+        uniform float u_minRadius;
+        uniform float u_radiusRange;
 
         void main() {
           vParticleType = particleType;
           vColor = color;
 
+          // Animate position on GPU
+          float radiusNormalized = (baseRadius - u_minRadius) / u_radiusRange;
+          float rotationSpeed = 0.07 * (1.0 - radiusNormalized * 0.4) + (particleType > 0.5 ? 0.005 : 0.0);
+          float swirlingAngle = baseAngle + u_time * rotationSpeed;
+          float currentRadius = baseRadius + sin(u_time * 0.3 + phase) * 0.3;
+
+          float turbulenceX = sin(u_time * 0.8 + phase * 1.5) * 0.15;
+          float turbulenceZ = cos(u_time * 0.9 + phase * 2.0) * 0.15;
+          float turbulenceY = sin(u_time * 0.6 + phase * 2.5) * 0.08 + cos(u_time * 0.7 + phase * 3.0) * 0.05;
+
+          float individualX = sin(u_time * 0.7 + phase * 2.0) * 0.1;
+          float individualZ = cos(u_time * 0.6 + phase * 3.0) * 0.1;
+          float individualY = sin(u_time * 0.4 + phase * 4.0) * 0.05;
+
+          vec3 animatedPos;
+          animatedPos.x = cos(swirlingAngle) * currentRadius + turbulenceX + individualX;
+          animatedPos.z = sin(swirlingAngle) * currentRadius + turbulenceZ + individualZ;
+          animatedPos.y = position.y + sin(u_time * 0.2 + phase) * 0.1 + turbulenceY + individualY;
+
+          // Flicker
           float flicker = 1.0;
           if (particleType > 0.5) {
               flicker = 0.8 + sin(u_time * 5.0 + phase * 10.0) * 0.2;
               vAlphaMultiplier = 1.0;
           } else {
-              flicker = 1.0;
               vAlphaMultiplier = 0.5 + sin(u_time * 0.2 + phase) * 0.2;
           }
 
-          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          vec4 mvPosition = modelViewMatrix * vec4(animatedPos, 1.0);
           gl_Position = projectionMatrix * mvPosition;
           gl_PointSize = size * scale * flicker * (500.0 / -mvPosition.z);
         }
@@ -233,17 +256,17 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
 
         void main() {
           vec2 uv = gl_PointCoord;
-          
+
           vec4 texColor;
           if (vParticleType > 0.2) {
             texColor = texture2D(starTexture, uv);
           } else {
             texColor = texture2D(dustTexture, uv);
           }
-          
+
           float finalAlpha = texColor.a * vAlphaMultiplier;
-          
-          gl_FragColor = vec4(vColor * texColor.rgb, finalAlpha * 0.7); // Slightly more overall opacity for atmosphere
+
+          gl_FragColor = vec4(vColor * texColor.rgb, finalAlpha * 0.7);
         }
       `,
       transparent: true,
@@ -300,55 +323,11 @@ const CosmicFlower: React.FC<CosmicFlowerProps> = ({ initialDelay = 1, onCosmicC
 
   useFrame((state) => {
     const elapsedTime = state.clock.getElapsedTime();
-    if (cosmicShaderMaterial.uniforms.u_time) {
-      cosmicShaderMaterial.uniforms.u_time.value = elapsedTime;
-    }
-    if (galaxyMaterial.uniforms.u_time) {
-        galaxyMaterial.uniforms.u_time.value = elapsedTime;
-    }
+    cosmicShaderMaterial.uniforms.u_time.value = elapsedTime;
+    galaxyMaterial.uniforms.u_time.value = elapsedTime;
 
     if (flowerRef.current) {
-        flowerRef.current.rotation.y += 0.0005;
-    }
-
-    if (galaxyRef.current && originalPositions.current) {
-      const positions = galaxyRef.current.geometry.attributes.position.array as Float32Array;
-      const baseRadii = galaxyRef.current.geometry.attributes.baseRadius.array as Float32Array;
-      const baseAngles = galaxyRef.current.geometry.attributes.baseAngle.array as Float32Array;
-      const phases = galaxyRef.current.geometry.attributes.phase.array as Float32Array;
-      const particleTypes = galaxyRef.current.geometry.attributes.particleType.array as Float32Array;
-
-      const minRadius = 4.0;
-      const maxRadius = 15.0;
-      const radiusRange = maxRadius - minRadius;
-
-      for (let i = 0; i < positions.length; i += 3) {
-        const idx = i / 3;
-        const phase = phases[idx];
-        const isStar = particleTypes[idx] > 0.5;
-
-        const radiusNormalized = (baseRadii[idx] - minRadius) / radiusRange; 
-        
-        const rotationSpeed = 0.07 * (1.0 - radiusNormalized * 0.4) + (isStar ? 0.005 : 0);
-        const swirlingAngle = baseAngles[idx] + elapsedTime * rotationSpeed;
-
-        const currentRadius = baseRadii[idx] + Math.sin(elapsedTime * 0.3 + phase) * 0.3;
-
-        const turbulenceX = Math.sin(elapsedTime * 0.8 + phase * 1.5) * 0.15;
-        const turbulenceZ = Math.cos(elapsedTime * 0.9 + phase * 2.0) * 0.15;
-        const turbulenceY = Math.sin(elapsedTime * 0.6 + phase * 2.5) * 0.08 + Math.cos(elapsedTime * 0.7 + phase * 3.0) * 0.05;
-
-        const individualX = Math.sin(elapsedTime * 0.7 + phase * 2) * 0.1;
-        const individualZ = Math.cos(elapsedTime * 0.6 + phase * 3) * 0.1;
-        const individualY = Math.sin(elapsedTime * 0.4 + phase * 4) * 0.05;
-
-        positions[i] = Math.cos(swirlingAngle) * currentRadius + turbulenceX + individualX;
-        positions[i + 2] = Math.sin(swirlingAngle) * currentRadius + turbulenceZ + individualZ;
-        
-        positions[i + 1] = originalPositions.current[i + 1] + Math.sin(elapsedTime * 0.2 + phase) * 0.1 + turbulenceY + individualY;
-      }
-      
-      galaxyRef.current.geometry.attributes.position.needsUpdate = true;
+      flowerRef.current.rotation.y += 0.0005;
     }
   });
 
